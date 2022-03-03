@@ -1,6 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const oracledb = require('oracledb');
+
 const app = express();
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -12,18 +14,16 @@ app.use((req, res, next) => {
   } else {
     next();
   }
-});
+}); 
 
-
-// parse requests of content-type - application/json
 app.use(bodyParser.json());
 
 
 // database
-const db = require("./models");
-const Role = db.role;
+//const db = require("./models");
+//const Role = db.role;
 
-db.sequelize.sync();
+//db.sequelize.sync();
 // force: true will drop the table if it already exists
 //db.sequelize.sync({force: true}).then(() => { console.log('Drop and Resync Database with { force: true }');initial();});
 
@@ -33,8 +33,8 @@ app.get("/", (req, res) => {
 });
 
 app.use(cors());
-require('./routes/auth.routes')(app);
-require('./routes/user.routes')(app);
+//require('./routes/auth.routes')(app);
+//require('./routes/user.routes')(app);
 //require("./routes/customer.routes")(app);
 
 
