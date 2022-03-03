@@ -3,7 +3,7 @@ module.exports = {
   USER: process.env.USER,
   PASSWORD: process.env.PASSWORD,
   DATABASE: process.env.DATABASE,
-  connectString : "localhost/ngsoft@NG",
+  ConnectString : "localhost/ngsoft@NG",
   logging: false,
 
 /*    pool: {
