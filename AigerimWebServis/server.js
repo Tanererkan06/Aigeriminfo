@@ -29,7 +29,7 @@ db.sequelize.sync();
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Madi - test" });
+  res.json({ message: "test" });
 });
 
 app.use(cors());
