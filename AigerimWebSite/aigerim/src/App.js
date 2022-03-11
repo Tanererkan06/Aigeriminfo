@@ -1,23 +1,79 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import About from "./components/About/About";
+import Appointment from "./components/Appointment/Appointment";
+import Banner from "./components/Banner/Banner";
+import ClinicalFacts from "./components/ClinicalFacts/ClinicalFacts";
+import Contact from "./components/Contact/Contact";
+import AuthProvider from "./components/Context/AuthContext";
+import Feature from "./components/Feature/Feature";
+import Footer from "./components/Footer/Footer";
+import ForgetPassword from "./components/ForgetPassword/ForgetPassword";
+import Header from "./components/Header/Header";
+import Login from "./components/Login/Login";
+import Menu from "./components/Menu/Menu";
+import NotFound from "./components/NotFound/NotFound";
+import PrivateRoute from "./components/PrivetRoute/PrivetRoute";
+import QualityService from "./components/QualityService/QualityService";
+import Register from "./components/Register/Register";
+import Services from "./components/Services/Services";
+import ServicesDetails from "./components/Services/ServicesDetails";
+import DoctorDetails from "./components/Doctors/DoctorDetails";
+import Doctors from "./components/Doctors/Doctors";
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Router>
+      <AuthProvider>
+          <Header />
+          <Menu />
+          <Switch>
+            <Route exact path="/">
+              <Banner />
+              <Feature />
+              <QualityService />
+              <Services home />
+              <ClinicalFacts />
+              <Doctors/>
+            </Route>
+            <Route path="/service/:serviceId">
+              <ServicesDetails />
+            </Route>
+            <Route path="/doctor/:doctor_id">
+              <DoctorDetails />
+            </Route>                      
+            <Route path="/login">
+              <Login />
+            </Route>            
+            <Route path="/register">
+              <Register />
+            </Route>
+            <Route path="/forget-password">
+              <ForgetPassword />
+            </Route>
+            <Route path="/about">
+              <About />
+            </Route>
+            <Route path="/services">
+              <Services />
+              </Route>
+              <Route path="/doctors">
+              <Doctors />
+              </Route>
+            <Route path="/contact">
+              <Contact />
+            </Route>
+            <Route path="/appointment">
+              <Appointment />
+            </Route>
+            {/* <Route path="*">
+              <NotFound />
+            </Route> */}
+          </Switch>
+          <Footer />
+        </AuthProvider>
+      </Router>
     </div>
   );
 }
