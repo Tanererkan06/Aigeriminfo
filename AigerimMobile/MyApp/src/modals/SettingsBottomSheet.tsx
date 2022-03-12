@@ -62,13 +62,23 @@ export const SettingsBottomSheet: React.FC<TProps> = props => {
               {getString("Selected Language")}
             </Text>
             <View style={styles.langBoxes}>
+          <LangButton
+                title="ru"
+                isSelected={currentLanguage() === "ru"}
+                onPress={() => changeLanguage("ru")}
+              />
+                <LangButton
+                title="kz"
+                isSelected={currentLanguage() === "kz"}
+                onPress={() => changeLanguage("kz")}
+              />  
               <LangButton
-                title="EN"
+                title="en"
                 isSelected={currentLanguage() === "en"}
                 onPress={() => changeLanguage("en")}
               />
               <LangButton
-                title="TR"
+                title="tr"
                 isSelected={currentLanguage() === "tr"}
                 onPress={() => changeLanguage("tr")}
               />

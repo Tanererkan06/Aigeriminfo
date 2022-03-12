@@ -4,7 +4,7 @@ import {
   ScrollView,
   Text,
   View,
-  FlatList,
+  FlatList,Image,
   TouchableOpacity
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -86,10 +86,14 @@ export const HomeScreen: React.FC<TProps> = props => {
       contentContainerStyle={styles.container}
       showsVerticalScrollIndicator={false}
     >
-      <UpcomingAppoinmentRow
+     <Image
+          style={styles.stretch}
+          source={require('../../../assets/header.png')}
+        />
+      {/* <UpcomingAppoinmentRow
         style={styles.upcomingAppoinmentRow}
         item={dashboardItem.appointment}
-      />
+      /> */}
       <SectionHeader title={getString("What are you looking for?")} />
       <FlatList
         data={generateMenuItems(getString)}
@@ -184,7 +188,20 @@ export const HomeScreen: React.FC<TProps> = props => {
 };
 
 const styles = StyleSheet.create({
-  container: { paddingVertical: 24 },
+  container: { paddingVertical: 24 , paddingTop: 50,
+  },
+  tinyLogo: {
+    width: 50,
+    height: 50,
+  },
+  logo: {
+    width: 66,
+    height: 58,
+  },   stretch: {
+    width: 50,
+    height: 200,
+    resizeMode: 'stretch'
+  },
   upcomingAppoinmentRow: {
     marginHorizontal: 16
   },
