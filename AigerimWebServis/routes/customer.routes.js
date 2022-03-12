@@ -3,7 +3,7 @@ module.exports = app => {
   const oracledb = require('oracledb');
  
  
- async function selectAllEmployees(req, res) {
+ async function haberler(req, res) {
   try {
     connection = await oracledb.getConnection({
       user: dbConfig.USER,
@@ -11,18 +11,15 @@ module.exports = app => {
       connectString: dbConfig.ConnectString
     });
  
-    let query = 'SELECT * FROM ng_haberler';
-    // run query to get all employees
-    result = await connection.execute(query);
+    let query = 'SELECT id,Tarih,ru_baslik,ru_haber,ru_resim,kz_baslik,kz_haber,kz_resim FROM ng_haberler';
+     result = await connection.execute(query);
 
   } catch (err) {
-    //send error message
-    return res.send(err.message);
+     return res.send(err.message);
   } finally {
     if (connection) {
       try {
-        // Always close connections
-        await connection.close();
+         await connection.close();
         console.log('close connection success');
       } catch (err) {
         console.error(err.message);
@@ -38,12 +35,235 @@ module.exports = app => {
 
   }
 }
+
+async function HastaneSecimi(req, res) {
+  try {
+    connection = await oracledb.getConnection({
+      user: dbConfig.USER,
+      password: dbConfig.PASSWORD,
+      connectString: dbConfig.ConnectString
+    });
+ 
+    let query = 'Select DBKOD,DBAD from NG_HIS_LNKDBS';
+     result = await connection.execute(query);
+
+  } catch (err) {
+     return res.send(err.message);
+  } finally {
+    if (connection) {
+      try {
+         await connection.close();
+        console.log('close connection success');
+      } catch (err) {
+        console.error(err.message);
+      }
+    }
+    if (result.rows.length == 0) {
+      //query return zero employees
+      return res.send('query send no rows');
+    } else {
+      //send all employees
+      return res.send(result.rows);
+    }
+
+  }
+}
+
+async function PoliklinikSecimi(req, res) {
+  try {
+    connection = await oracledb.getConnection({
+      user: dbConfig.USER,
+      password: dbConfig.PASSWORD,
+      connectString: dbConfig.ConnectString
+    });
+ 
+    let query = "select profs,isim,kiosk from ng_his_kabuzman where kiosk='X' order by isim";
+     result = await connection.execute(query);
+
+  } catch (err) {
+     return res.send(err.message);
+  } finally {
+    if (connection) {
+      try {
+        // await connection.close();
+      //  console.log('close connection success');
+      } catch (err) {
+        console.error(err.message);
+      }
+    }
+    if (result.rows.length == 0) {
+       return res.send('query send no rows');
+    } else {
+       return res.send(result.rows);
+    }
+
+  }
+}
+// 
+// test - uzmanlik id 
+//69042
+//Взрослый Офтальмология
+async function UzmanlikSecimi(req, res) {
+  try {
+    connection = await oracledb.getConnection({
+      user: dbConfig.USER,
+      password: dbConfig.PASSWORD,
+      connectString: dbConfig.ConnectString
+    });
+ 
+    let query = "select KABINET,ISIM,SINIFI from ng_his_glzr WHERE PROFS='UZ024' and SINIFI='P' ";
+     result = await connection.execute(query);
+
+  } catch (err) {
+     return res.send(err.message);
+  } finally {
+    if (connection) {
+      try {
+        // await connection.close();
+      //  console.log('close connection success');
+      } catch (err) {
+        console.error(err.message);
+      }
+    }
+    if (result.rows.length == 0) {
+       return res.send('query send no rows');
+    } else {
+       return res.send(result.rows);
+    }
+
+  }
+}
+/*
+  [
+        "DR534",
+        "Закелова Наталья Юрьевна",
+        "UZ260"
+    ]
+*/
+async function DoktorSecimi(req, res) {
+  try {
+    connection = await oracledb.getConnection({
+      user: dbConfig.USER,
+      password: dbConfig.PASSWORD,
+      connectString: dbConfig.ConnectString
+    });
+ 
+    let query = "select doktor_id,soy||' '||ad||' '||baba vr,profs from ng_his_vrtkmad where PROFS='UZ260' and servis_id ='13001' and doktor_id is not null GROUP BY soy,ad,baba,profs,doktor_id  order by soy,ad";
+     result = await connection.execute(query);
+
+  } catch (err) {
+     return res.send(err.message);
+  } finally {
+    if (connection) {
+      try {
+        // await connection.close();
+      //  console.log('close connection success');
+      } catch (err) {
+        console.error(err.message);
+      }
+    }
+    if (result.rows.length == 0) {
+       return res.send('query send no rows');
+    } else {
+       return res.send(result.rows);
+    }
+
+  }
+}
+//UygunTarihSecimi
+async function UygunTarihSecimi(req, res) {
+  try {
+    connection = await oracledb.getConnection({
+      user: dbConfig.USER,
+      password: dbConfig.PASSWORD,
+      connectString: dbConfig.ConnectString
+    });
+ //
+    let query = "select * from  ng_his_vractakvim ";
+     result = await connection.execute(query);
+
+  } catch (err) {
+     return res.send(err.message);
+  } finally {
+    if (connection) {
+      try {
+        // await connection.close();
+      //  console.log('close connection success');
+      } catch (err) {
+        console.error(err.message);
+      }
+    }
+    if (result.rows.length == 0) {
+       return res.send('query send no rows');
+    } else {
+       return res.send(result.rows);
+    }
+
+  }
+}
+async function UygunSaatSecimi(req, res) {
+  try {
+    connection = await oracledb.getConnection({
+      user: dbConfig.USER,
+      password: dbConfig.PASSWORD,
+      connectString: dbConfig.ConnectString
+    });
+ //
+    let query = "select * from  ng_his_vractakvim ";
+     result = await connection.execute(query);
+
+  } catch (err) {
+     return res.send(err.message);
+  } finally {
+    if (connection) {
+      try {
+        // await connection.close();
+      //  console.log('close connection success');
+      } catch (err) {
+        console.error(err.message);
+      }
+    }
+    if (result.rows.length == 0) {
+       return res.send('query send no rows');
+    } else {
+       return res.send(result.rows);
+    }
+
+  }
+}
  
 app.get('/haberler', function (req, res) { 
-  selectAllEmployees(req, res);
+  haberler(req, res);
+})
+
+app.get('/HastaneSecimi', function (req, res) { 
+  HastaneSecimi(req, res);
 })
  
+ //PoliklinikSecimi
+ /*
+ ’P’  POLIKLINIK (HEM POLIKNIK VE DOKTOR SECILECEK)
+      =’R’  RADYOLOJI  (HEM POLIKNIK VE DOKTOR SECILECEK)
+      =’L’   LABORATUVAR (SADECE POLIKNIK SECILECEK DOKTORA YOK)
  
- 
+ */
+ app.get('/PoliklinikSecimi', function (req, res) { 
+  PoliklinikSecimi(req, res);
+})
 
+app.get('/UzmanlikSecimi', function (req, res) { 
+  UzmanlikSecimi(req, res);
+})
+
+app.get('/DoktorSecimi', function (req, res) { 
+  DoktorSecimi(req, res);
+})
+
+
+//UZ024
+app.get('/UygunTarihSecimi', function (req, res) { 
+  UygunTarihSecimi(req, res);
+})
+
+ 
 };
