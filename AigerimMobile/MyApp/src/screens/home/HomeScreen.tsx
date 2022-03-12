@@ -4,7 +4,7 @@ import {
   ScrollView,
   Text,
   View,
-  FlatList,Image,
+  FlatList,
   TouchableOpacity
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -23,32 +23,34 @@ import { DashboardService } from "../../services";
 import { useLocalization } from "../../localization";
 import NavigationNames from "../../navigations/NavigationNames";
 import { HomeMenuItemType } from "../../types";
+import { YMaps, Map } from 'react-yandex-maps';
+
 
 const generateMenuItems = (
   getString: (key: string) => string
 ): HomeMenuItemType[] => [
-  {
-    row1: getString("Book an Appoinment"),
-    row2: getString("6 Doctors are available"),
-    iconName: "md-alarm",
-    iconBack: "#73CEC1",
-    action: "BookAnAppoinment"
-  },
-  {
-    row1: getString("Lab Tests at Home"),
-    row2: getString("92 Diagnostics are available"),
-    iconName: "ios-flask",
-    iconBack: "#35CDF7",
-    action: "LabTestsAtHome"
-  },
-  {
-    row1: getString("Online Healt Consultant"),
-    row2: getString("+14 Consultants"),
-    iconName: "ios-text",
-    iconBack: "#FA7F5D",
-    action: "OnlineHealtConsultant"
-  }
-];
+    {
+      row1: getString("Book an Appoinment"),
+      row2: getString("6 Doctors are available"),
+      iconName: "md-alarm",
+      iconBack: "#73CEC1",
+      action: "BookAnAppoinment"
+    },
+    {
+      row1: getString("Lab Tests at Home"),
+      row2: getString("92 Diagnostics are available"),
+      iconName: "ios-flask",
+      iconBack: "#35CDF7",
+      action: "LabTestsAtHome"
+    },
+    {
+      row1: getString("Online Healt Consultant"),
+      row2: getString("+14 Consultants"),
+      iconName: "ios-text",
+      iconBack: "#FA7F5D",
+      action: "OnlineHealtConsultant"
+    }
+  ];
 
 type TProps = {};
 
@@ -86,14 +88,10 @@ export const HomeScreen: React.FC<TProps> = props => {
       contentContainerStyle={styles.container}
       showsVerticalScrollIndicator={false}
     >
-     <Image
-          style={styles.stretch}
-          source={require('../../../assets/header.png')}
-        />
-      {/* <UpcomingAppoinmentRow
+      <UpcomingAppoinmentRow
         style={styles.upcomingAppoinmentRow}
         item={dashboardItem.appointment}
-      /> */}
+      />
       <SectionHeader title={getString("What are you looking for?")} />
       <FlatList
         data={generateMenuItems(getString)}
@@ -183,25 +181,18 @@ export const HomeScreen: React.FC<TProps> = props => {
         keyExtractor={(item, index) => `key${index}ForDepartment`}
         contentContainerStyle={styles.departmentsContainer}
       />
+      <View>
+        <YMaps>
+          <Map defaultState={{ center: [55.75, 37.57], zoom: 9 }} />
+        </YMaps>
+      </View>
+
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { paddingVertical: 24 , paddingTop: 50,
-  },
-  tinyLogo: {
-    width: 50,
-    height: 50,
-  },
-  logo: {
-    width: 66,
-    height: 58,
-  },   stretch: {
-    width: 50,
-    height: 200,
-    resizeMode: 'stretch'
-  },
+  container: { paddingVertical: 24 },
   upcomingAppoinmentRow: {
     marginHorizontal: 16
   },

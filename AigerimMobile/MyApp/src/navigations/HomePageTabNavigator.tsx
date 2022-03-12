@@ -111,7 +111,7 @@ const MediaTabStack = () => {
   );
 };
 
-const ProfileTabStack = () => {
+/* const ProfileTabStack = () => {
   return (
     <Stack.Navigator headerMode="screen" screenOptions={stackScreenOptions}>
       <Stack.Screen
@@ -121,7 +121,7 @@ const ProfileTabStack = () => {
       />
     </Stack.Navigator>
   );
-};
+}; */
 
 const MenuTabStack = () => {
   const { getString } = useLocalization();

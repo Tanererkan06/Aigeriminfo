@@ -1,11 +1,12 @@
 import React from "react";
-import { View, Text, StyleSheet, ViewStyle } from "react-native";
+import { View, Text, StyleSheet, ViewStyle, Image, Dimensions } from "react-native";
 import { Theme } from "../../theme";
 import { Ionicons } from "@expo/vector-icons";
 import { Avatar } from "../avatar";
 import { AppointmentModel } from "../../models/AppointmentModel";
 import moment from "moment";
-
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
 type TProps = {
   style?: ViewStyle;
   item: AppointmentModel;
@@ -14,33 +15,19 @@ type TProps = {
 export const UpcomingAppoinmentRow: React.FC<TProps> = props => {
   return (
     <View style={[styles.container, props.style]}>
-      <Avatar
-        source={{
-          uri: props.item.doctor.imageUrl
-        }}
-        status={props.item.doctor.isOnline ? "online" : "bussy"}
+      <Image source={require('../../../assets/header.png')} style={{ width: 400, height: 175, resizeMode: 'stretch', marginLeft: -10 }}
       />
-      <View style={styles.rows}>
-        <Text style={styles.titleText}>{props.item.title}</Text>
-        <Text style={styles.doctorNameText}>{props.item.doctor.fullName}</Text>
-        <Text style={styles.locationText}>
-          {`${moment(props.item.appointmentDate).format("LT")} ${
-            props.item.locationName
-          }`}
-        </Text>
-      </View>
-      <View style={styles.notification}>
-        <Ionicons name="ios-notifications" color="white" size={20} />
-      </View>
+
+
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Theme.colors.grayForBoxBackground,
-    padding: 10,
-    borderRadius: 12,
+    // backgroundColor: Theme.colors.grayForBoxBackground,
+    //padding: 10,
+    // borderRadius: 12,
     flexDirection: "row"
   },
   rows: {

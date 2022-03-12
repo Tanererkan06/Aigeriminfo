@@ -23,7 +23,7 @@ const StorySection: React.FC<{
   onClickStoryItem: (index: number) => void;
 }> = props => (
   <>
-    <FlatList
+    {/* <FlatList
       data={storyList}
       keyExtractor={(item, index) => `key${index}ForStory`}
       renderItem={row => (
@@ -43,7 +43,7 @@ const StorySection: React.FC<{
       showsHorizontalScrollIndicator={false}
       ItemSeparatorComponent={() => <View style={styles.horizontalDivider} />}
       contentContainerStyle={styles.storyContentContainer}
-    />
+    /> */}
     <Divider />
   </>
 );
@@ -90,22 +90,22 @@ export const MediaScreen: React.FC<TProps> = props => {
                 <Text style={styles.liveText}>{getString("LIVE")}</Text>
               </View>
 
-              <View style={styles.doctorContainer}>
+               {/* <View style={styles.doctorContainer}>
                 <Image
                   source={{
                     uri: item.doctor.imageUrl
                   }}
                   style={styles.doctorImage}
                 />
-                <View style={styles.doctorTextContainer}>
+               <View style={styles.doctorTextContainer}>
                   <Text style={styles.doctorNameText}>
                     {item.doctor.fullName}
                   </Text>
                   <Text style={styles.doctorTitleText}>
                     {item.doctor.title}
                   </Text>
-                </View>
-              </View>
+                </View> 
+              </View>*/}
             </View>
             <View style={styles.textRowContainer}>
               <ScrollView
