@@ -111,7 +111,7 @@ async function UzmanlikSecimi(req, res) {
       connectString: dbConfig.ConnectString
     });
  
-    let query = "select KABINET,ISIM,SINIFI from ng_his_glzr WHERE PROFS='UZ024' and SINIFI='P' ";
+    let query = "select KABINET,ISIM,SINIFI from ng_his_glzr WHERE PROFS='UZ259' and SINIFI='P' ";
      result = await connection.execute(query);
 
   } catch (err) {
@@ -263,6 +263,10 @@ app.get('/DoktorSecimi', function (req, res) {
 //UZ024
 app.get('/UygunTarihSecimi', function (req, res) { 
   UygunTarihSecimi(req, res);
+})
+
+app.get('/UygunTarihSecimi', function (req, res) { 
+  UygunSaatSecimi(req, res);
 })
 
  
