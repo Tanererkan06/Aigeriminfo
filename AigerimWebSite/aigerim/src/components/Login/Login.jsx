@@ -34,7 +34,7 @@ const Login = () => {
 
   return (
     <>
-      <Breadcrumbs title="Login" />
+      <Breadcrumbs title="АВТОРИЗАЦИЯ" />
       <div className="container">
         <div
           className="flex gap-8 items-center justify-center "
@@ -46,24 +46,24 @@ const Login = () => {
           >
             <form onSubmit={handleSubmit(onSubmit)}>
               <h2 className="text-2xl font-Poppins text-center">
-                Log In Your Account
+              Войдите в свою учетную запись
               </h2>
               {error && <span className="text-red-600 py-2">{error}</span>}
 
               <div className="mt-4 mb-4">
-                <label htmlFor="email">Email</label>
+                <label htmlFor="email">Ваш email</label>
                 <input
                   className="border border-gray-400 w-full px-4 py-2"
                   placeholder="Enter Email"
                   {...register("email", { required: true })}
                 />
                 {errors.email && (
-                  <span className="text-red-600">This field is required</span>
+                  <span className="text-red-600">Это поле обязательно к заполнению</span>
                 )}
               </div>
 
               <div className="mt-4 mb-4">
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password">Пароль</label>
                 <input
                   type="password"
                   placeholder="Password"
@@ -74,10 +74,10 @@ const Login = () => {
                   to="forget-password"
                   className="float-right text-secondary"
                 >
-                  Forget password?
+                  Забыть пароль?
                 </Link>
                 {errors.password && (
-                  <span className="text-red-600">This field is required</span>
+                  <span className="text-red-600">Это поле обязательно к заполнению</span>
                 )}
               </div>
 
@@ -85,12 +85,12 @@ const Login = () => {
                 className="w-full bg-primary text-white mt-4 mb-4  py-2 px-4 rounded-md"
                 type="submit"
               >
-                submit
+                представить
               </button>
               <h1 className="py-4">
-                Don't Have an Account?
+              Нет учетной записи?
                 <Link className="text-primary px-2" to="/register">
-                  Register now
+                Зарегистрируйтесь сейчас
                 </Link>
               </h1>
             </form>

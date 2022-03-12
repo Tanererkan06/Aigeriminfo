@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-const useDoctor = () => {
+const useDoctors = () => {
     const [doctors, setDoctors] = useState([]);
     const baseUrl = "http://localhost:3000";
     // const baseUrl = "https://aysha-dental-care.web.app";
@@ -12,4 +12,4 @@ const useDoctor = () => {
     return [doctors]
 
 }
-export default useDoctor
+export default useDoctors

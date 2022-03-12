@@ -9,6 +9,7 @@ const EventsList = () => {
         backgroundImage: `url(${eventBg})`,
       }}
     >
+    
       <div className="container py-16">
         <div className="py-8 text-center">
           <h1 className="text-center text-4xl font-bold font-Roboto">

@@ -11,6 +11,7 @@ const DoctorsSidebar = ({ doctor }) => {
       <ul className="">
         <li className="border border-l-4 border-primary px-4 py-4 text-1xl font-Roboto hover:bg-secondary hover:text-white">
           <Link to={`/doctor/${doctor?.id}/${slug}`}>{doctor?.name}</Link>
+          
         </li>
       </ul>
     </>

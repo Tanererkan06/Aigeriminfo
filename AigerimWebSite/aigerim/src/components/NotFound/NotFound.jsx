@@ -8,11 +8,11 @@ const NotFound = () => {
           <div className="inline-block align-middle mx-auto ">
             <h1 className="text-9xl text-red-300 font-Poppins">404</h1>
             <h1 className="text-7xl text-white font-Poppins py-2">
-              oops! Page not found
+            ой! Страница не найдена
             </h1>
             <h1 className="text-2xl text-white font-Poppins">
-              Oops! The page you are looking for does not exist. It might have
-              been moved or deleted.
+            Ой! Страница, которую вы ищете, не существует. Это может иметь
+               были перемещены или удалены.
             </h1>
           </div>
         </div>

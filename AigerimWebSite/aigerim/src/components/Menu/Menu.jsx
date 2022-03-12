@@ -63,14 +63,7 @@ const Menu = () => {
                       УСЛУГИ
                     </Link>
                   </li>
-                  <li className="nav-item">
-                    <Link
-                      to="/about"
-                      className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-black hover:opacity-75"
-                    >
-                      КОНТАКТЫ РЕЖИМ РАБОТЫ
-                    </Link>
-                  </li>
+                  
                   <li className="nav-item">
                     <Link
                       to="/Doctors"

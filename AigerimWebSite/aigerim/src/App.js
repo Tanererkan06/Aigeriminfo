@@ -19,6 +19,7 @@ import Services from "./components/Services/Services";
 import ServicesDetails from "./components/Services/ServicesDetails";
 import DoctorDetails from "./components/Doctors/DoctorDetails";
 import Doctors from "./components/Doctors/Doctors";
+import AboutDetails from "./components/About/AboutDetails";
 
 
 function App() {
@@ -31,18 +32,18 @@ function App() {
           <Switch>
             <Route exact path="/">
               <Banner />
-              <Feature />
-              <QualityService />
-              <Services home />
-              <ClinicalFacts />
+              
+              <Services/>
               <Doctors/>
+              <ClinicalFacts />
             </Route>
+            
+            <Route path="/doctor/:doctorId">
+              <DoctorDetails />
+            </Route>  
             <Route path="/service/:serviceId">
               <ServicesDetails />
-            </Route>
-            <Route path="/doctor/:doctor_id">
-              <DoctorDetails />
-            </Route>                      
+            </Route>                    
             <Route path="/login">
               <Login />
             </Route>            
@@ -58,7 +59,7 @@ function App() {
             <Route path="/services">
               <Services />
               </Route>
-              <Route path="/doctors">
+            <Route path="/doctors">
               <Doctors />
               </Route>
             <Route path="/contact">

@@ -21,10 +21,10 @@ const DoctorsItems = ({ doctor }) => {
         </div>
         <div className="my-8">
           <Link
-           to={`/service/${id}/${slug}`} 
+           to={`/doctor/${id}/${slug}`} 
             className="bg-primary border border-primary text-white px-3 py-2 font-medium uppercase rounded hover:bg-transparent hover:text-primary transition"
           >
-            Button Bağla
+            Деталь
           </Link>
       
         </div>

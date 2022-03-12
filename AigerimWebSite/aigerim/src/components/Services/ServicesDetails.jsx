@@ -15,7 +15,6 @@ const ServicesDetails = () => {
       newData = services.find(
         (data) => parseInt(data.id) === parseInt(serviceId)
       );
-   
     }
     setData(newData);
   }, [serviceId, services]);
@@ -33,11 +32,11 @@ const ServicesDetails = () => {
           </div>
           <div className="lg:mt-0 mt-16">
             <h1 className="text-4xl text-center px-4 py-2 font-Poppins  bg-secondary text-white">
-              All Services
+            ВСЕ УСЛУГИ
             </h1>
              {services.length > 0 &&
               services.map((service)=> (
-                <ServicesSidebar key={service.id} service={service} />
+                <ServicesSidebar key={service.upid} service={service} />
               ))}
           </div>
         </div>

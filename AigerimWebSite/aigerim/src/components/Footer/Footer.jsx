@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 
 const Footer = () => {
@@ -17,7 +18,7 @@ const Footer = () => {
           </div>
           <p className="text-justify py-4">
           Режим работы:
-          <i className="fa-brands fa-vk"></i>
+        
           <br/>
           будни07:00 - 22:00
           <br/>
@@ -51,16 +52,16 @@ const Footer = () => {
           </div>
         </div>
         <div className="w-1/3 lg:py-0 py-8">
-          <h1 className="text-2xl font-Poppins">Quick Links</h1>
+          <h1 className="text-2xl font-Poppins">Быстрые ссылки</h1>
           <ul className="py-4">
             <li className="py-1 hover:text-primary">
-              <Link to="/">Задать вопрос</Link>
+              <Link to="contact">Задать вопрос</Link>
             </li>
             <li className="py-1 hover:text-primary">
-              <Link to="/appointment">Получить назначение</Link>
+              <Link to="/contact">Получить назначение</Link>
             </li>
             <li className="py-1 hover:text-primary">
-              <Link to="/services">Оставить отзыв</Link>
+              <Link to="/contact">Оставить отзыв</Link>
             </li>
             <li className="py-1 hover:text-primary">
               <Link to="/contact">Написать в администрацию</Link>
@@ -69,20 +70,21 @@ const Footer = () => {
         </div>
        
          <div className="lg:w-1/3">
-          
+         
           <h1 className="text-2xl font-Poppins">КОНТАКТЫ</h1>
-          <i className="fa-solid fa-location-dot"></i>
-          <p>03000, РК, г.Актобе ул. Пацаева 7/1</p>
-          <i className="fa-solid fa-location-dot"></i>
-          <p>03000, РК, г.Актобе ул. Шернияза 35</p>
-          <i className="fa-solid fa-location-dot"></i>
-          <p>03000, РК, г.Актобе ул.Маресьева 87</p>
-          <i className="fa-solid fa-phone-flip"></i>
-          <p>+77132905100</p>
-          <i className="fa-solid fa-phone-flip"></i>
-          <p>+77750905100</p>
-          <i></i>
-          <p>+77780905100</p>
+          
+          <i className="fa fa-map-marker"></i>
+          03000, РК, г.Актобе ул. Пацаева 7/1<br/>
+          <i className="fa fa-map-marker"></i>
+          03000, РК, г.Актобе ул. Шернияза 35<br/>
+          <i className="fa fa-map-marker"></i>
+          03000, РК, г.Актобе ул.Маресьева 87<br/>
+          <i className="fas fa-phone"></i>
+          +77132905100<br/>
+          <i className="fas fa-phone"></i>
+          +77750905100<br/>
+          <i className="fas fa-phone"></i>
+          +77780905100<br/>
          
         </div> 
       </div>

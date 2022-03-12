@@ -38,7 +38,7 @@ const Register = () => {
 
   return (
     <>
-      <Breadcrumbs title="Register" />
+      <Breadcrumbs title="РЕГИСТРАЦИЯ" />
       <div className="container">
         <div
           className="flex gap-8 items-center justify-center "
@@ -50,29 +50,57 @@ const Register = () => {
           >
             <form onSubmit={handleSubmit(onSubmit)}>
               <h2 className="text-2xl font-Poppins text-center">
-                Log In Your Account
+              РЕГИСТРАЦИЯ
               </h2>
               {error && (
                 <span className="text-red-600 text-center py-2">{error}</span>
               )}
 
               <div className="mt-4 mb-4">
-                <label htmlFor="email">Email</label>
+              <label htmlFor="fname">Введите фамилию и имя</label>
+          <input
+            className="border-opacity-100 w-full border px-4 border-gray-800 py-2"
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Введите фамилию и имя"
+          />
+         <label htmlFor="email">Ваш email</label>
                 <input
                   className="border border-gray-400 w-full px-4 py-2"
-                  placeholder="Enter Email"
+                  placeholder="Ваш email"
                   {...register("email", { required: true })}
                 />
                 {errors.email && (
                   <span className="text-red-600">This field is required</span>
                 )}
+          
+          <label htmlFor="date">Дата рождения</label>
+          <input
+            className="border-opacity-100 w-full border px-4 border-gray-800 py-2"
+            type="text"
+            id="date"
+            name="date"
+            placeholder="Дата рождения"
+          />
+
+          <label htmlFor="fname">Номер регистрации</label>
+          <input
+            className="border-opacity-100 w-full border px-4 border-gray-800 py-2"
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Номер регистрации"
+          /> 
+          <br />
+                
               </div>
 
               <div className="mt-4 mb-4">
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password">Пароль</label>
                 <input
                   type="password"
-                  placeholder="Password"
+                  placeholder="Пароль"
                   className="border border-gray-400 w-full px-4 py-2"
                   {...register("password", { required: true })}
                 />
@@ -82,10 +110,10 @@ const Register = () => {
               </div>
 
               <div className="mt-4 mb-4">
-                <label htmlFor="password">Re-enter Password</label>
+                <label htmlFor="password">Подтвердите пароль</label>
                 <input
                   type="password"
-                  placeholder="Re-enter Password"
+                  placeholder="Подтвердите пароль"
                   className="border border-gray-400 w-full px-4 py-2"
                   {...register("reEnterPassword", { required: true })}
                 />
@@ -98,12 +126,12 @@ const Register = () => {
                 className="w-full bg-primary text-white mt-4 mb-4  py-2 px-4 rounded-md"
                 type="submit"
               >
-                submit
+                Регистрация
               </button>
               <h1 className="py-4">
-                Already have an account?
+              У вас уже есть аккаунт?
                 <Link className="text-primary px-2" to="/login">
-                  Log in
+                авторизоваться
                 </Link>
               </h1>
             </form>

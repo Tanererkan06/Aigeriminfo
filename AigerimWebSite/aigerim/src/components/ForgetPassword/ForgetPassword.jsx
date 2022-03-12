@@ -44,7 +44,7 @@ const ForgetPassword = () => {
           >
             <form onSubmit={handleSubmit(onSubmit)}>
               <h2 className="text-2xl font-Poppins text-center">
-                Reset your password
+              Сбросить пароль
               </h2>
               {error && <span className="text-red-600 py-2">{error}</span>}
               {message && (
@@ -52,14 +52,14 @@ const ForgetPassword = () => {
               )}
 
               <div className="mt-4 mb-4">
-                <label htmlFor="email">Email</label>
+                <label htmlFor="email">Эл. адрес</label>
                 <input
                   className="border border-gray-400 w-full px-4 py-2"
                   placeholder="Enter Email"
                   {...register("email", { required: true })}
                 />
                 {errors.email && (
-                  <span className="text-red-600">This field is required</span>
+                  <span className="text-red-600">Это поле обязательно к заполнению</span>
                 )}
               </div>
 
@@ -67,13 +67,13 @@ const ForgetPassword = () => {
                 className="w-full bg-primary text-white mt-4 mb-4  py-2 px-4 rounded-md"
                 type="submit"
               >
-                submit
+                представить
               </button>
             </form>
             <h1 className="py-4">
-              Already have an account?
+            У вас уже есть аккаунт?
               <Link className="text-primary px-2" to="/login">
-                Log in
+              авторизоваться
               </Link>
             </h1>
           </div>

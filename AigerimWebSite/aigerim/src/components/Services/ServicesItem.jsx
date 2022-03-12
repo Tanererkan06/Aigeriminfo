@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const ServicesItem = ({ service }) => {
-  const { id, title, description, image, subid, upid} = service;
+  const { id, title, description, image} = service;
   const slug = title
     .toLowerCase()
     .replace(/[^\w ]+/g, "")
@@ -24,7 +24,7 @@ const ServicesItem = ({ service }) => {
            to={`/service/${id}/${slug}`} 
             className="bg-primary border border-primary text-white px-3 py-2 font-medium uppercase rounded hover:bg-transparent hover:text-primary transition"
           >
-            Button Bağla
+            Деталь
           </Link>
       
         </div>

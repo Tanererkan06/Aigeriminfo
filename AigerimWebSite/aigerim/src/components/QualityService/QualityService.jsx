@@ -9,43 +9,41 @@ const QualityService = () => {
         <div className="h-full lg:w-2/3 w-full">
           <img className="w-full" src={qualityServiceImg} alt="" />
         </div>
-        <div className="lg:ml-8">
+        <div className="lg:ml-8"> 
           <h1 className="text-3xl font-Poppins font-semibold">
-            15 Years of Quality Service in{" "}
-            <span className="text-primary">Dental Practice</span>
+          Клиника «Айгерим» - это крупнейшая частная медицинская компания в Актюбинской области,  с опытом работы более 25 лет. 
           </h1>
           <p className="py-8">
-            To have your lawn look its best, trust Landscaping & Garening, Inc.
-            to get the job done right. We take a great deal of pride in the
-            quality of our work. we understand what complete customer
-            satisfaction means customer satisfaction.{" "}
+         Более 700 сотрудников ежедневно обслуживают сотни клиентов и компаний. Клиника располагает современным оборудованием от ведущих иностранных производителей, высококвалифицированным персоналом с большим стажем работы, а также нами применяются современные методы управления и обслуживания клиентов.{" "}
           </p>
           <div className="lg:flex justify-between">
             <ul>
               <li className="flex">
                 <i className="far fa-hand-point-right text-3xl text-green-500"></i>
                 <h1 className="text-lg pb-8 px-4 uppercase font-bold leading-snug text-black hover:opacity-75">
-                  Trained Staff
+                Обученный персонал
                 </h1>
               </li>
               <li className="flex">
                 <i className="far fa-hand-point-right text-3xl text-green-500"></i>
                 <h1 className="text-lg pb-8 px-4 uppercase font-bold leading-snug text-black hover:opacity-75">
-                  We provide quality Treatment
+                Мы предоставляем качественное лечение
                 </h1>
               </li>
               <li className="flex">
                 <i className="far fa-hand-point-right text-3xl text-green-500"></i>
                 <h1 className="text-lg pb-8 px-4 uppercase font-bold leading-snug text-black hover:opacity-75">
-                  Best Price
+                Лучшая цена
                 </h1>
               </li>
             </ul>
-            <div>
-              <img src={stetoskop} alt="" />
+            <div className="h-full lg:w-2/3 w-full">
+              <img  className="w-full"  src={stetoskop} alt="" />
             </div>
           </div>
+          
         </div>
+        
       </div>
     </>
   );
