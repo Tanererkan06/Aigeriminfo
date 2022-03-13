@@ -19,7 +19,7 @@ import {
   TouchableHighlight
 } from "../../components";
 import { DashboardItemsModel, DoctorModel, TypicodeUserModel } from "../../models";
-import { DashboardService, TypicodeUserService } from "../../services";
+import { DashboardService, DoctorsService } from "../../services";
 import { useLocalization } from "../../localization";
 import NavigationNames from "../../navigations/NavigationNames";
 import { HomeMenuItemType } from "../../types";
@@ -66,12 +66,10 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
       setDashboardItem(item);
     });
  
-    TypicodeUserService.getUsers().then(typeUsers => {
+    DoctorsService.getDoctors().then(typeUsers => {
       setDoctors(typeUsers);
     });
-    /*  TypicodeUserService.getUsers().then(typeUsers => {
-        setTypicodeUsers(typeUsers);
-      });*/
+  
   }, []);
   const onClickMenu = (item: HomeMenuItemType) => {
     switch (item.action) {

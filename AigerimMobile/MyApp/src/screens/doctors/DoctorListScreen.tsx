@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -8,17 +8,33 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { doctorsList } from "../../datas";
+import { DashboardItemsModel, DoctorModel, TypicodeUserModel } from "../../models";
+import { DashboardService, DoctorsService } from "../../services";
 import { DoctorItemRow, Divider } from "../../components";
 import NavigationNames from "../../navigations/NavigationNames";
-
+import { useLocalization } from "../../localization";
 type TProps = {};
 
 export const DoctorListScreen: React.FC<TProps> = props => {
   const navigation = useNavigation();
+  const { getString, changeLanguage } = useLocalization();
+  const [dashboardItem, setDashboardItem] = useState<DashboardItemsModel>(null);
+  const [doctors, setDoctors] = useState<DoctorModel[]>(null);
+
+  useEffect(() => {
+/*     DashboardService.getDashboardItems().then(item => {
+      setDashboardItem(item);
+    }); */
+ 
+    DoctorsService.getDoctors().then(typeUsers => {
+      setDoctors(typeUsers);
+    });
+  
+  }, []);
 
   return (
     <FlatList
-      data={doctorsList}
+      data={doctors}
       renderItem={({ item }) => (
         <TouchableOpacity
           onPress={() =>
