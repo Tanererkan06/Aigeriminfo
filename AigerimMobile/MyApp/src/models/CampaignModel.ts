@@ -1,4 +1,4 @@
-export type CampaignModel = {
+export interface  CampaignModel   {
   title: string;
   shortDescription: string;
   imageUrl: string;

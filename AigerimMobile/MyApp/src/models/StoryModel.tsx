@@ -1,6 +1,6 @@
 import { UserModel } from "./UserModel";
 
-export type StoryModel = {
+export interface  StoryModel  {
   imageUrl: string;
   user?: UserModel;
 };

@@ -1,6 +1,6 @@
 import { UserModel } from "./UserModel";
 
-export type ReviewModel = {
+export interface  ReviewModel   {
   user: UserModel;
   rating: number;
   comment: string;

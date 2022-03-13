@@ -18,8 +18,8 @@ import {
   DepartmentItem,
   TouchableHighlight
 } from "../../components";
-import { DashboardItemsModel } from "../../models";
-import { DashboardService } from "../../services";
+import { DashboardItemsModel, DoctorModel, TypicodeUserModel } from "../../models";
+import { DashboardService, TypicodeUserService } from "../../services";
 import { useLocalization } from "../../localization";
 import NavigationNames from "../../navigations/NavigationNames";
 import { HomeMenuItemType } from "../../types";
@@ -54,17 +54,25 @@ const generateMenuItems = (
 
 type TProps = {};
 
-export const HomeScreen: React.FC<TProps> = props => {
+export const HomeScreen: React.FC<TProps> = asyncprops => {
   const navigation = useNavigation();
   const { getString, changeLanguage } = useLocalization();
   const [dashboardItem, setDashboardItem] = useState<DashboardItemsModel>(null);
+  const [doctors, setDoctors] = useState<DoctorModel[]>(null);
+
 
   useEffect(() => {
     DashboardService.getDashboardItems().then(item => {
       setDashboardItem(item);
     });
+ 
+    TypicodeUserService.getUsers().then(typeUsers => {
+      setDoctors(typeUsers);
+    });
+    /*  TypicodeUserService.getUsers().then(typeUsers => {
+        setTypicodeUsers(typeUsers);
+      });*/
   }, []);
-
   const onClickMenu = (item: HomeMenuItemType) => {
     switch (item.action) {
       case "BookAnAppoinment":
@@ -78,7 +86,7 @@ export const HomeScreen: React.FC<TProps> = props => {
         break;
     }
   };
-
+   
   if (dashboardItem === null) {
     return <Text>Loading</Text>;
   }
@@ -111,6 +119,8 @@ export const HomeScreen: React.FC<TProps> = props => {
           navigation.navigate(NavigationNames.CampaignListScreen)
         }
       />
+
+
       <FlatList
         data={dashboardItem.campaigns}
         renderItem={row => (
@@ -130,6 +140,8 @@ export const HomeScreen: React.FC<TProps> = props => {
         contentContainerStyle={styles.campaignsContainer}
         keyExtractor={(item, index) => `key${index}ForCampaign`}
       />
+
+
       <SectionHeader
         title={getString("All Specialists")}
         rightTitle={getString("See More")}
@@ -138,7 +150,7 @@ export const HomeScreen: React.FC<TProps> = props => {
         }
       />
       <FlatList
-        data={dashboardItem.doctors.slice(0, 3)}
+        data={doctors}
         keyExtractor={(item, index) => `key${index}ForDoctor`}
         renderItem={row => (
           <TouchableOpacity

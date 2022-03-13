@@ -1,4 +1,4 @@
-export type NewsPostModel = {
+export interface  NewsPostModel   {
   title: string;
   imageUrl: string;
   htmlContent: string;

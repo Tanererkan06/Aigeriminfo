@@ -1,6 +1,6 @@
 import { DoctorModel } from "./DoctorModel";
 
-export type MediaModel = {
+export interface  MediaModel   {
   imageUrl: string;
   title: string;
   tags: string[];

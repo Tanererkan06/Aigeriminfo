@@ -1,6 +1,6 @@
 import { DoctorModel } from "./DoctorModel";
 
-export type AppointmentModel = {
+export interface  AppointmentModel   {
   title: string;
   doctor: DoctorModel;
   appointmentDate: Date;

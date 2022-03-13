@@ -1,4 +1,4 @@
-export type EventModel = {
+export interface  EventModel   {
   title: string;
   content: string;
   imageUrl: string;

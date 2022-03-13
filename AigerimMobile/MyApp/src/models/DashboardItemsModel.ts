@@ -3,7 +3,7 @@ import { AppointmentModel } from "./AppointmentModel";
 import { CampaignModel } from "./CampaignModel";
 import { DepartmentModel } from "./DepartmentModel";
 
-export type DashboardItemsModel = {
+export interface  DashboardItemsModel   {
   appointment: AppointmentModel;
   campaigns: CampaignModel[];
   doctors: DoctorModel[];

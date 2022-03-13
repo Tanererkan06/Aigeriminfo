@@ -1,6 +1,6 @@
 import { DoctorModel } from "./DoctorModel";
 
-export type AppointmentTimeModal = {
+export interface  AppointmentTimeModal   {
   doctor?: DoctorModel;
   time: string;
   available: boolean;

@@ -1,4 +1,4 @@
-export type DepartmentServiceModel = {
+export interface  DepartmentServiceModel   {
   title: string;
   shortDescription: string;
 };

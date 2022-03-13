@@ -12,3 +12,4 @@ export * from "./NewsPostModel";
 export * from "./ImageModel";
 export * from "./StoryModel";
 export * from "./MediaModel";
+export * from "./TypicodeUserModel";

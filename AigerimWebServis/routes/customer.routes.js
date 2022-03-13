@@ -201,7 +201,7 @@ async function UygunTarihSecimi(req, res) {
 
   }
 }
-async function UygunSaatSecimi(req, res) {
+async function UygunSaatSecimi(id,req, res) {
   try {
     connection = await oracledb.getConnection({
       user: dbConfig.USER,

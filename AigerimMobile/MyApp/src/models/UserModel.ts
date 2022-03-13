@@ -1,4 +1,4 @@
-export type UserModel = {
+export interface  UserModel  {
   fullName: string;
   imageUrl: string;
   about: string;
