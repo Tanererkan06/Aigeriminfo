@@ -88,36 +88,40 @@ module.exports = app => {
     //  res.status(500).json({ message: error.message || "Some error occurred!" });
   });
    };
-  async function PoliklinikSecimi(req, res) {
-    try {
-      connection = await oracledb.getConnection({
-        user: dbConfig.USER,
-        password: dbConfig.PASSWORD,
-        connectString: dbConfig.ConnectString
+   //PoliklinikSecimi
+   //select profs,isim,kiosk from ng_his_kabuzman where kiosk='X' order by isim
+   async function PoliklinikSecimi(req, res) {
+    let users = new Array();
+
+  connection = await oracledb.getConnection({
+    user: dbConfig.USER,
+    password: dbConfig.PASSWORD,
+    connectString: dbConfig.ConnectString
+  })
+  .then((c) => {
+      connection = c;
+      return connection.execute("select profs,isim,kiosk from ng_his_kabuzman where kiosk='X' order by isim");
+ 
+    })
+    .then((result) => {
+      result.rows.forEach((elemento) => {
+          let user = new Object();
+          user.profs = elemento[0];
+          user.isim= elemento[1]; 
+          user.kiosk= elemento[2];
+ 
+          users.push(user);
       });
-
-      let query = "select profs,isim,kiosk from ng_his_kabuzman where kiosk='X' order by isim";
-      result = await connection.execute(query);
-
-    } catch (err) {
-      return res.send(err.message);
-    } finally {
-      if (connection) {
-        try {
-          // await connection.close();
-          //  console.log('close connection success');
-        } catch (err) {
-          console.error(err.message);
-        }
+      
+      res.status(200).json(users);
+  }).then(()=>{
+      if(connection){
+          connection.close();
       }
-      if (result.rows.length == 0) {
-        return res.send('query send no rows');
-      } else {
-        return res.send(result.rows);
-      }
-
-    }
-  } 
+  }).catch((error)=>{
+    //  res.status(500).json({ message: error.message || "Some error occurred!" });
+  });
+   };
   async function UzmanlikSecimi(req, res) {
     try {
       connection = await oracledb.getConnection({
