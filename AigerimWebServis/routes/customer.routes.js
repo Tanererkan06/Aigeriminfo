@@ -15,41 +15,40 @@ module.exports = app => {
 
   //SELECT id,Tarih,ru_baslik,ru_haber,ru_resim,kz_baslik,kz_haber,kz_resim FROM ng_haberler
   async function haberler(req, res) {
-
-
-    let connection;
     let user = new Object();
-    oracledb.getConnection({
+    let users = new Array();
+
+    connection = await oracledb.getConnection({
       user: dbConfig.USER,
       password: dbConfig.PASSWORD,
       connectString: dbConfig.ConnectString
     })
-
-
-      .then((c) => {
+    .then((c) => {
         connection = c;
-        return connection.execute("SELECT id,Tarih,ru_baslik,ru_haber,ru_resim,kz_baslik,kz_haber,kz_resim FROM ng_haberler");
-      })
-      .then((result) => {
+        return connection.execute("SELECT * FROM ng_haberler");
+    })
+    .then((result) => {
         result.rows.forEach((elemento) => {
-          user.id = elemento[0];
-          user.Tarih = elemento[1];
-          user.ru_baslik = elemento[2];
-          user.ru_haber = elemento[3];
-          user.ru_resim = elemento[4];
-          user.kz_baslik = elemento[5];
-          user.kz_haber = elemento[6];
-          user.kz_resim = elemento[7];
+          //id,Tarih,ru_baslik,ru_haber,ru_resim,kz_baslik,kz_haber,kz_resim
+            user.id = elemento[0];
+            user.Tarih= elemento[1];
+            user.ru_baslik= elemento[2];
+            user.ru_haber= elemento[3];
+            user.ru_resim= elemento[4];
+            user.kz_baslik= elemento[5];
+            user.kz_haber= elemento[6];
+            user.kz_resim= elemento[7];
 
+            users.push(user);
         });
-        res.status(200).json(user);
-      }).then(() => {
-        if (connection) {
-          connection.close();
+        res.status(200).json(users);
+    }).then(()=>{
+        if(connection){
+            connection.close();
         }
-      }).catch((error) => {
+    }).catch((error)=>{
         res.status(500).json({ message: error.message || "Some error occurred!" });
-      });
+    });
   };
   //Select DBKOD,DBAD from NG_HIS_LNKDBS
   //HastaneSecimi
