@@ -38,6 +38,7 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Headers", "*");
   res.setHeader("Access-Control-Allow-Methods", "*");
+  
   res.setHeader("Access-Control-Allow-Credentials", true);
   if (req.method === 'OPTIONS') {
     res.send(200);
@@ -68,7 +69,7 @@ app.use(cors());
 
 
 // set port, listen for requests
-const PORT =  3001;
+const PORT =  3002;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
