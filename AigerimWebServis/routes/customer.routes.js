@@ -244,40 +244,50 @@ module.exports = app => {
 
     }
   }
+//Select NG_HIS_PRSRSMM.RESIM,NG_HIS_PRSRSMM.VRAC_ID,NG_HIS_PRSRSMM.PERBILGI,NG_HIS_RPSL.IMYA , NG_HIS_RPSL.FAMILYA ,  NG_HIS_RPSL.OCEST from  NG_HIS_PRSRSMM INNER JOIN NG_HIS_RPSL ON NG_HIS_PRSRSMM.VRAC_ID=NG_HIS_RPSL.KULLAN 
+//DoktorBilgi 
 
-  async function DoktorBilgi(req, res) {
-
-
-    let connection;
-    let user = new Object();
-    oracledb.getConnection({
-      user: dbConfig.USER,
-      password: dbConfig.PASSWORD,
-      connectString: dbConfig.ConnectString
-    })
-
-
-      .then((c) => {
-        connection = c;
-        return connection.execute("Select NG_HIS_PRSRSMM.RESIM,NG_HIS_PRSRSMM.VRAC_ID,NG_HIS_PRSRSMM.PERBILGI,NG_HIS_RPSL.IMYA , NG_HIS_RPSL.FAMILYA ,  NG_HIS_RPSL.OCEST from  NG_HIS_PRSRSMM INNER JOIN NG_HIS_RPSL ON NG_HIS_PRSRSMM.VRAC_ID=NG_HIS_RPSL.KULLAN ");
-      })
-      .then((result) => {
-        result.rows.forEach((elemento) => {
-          user.resim = elemento[0];
+/*
+ user.resim = elemento[0];
           user.vrcid = elemento[1];
           user.perbilgi = elemento[2];
           user.imya = elemento[3];
           user.familya = elemento[4];
           user.ocest = elemento[5];
-        });
-        res.status(200).json(user);
-      }).then(() => {
-        if (connection) {
-          connection.close();
-        }
-      }).catch((error) => {
-        res.status(500).json({ message: error.message || "Some error occurred!" });
+*/
+async function DoktorBilgi(req, res) {
+  let user = new Object();
+  let users = new Array();
+
+  connection = await oracledb.getConnection({
+    user: dbConfig.USER,
+    password: dbConfig.PASSWORD,
+    connectString: dbConfig.ConnectString
+  })
+  .then((c) => {
+      connection = c;
+      return connection.execute("Select NG_HIS_PRSRSMM.RESIM,NG_HIS_PRSRSMM.VRAC_ID,NG_HIS_PRSRSMM.PERBILGI,NG_HIS_RPSL.IMYA , NG_HIS_RPSL.FAMILYA ,  NG_HIS_RPSL.OCEST from  NG_HIS_PRSRSMM INNER JOIN NG_HIS_RPSL ON NG_HIS_PRSRSMM.VRAC_ID=NG_HIS_RPSL.KULLAN ");
+  })
+  .then((result) => {
+      result.rows.forEach((elemento) => {
+        //id,Tarih,ru_baslik,ru_haber,ru_resim,kz_baslik,kz_haber,kz_resim
+        user.resim = elemento[0];
+        user.vrcid = elemento[1];
+        user.perbilgi = elemento[2];
+        user.imya = elemento[3];
+        user.familya = elemento[4];
+        user.ocest = elemento[5];
+
+          users.push(user);
       });
+      res.status(200).json(users);
+  }).then(()=>{
+      if(connection){
+          connection.close();
+      }
+  }).catch((error)=>{
+      res.status(500).json({ message: error.message || "Some error occurred!" });
+  });
   };
 
 
