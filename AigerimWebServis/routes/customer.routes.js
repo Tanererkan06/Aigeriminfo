@@ -259,12 +259,12 @@ async function DoktorBilgi(req, res) {
     .then((result) => {
       result.rows.forEach((elemento) => {
           let user = new Object();
-          user.id = elemento[0];
-          user.nome= elemento[1];
-          user.email= elemento[2];
-          user.email1= elemento[3];
-          user.email2= elemento[4];
-          user.email3= elemento[5];
+          user.resim= elemento[0];
+          user.vracid= elemento[1];
+          user.perbilgi= elemento[2];
+          user.imya= elemento[3];
+          user.familya= elemento[4];
+          user.ocest= elemento[5];
 
 
           users.push(user);
