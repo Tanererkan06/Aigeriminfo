@@ -15,41 +15,44 @@ module.exports = app => {
 
   //SELECT id,Tarih,ru_baslik,ru_haber,ru_resim,kz_baslik,kz_haber,kz_resim FROM ng_haberler
   async function haberler(req, res) {
-    let user = new Object();
     let users = new Array();
 
-    connection = await oracledb.getConnection({
-      user: dbConfig.USER,
-      password: dbConfig.PASSWORD,
-      connectString: dbConfig.ConnectString
-    })
-    .then((c) => {
-        connection = c;
-        return connection.execute("SELECT * FROM ng_haberler");
+  connection = await oracledb.getConnection({
+    user: dbConfig.USER,
+    password: dbConfig.PASSWORD,
+    connectString: dbConfig.ConnectString
+  })
+  .then((c) => {
+      connection = c;
+      return connection.execute("SELECT id,Tarih,ru_baslik,ru_haber,ru_resim,kz_baslik,kz_haber,kz_resim FROM ng_haberler");
+ 
     })
     .then((result) => {
-        result.rows.forEach((elemento) => {
-          //id,Tarih,ru_baslik,ru_haber,ru_resim,kz_baslik,kz_haber,kz_resim
-            user.id = elemento[0];
-            user.Tarih= elemento[1];
-            user.ru_baslik= elemento[2];
-            user.ru_haber= elemento[3];
-            user.ru_resim= elemento[4];
-            user.kz_baslik= elemento[5];
-            user.kz_haber= elemento[6];
-            user.kz_resim= elemento[7];
+      result.rows.forEach((elemento) => {
+          let user = new Object();
+          user.id = elemento[0];
+          user.tarih= elemento[1];
+          user.rubaslik= elemento[2]; 
+          user.ruhaber= elemento[3]; 
+          user.ruresim = elemento[4];
+          user.kzbaslik= elemento[5];
+          user.kzhaber= elemento[6]; 
+          user.kzresim= elemento[7]; 
+ 
 
-            users.push(user);
-        });
-        res.status(200).json(users);
-    }).then(()=>{
-        if(connection){
-            connection.close();
-        }
-    }).catch((error)=>{
-        res.status(500).json({ message: error.message || "Some error occurred!" });
-    });
-  };
+
+          users.push(user);
+      });
+      
+      res.status(200).json(users);
+  }).then(()=>{
+      if(connection){
+          connection.close();
+      }
+  }).catch((error)=>{
+    //  res.status(500).json({ message: error.message || "Some error occurred!" });
+  });
+   };
   //Select DBKOD,DBAD from NG_HIS_LNKDBS
   //HastaneSecimi
   async function HastaneSecimi(req, res) {
@@ -80,8 +83,7 @@ module.exports = app => {
     }).catch((error)=>{
         res.status(500).json({ message: error.message || "Some error occurred!" });
     });
-  };
-
+  }; 
   async function PoliklinikSecimi(req, res) {
     try {
       connection = await oracledb.getConnection({
@@ -111,11 +113,7 @@ module.exports = app => {
       }
 
     }
-  }
-  // 
-  // test - uzmanlik id 
-  //69042
-  //Взрослый Офтальмология
+  } 
   async function UzmanlikSecimi(req, res) {
     try {
       connection = await oracledb.getConnection({
@@ -145,14 +143,7 @@ module.exports = app => {
       }
 
     }
-  }
-  /*
-    [
-          "DR534",
-          "Закелова Наталья Юрьевна",
-          "UZ260"
-      ]
-  */
+  } 
   async function DoktorSecimi(req, res) {
     try {
       connection = await oracledb.getConnection({
@@ -182,8 +173,7 @@ module.exports = app => {
       }
 
     }
-  }
-  //UygunTarihSecimi
+  } 
   async function UygunTarihSecimi(req, res) {
     try {
       connection = await oracledb.getConnection({
@@ -244,20 +234,9 @@ module.exports = app => {
 
     }
   }
-//Select NG_HIS_PRSRSMM.RESIM,NG_HIS_PRSRSMM.VRAC_ID,NG_HIS_PRSRSMM.PERBILGI,NG_HIS_RPSL.IMYA , NG_HIS_RPSL.FAMILYA ,  NG_HIS_RPSL.OCEST from  NG_HIS_PRSRSMM INNER JOIN NG_HIS_RPSL ON NG_HIS_PRSRSMM.VRAC_ID=NG_HIS_RPSL.KULLAN 
-//DoktorBilgi 
-
-/*
- user.resim = elemento[0];
-          user.vrcid = elemento[1];
-          user.perbilgi = elemento[2];
-          user.imya = elemento[3];
-          user.familya = elemento[4];
-          user.ocest = elemento[5];
-*/
+ 
 async function DoktorBilgi(req, res) {
-  let z = new Object();
-  let users = new Array();
+   let users = new Array();
 
   connection = await oracledb.getConnection({
     user: dbConfig.USER,
@@ -275,15 +254,21 @@ async function DoktorBilgi(req, res) {
           user.id = elemento[0];
           user.nome= elemento[1];
           user.email= elemento[2];
+          user.email1= elemento[3];
+          user.email2= elemento[4];
+          user.email3= elemento[5];
+
+
           users.push(user);
       });
+      
       res.status(200).json(users);
   }).then(()=>{
       if(connection){
           connection.close();
       }
   }).catch((error)=>{
-      res.status(500).json({ message: error.message || "Some error occurred!" });
+    //  res.status(500).json({ message: error.message || "Some error occurred!" });
   });
    };
 
