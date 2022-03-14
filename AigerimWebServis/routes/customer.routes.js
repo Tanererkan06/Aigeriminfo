@@ -68,9 +68,9 @@ module.exports = app => {
     })
     .then((result) => {
         result.rows.forEach((elemento) => {
-            user.id = elemento[0];
-            user.nome= elemento[1];
-            user.email= elemento[2];
+            user.DBKOD = elemento[0];
+            user.DBAD= elemento[1];
+            user.LNKD= elemento[2];
             users.push(user);
         });
         res.status(200).json(users);
