@@ -269,31 +269,23 @@ async function DoktorBilgi(req, res) {
       return connection.execute("Select NG_HIS_PRSRSMM.RESIM,NG_HIS_PRSRSMM.VRAC_ID,NG_HIS_PRSRSMM.PERBILGI,NG_HIS_RPSL.IMYA , NG_HIS_RPSL.FAMILYA ,  NG_HIS_RPSL.OCEST from  NG_HIS_PRSRSMM INNER JOIN NG_HIS_RPSL ON NG_HIS_PRSRSMM.VRAC_ID=NG_HIS_RPSL.KULLAN ");
  
     })
-  .then((result) => {
-    console.log(result)
+    .then((result) => {
       result.rows.forEach((elemento) => {
-        console.log(elemento);
-
-        //id,Tarih,ru_baslik,ru_haber,ru_resim,kz_baslik,kz_haber,kz_resim
-        z.resim = elemento[0];
-        z.vrcid = elemento[1];
-        z.perbilgi = elemento[2];
-        z.imya = elemento[3];
-        z.familya = elemento[4];
-        z.ocest = elemento[5];
-
-         
+          let user = new Object();
+          user.id = elemento[0];
+          user.nome= elemento[1];
+          user.email= elemento[2];
+          users.push(user);
       });
-      users.push(z);
       res.status(200).json(users);
   }).then(()=>{
       if(connection){
-         // connection.close();
+          connection.close();
       }
   }).catch((error)=>{
       res.status(500).json({ message: error.message || "Some error occurred!" });
   });
-  };
+   };
 
 
 
