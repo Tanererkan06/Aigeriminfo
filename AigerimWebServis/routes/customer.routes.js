@@ -56,34 +56,38 @@ module.exports = app => {
   //Select DBKOD,DBAD from NG_HIS_LNKDBS
   //HastaneSecimi
   async function HastaneSecimi(req, res) {
-    let user = new Object();
     let users = new Array();
 
-    connection = await oracledb.getConnection({
-      user: dbConfig.USER,
-      password: dbConfig.PASSWORD,
-      connectString: dbConfig.ConnectString
-    })
-    .then((c) => {
-        connection = c;
-        return connection.execute("SELECT * FROM NG_HIS_LNKDBS");
+  connection = await oracledb.getConnection({
+    user: dbConfig.USER,
+    password: dbConfig.PASSWORD,
+    connectString: dbConfig.ConnectString
+  })
+  .then((c) => {
+      connection = c;
+      return connection.execute("SELECT DBKOD,DBAD from NG_HIS_LNKDBS");
+ 
     })
     .then((result) => {
-        result.rows.forEach((elemento) => {
-            user.DBKOD = elemento[0];
-            user.DBAD= elemento[1];
-            user.LNKD= elemento[2];
-            users.push(user);
-        });
-        res.status(200).json(users);
-    }).then(()=>{
-        if(connection){
-            connection.close();
-        }
-    }).catch((error)=>{
-        res.status(500).json({ message: error.message || "Some error occurred!" });
-    });
-  }; 
+      result.rows.forEach((elemento) => {
+          let user = new Object();
+          user.id = elemento[0];
+          user.tarih= elemento[1]; 
+ 
+
+
+          users.push(user);
+      });
+      
+      res.status(200).json(users);
+  }).then(()=>{
+      if(connection){
+          connection.close();
+      }
+  }).catch((error)=>{
+    //  res.status(500).json({ message: error.message || "Some error occurred!" });
+  });
+   };
   async function PoliklinikSecimi(req, res) {
     try {
       connection = await oracledb.getConnection({
