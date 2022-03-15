@@ -326,9 +326,11 @@ ng_his_vractakvim.doktor_id='DR534'  and ng_his_vractakvim.servis_id=ng_his_glzr
       .then((result) => {
         result.rows.forEach((elemento) => {
           let user = new Object();
-
-          user.resim = elemento[0];
-          user.vracid = elemento[1];
+          user.ruhaber = elemento[0];
+          const buff = Buffer.from(elemento[4],'utf-8');
+          const base64 = buff.toString('base64');
+          user.resim =base64;
+           user.vracid = elemento[1];
           user.perbilgi = elemento[2];
           user.imya = elemento[3];
           user.familya = elemento[4];
