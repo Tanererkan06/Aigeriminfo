@@ -3,7 +3,7 @@ module.exports = app => {
   const oracledb = require('oracledb');
   const fs = require('fs');
   oracledb.fetchAsString = [oracledb.CLOB];
-
+ 
 
 
   /* const dbConfig = {
@@ -32,26 +32,30 @@ module.exports = app => {
       .then((c) => {
        connection = c;
          oracledb.fetchAsBuffer = [ oracledb.BLOB ];
+ 
         return connection.execute("SELECT id,Tarih,ru_baslik,ru_haber,ru_resim,kz_baslik,kz_haber,kz_resim FROM ng_haberler");
 
       })
       .then((result) => {
         result.rows.forEach((elemento) => {
           let user = new Object();
+          
           user.id = elemento[0];
           user.tarih = elemento[1];
           user.rubaslik = elemento[2];
-          user.ruhaber = elemento[3];
-         // const blob = result.rows[4];
-         // console.log(blob.toString());
-          user.ru_resim = elemento[4];
-          user.kzbaslik = elemento[5];
+          user.ruhaber = elemento[3]; 
+          //user.ru_resim = elemento[4]; 
+          const buff = Buffer.from(elemento[4], 'utf-8');
+          const base64 = buff.toString('base64');
+          console.log(base64);
+           user.kzbaslik = elemento[5];
           user.kzhaber = elemento[6];
           user.kzresim = elemento[7]; 
           
           users.push(user); 
         });
-
+       // urlCreator.createObjectURL(user.ru_resim);
+      //  console.log(user.ru_resim);
         res.status(200).json(users);
       }).then(() => {
         if (connection) {
