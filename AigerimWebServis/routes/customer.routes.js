@@ -51,19 +51,9 @@ module.exports = app => {
           user.kzhaber = elemento[6];
           const kzres = Buffer.from(elemento[4],'utf-8');
           const kzresbase64 = kzres.toString('base64');
-          user.kzresim = kzresbase64;
-         // const buffs = Buffer.from(elemento[7], 'utf-8');
-         // const base64s = buff.toString('base64');
-          //user.kzresim = base64s;
-          //console.log(user.kzresim)
-          /* const buffs = Buffer.from(elemento[7], 'utf-8');
-          const base64s = buffs.toString('base64');
-          user.kz_resim = base64s; 
-          */
+          user.kzresim = kzresbase64; 
           users.push(user);
-        });
-        // urlCreator.createObjectURL(user.ru_resim);
-        //  console.log(user.ru_resim);
+        }); 
         res.status(200).json(users);
       }).then(() => {
         if (connection) {
