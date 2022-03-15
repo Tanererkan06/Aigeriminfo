@@ -144,7 +144,7 @@ module.exports = app => {
         return connection.execute("select KABINET,ISIM,SINIFI,PROFS from ng_his_glzr WHERE PROFS=:PROFS AND SINIFI=:SINIFI",{
             
           PROFS: req.body.PROFS,
-          SINIFI: req.body.SINIF
+          SINIFI: req.body.SINIFI
         });
   })
   .then((result) => {
