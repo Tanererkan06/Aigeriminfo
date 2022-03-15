@@ -3,7 +3,7 @@ module.exports = app => {
   const oracledb = require('oracledb');
   const fs = require('fs');
   oracledb.fetchAsString = [oracledb.CLOB];
- 
+
 
 
   /* const dbConfig = {
@@ -30,32 +30,40 @@ module.exports = app => {
       connectString: dbConfig.ConnectString
     })
       .then((c) => {
-       connection = c;
-         oracledb.fetchAsBuffer = [ oracledb.BLOB ];
- 
+        connection = c;
+        oracledb.fetchAsBuffer = [oracledb.BLOB];
+
         return connection.execute("SELECT id,Tarih,ru_baslik,ru_haber,ru_resim,kz_baslik,kz_haber,kz_resim FROM ng_haberler");
 
       })
       .then((result) => {
         result.rows.forEach((elemento) => {
           let user = new Object();
-          
+
           user.id = elemento[0];
           user.tarih = elemento[1];
           user.rubaslik = elemento[2];
-          user.ruhaber = elemento[3]; 
-          //user.ru_resim = elemento[4]; 
-          const buff = Buffer.from(elemento[4], 'utf-8');
+          user.ruhaber = elemento[3];
+          const buff = Buffer.from(elemento[4],'utf-8');
           const base64 = buff.toString('base64');
-          console.log(base64);
-           user.kzbaslik = elemento[5];
+          user.ruresim = base64;
+          user.kzbaslik = elemento[5];
           user.kzhaber = elemento[6];
-          user.kzresim = elemento[7]; 
-          
-          users.push(user); 
+          const kzres = Buffer.from(elemento[4],'utf-8');
+          const kzresbase64 = kzres.toString('base64');
+          user.kzresim = kzresbase64;
+         // const buffs = Buffer.from(elemento[7], 'utf-8');
+         // const base64s = buff.toString('base64');
+          //user.kzresim = base64s;
+          //console.log(user.kzresim)
+          /* const buffs = Buffer.from(elemento[7], 'utf-8');
+          const base64s = buffs.toString('base64');
+          user.kz_resim = base64s; 
+          */
+          users.push(user);
         });
-       // urlCreator.createObjectURL(user.ru_resim);
-      //  console.log(user.ru_resim);
+        // urlCreator.createObjectURL(user.ru_resim);
+        //  console.log(user.ru_resim);
         res.status(200).json(users);
       }).then(() => {
         if (connection) {
@@ -76,8 +84,8 @@ module.exports = app => {
       connectString: dbConfig.ConnectString
     })
       .then((c) => {
-       connection = c;
-        oracledb.fetchAsBuffer = [ oracledb.BLOB ];
+        connection = c;
+        oracledb.fetchAsBuffer = [oracledb.BLOB];
         return connection.execute("SELECT SIRA,DBKOD,DBAD from NG_HIS_LNKDBS");
         //NG_HIS_GLZR
 
@@ -113,8 +121,8 @@ module.exports = app => {
       connectString: dbConfig.ConnectString
     })
       .then((c) => {
-       connection = c;
-        oracledb.fetchAsBuffer = [ oracledb.BLOB ];
+        connection = c;
+        oracledb.fetchAsBuffer = [oracledb.BLOB];
         return connection.execute("select profs,isim,aciklama from ng_his_kabuzman where kiosk='X' order by isim");
 
       })
@@ -149,8 +157,8 @@ module.exports = app => {
       connectString: dbConfig.ConnectString
     })
       .then((c) => {
-       connection = c;
-        oracledb.fetchAsBuffer = [ oracledb.BLOB ];
+        connection = c;
+        oracledb.fetchAsBuffer = [oracledb.BLOB];
         return connection.execute("select KABINET,ISIM,SINIFI,PROFS from ng_his_glzr WHERE PROFS=:PROFS AND SINIFI=:SINIFI", {
 
           PROFS: req.body.PROFS,
@@ -188,8 +196,8 @@ module.exports = app => {
       connectString: dbConfig.ConnectString
     })
       .then((c) => {
-       connection = c;
-        oracledb.fetchAsBuffer = [ oracledb.BLOB ];
+        connection = c;
+        oracledb.fetchAsBuffer = [oracledb.BLOB];
         return connection.execute("select doktor_id,soy||' '||ad||' '||baba vr,profs from ng_his_vrtkmad where PROFS=:PROFS and servis_id =:servis_id and doktor_id is not null GROUP BY soy,ad,baba,profs,doktor_id  order by soy,ad", {
 
           PROFS: req.body.PROFS,
@@ -241,8 +249,8 @@ ng_his_vractakvim.doktor_id='DR534'  and ng_his_vractakvim.servis_id=ng_his_glzr
       connectString: dbConfig.ConnectString
     })
       .then((c) => {
-       connection = c;
-        oracledb.fetchAsBuffer = [ oracledb.BLOB ];
+        connection = c;
+        oracledb.fetchAsBuffer = [oracledb.BLOB];
         return connection.execute("select ng_his_vractakvim.datar, 'прием' d  ,ng_his_vractakvim.bassaat,ng_his_vractakvim.bitsaat,ng_his_vractakvim.servis_id ,ng_his_glzr.isim from ng_his_glzr,ng_his_vractakvim  where ng_his_vractakvim.doktor_id=:doktor_id  and ng_his_vractakvim.servis_id=ng_his_glzr.kabinet and ng_his_vractakvim.datar>=to_char(sysdate,'dd/mm/yyyy') and ng_his_vractakvim.servis_id in (select kabinet from ng_his_glzr where sinifi <>'S')", {
 
           doktor_id: req.body.doktor_id
@@ -281,8 +289,8 @@ ng_his_vractakvim.doktor_id='DR534'  and ng_his_vractakvim.servis_id=ng_his_glzr
       connectString: dbConfig.ConnectString
     })
       .then((c) => {
-       connection = c;
-        oracledb.fetchAsBuffer = [ oracledb.BLOB ];
+        connection = c;
+        oracledb.fetchAsBuffer = [oracledb.BLOB];
         return connection.execute("SELECT * FROM ng_his_kabuzman WHERE PROFS=:PROFS", {
 
           PROFS: req.body.PROFS
@@ -320,8 +328,8 @@ ng_his_vractakvim.doktor_id='DR534'  and ng_his_vractakvim.servis_id=ng_his_glzr
       connectString: dbConfig.ConnectString
     })
       .then((c) => {
-       connection = c;
-        oracledb.fetchAsBuffer = [ oracledb.BLOB ];
+        connection = c;
+        oracledb.fetchAsBuffer = [oracledb.BLOB];
         return connection.execute("Select NG_HIS_PRSRSMM.RESIM,NG_HIS_PRSRSMM.VRAC_ID,NG_HIS_PRSRSMM.PERBILGI,NG_HIS_RPSL.IMYA , NG_HIS_RPSL.FAMILYA ,  NG_HIS_RPSL.OCEST from  NG_HIS_PRSRSMM INNER JOIN NG_HIS_RPSL ON NG_HIS_PRSRSMM.VRAC_ID=NG_HIS_RPSL.KULLAN ");
 
       })
