@@ -106,7 +106,7 @@ module.exports = app => {
     })
       .then((c) => {
         connection = c;
-        return connection.execute("select profs,isim,kiosk from ng_his_kabuzman where kiosk='X' order by isim");
+        return connection.execute("select profs,isim,aciklama from ng_his_kabuzman where kiosk='X' order by isim");
 
       })
       .then((result) => {
@@ -115,7 +115,7 @@ module.exports = app => {
 
           user.profs = elemento[0];
           user.isim = elemento[1];
-          user.kiosk = elemento[2];
+          user.aciklama = elemento[2];
  
           users.push(user);
         });
@@ -141,9 +141,10 @@ module.exports = app => {
     })
       .then((c) => {
         connection = c;
-        return connection.execute("select KABINET,ISIM,SINIFI,PROFS from ng_his_glzr WHERE PROFS=:PROFS",{
+        return connection.execute("select KABINET,ISIM,SINIFI,PROFS from ng_his_glzr WHERE PROFS=:PROFS AND SINIFI=:SINIFI",{
             
-          PROFS: req.body.PROFS 
+          PROFS: req.body.PROFS,
+          SINIFI: req.body.SINIF
         });
   })
   .then((result) => {
@@ -178,9 +179,12 @@ module.exports = app => {
     })
       .then((c) => {
         connection = c;
-        return connection.execute("select doktor_id,soy||' '||ad||' '||baba vr,profs from ng_his_vrtkmad where PROFS='UZ260' and servis_id ='13001' and doktor_id is not null GROUP BY soy,ad,baba,profs,doktor_id  order by soy,ad");
-
-      })
+        return connection.execute("select doktor_id,soy||' '||ad||' '||baba vr,profs from ng_his_vrtkmad where PROFS=:PROFS and servis_id =:servis_id and doktor_id is not null GROUP BY soy,ad,baba,profs,doktor_id  order by soy,ad",{
+            
+          PROFS: req.body.PROFS,
+          servis_id: req.body.servis_id
+        });
+  })
       .then((result) => {
         result.rows.forEach((elemento) => {
           let user = new Object();
