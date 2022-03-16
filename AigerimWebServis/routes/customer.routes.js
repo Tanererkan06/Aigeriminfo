@@ -320,21 +320,26 @@ ng_his_vractakvim.doktor_id='DR534'  and ng_his_vractakvim.servis_id=ng_his_glzr
       .then((c) => {
         connection = c;
         oracledb.fetchAsBuffer = [oracledb.BLOB];
-        return connection.execute("Select NG_HIS_PRSRSMM.RESIM,NG_HIS_PRSRSMM.VRAC_ID,NG_HIS_PRSRSMM.PERBILGI,NG_HIS_RPSL.IMYA , NG_HIS_RPSL.FAMILYA ,  NG_HIS_RPSL.OCEST from  NG_HIS_PRSRSMM INNER JOIN NG_HIS_RPSL ON NG_HIS_PRSRSMM.VRAC_ID=NG_HIS_RPSL.KULLAN ");
+        return connection.execute("select NG_HIS_PRSRSMM.RESIM,NG_HIS_PRSRSMM.VRAC_ID,NG_HIS_PRSRSMM.PERBILGI,  NG_HIS_RPSL.IMYA , NG_HIS_RPSL.FAMILYA ,  NG_HIS_RPSL.OCEST from  NG_HIS_PRSRSMM ,NG_HIS_RPSL WHERE  NG_HIS_PRSRSMM.VRAC_ID=NG_HIS_RPSL.KULLAN AND  NG_HIS_RPSL.PKULL  IS NULL ");
 
       })
       .then((result) => {
-        result.rows.forEach((elemento) => {
+        result.rows.forEach((elemento) => { 
+         
           let user = new Object();
-           const buff = Buffer.from(elemento[1],'utf-8');
-          const base64 = buff.toString('base64');
-          user.resim =base64;
-           user.vracid = elemento[3];
-          user.perbilgi = elemento[5];
-          user.imya = elemento[6];
-          user.familya = elemento[7];
-          user.ocest = elemento[8];
+          
+           user.vracid = elemento[1];
+           ///const buff = Buffer.from(elemento[1],'utf-8');
+          //  const base64 = buff.toString('base64');
+            //user.resim =base64; //elemento[0];
+            user.vracids = elemento[0];
 
+            user.perbilgi =elemento[2]; 
+            user.imya =elemento[3]; 
+            user.familiya =elemento[4]; 
+            user.ocest =elemento[5]; 
+         
+           
 
           users.push(user);
         });
