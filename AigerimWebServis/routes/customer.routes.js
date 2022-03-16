@@ -328,15 +328,14 @@ ng_his_vractakvim.doktor_id='DR534'  and ng_his_vractakvim.servis_id=ng_his_glzr
          
           let user = new Object();
           
-            user.vracid = elemento[1]; 
-            user.perbilgi =elemento[2]; 
-            user.imya =elemento[3]; 
-            user.familiya =elemento[4]; 
-            user.ocest =elemento[5]; 
-            const buff = Buffer.from(elemento[0],'utf-8');
-              const base64 = buff.toString('base64');
-              //user.resim =base64; //elemento[0];
-              user.ocest =elemento[6]; 
+            user.vracid = elemento[0]; 
+            user.perbilgi =elemento[1]; 
+            user.imya =elemento[2]; 
+            user.familiya =elemento[3]; 
+            user.ocest =elemento[4]; 
+            const userresim = Buffer.from(elemento[5],'utf-8');
+            const userresimbase64 = userresim.toString('base64');
+            user.userresimbase64 = userresimbase64;
 
           users.push(user);
         });
