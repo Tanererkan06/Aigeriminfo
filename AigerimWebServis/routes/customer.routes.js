@@ -320,27 +320,45 @@ ng_his_vractakvim.doktor_id='DR534'  and ng_his_vractakvim.servis_id=ng_his_glzr
       .then((c) => {
         connection = c;
         oracledb.fetchAsBuffer = [oracledb.BLOB];
-        return connection.execute("select NG_HIS_PRSRSMM.VRAC_ID,NG_HIS_PRSRSMM.PERBILGI,  NG_HIS_RPSL.IMYA , NG_HIS_RPSL.FAMILYA ,  NG_HIS_RPSL.OCEST, NG_HIS_PRSRSMM.RESIM from  NG_HIS_PRSRSMM ,NG_HIS_RPSL WHERE  NG_HIS_PRSRSMM.VRAC_ID=NG_HIS_RPSL.KULLAN AND  NG_HIS_RPSL.PKULL  IS NULL ");
-
+      //  oracledb.outFormat = oracledb.OUT_FORMAT_OBJECT;
+      const myoffset = 0;       // do not skip any rows (start at row 1)
+      const mymaxnumrows = 20;  // get 20 rows
+        return connection.execute(`
+        select   *  from   NG_HIS_PRSRSMM ,NG_HIS_RPSL  WHERE 
+         NG_HIS_PRSRSMM.VRAC_ID=NG_HIS_RPSL.KULLAN AND  NG_HIS_RPSL.PKULL  IS NULL 
+          and ROWNUM <= 10 ORDER BY NG_HIS_PRSRSMM.VRAC_ID ASC  `);
+      
       })
       .then((result) => {
-        result.rows.forEach((elemento) => {
+        
+
+      result.rows.forEach((elemento) => {
 
           let user = new Object();
-
-          user.vracid = elemento[1];
-          user.perbilgi = elemento[2];
-          user.imya = elemento[3];
-          user.familiya = elemento[4];
-           const buff = Buffer.from(elemento[5], 'utf-8');
+          user.vracid = elemento[0];
+          const buff = Buffer.from(elemento[1], 'utf-8');
           const base64 = buff.toString('base64');
-          user.resim = base64;  
+          user.resim = base64; 
+          user.perbilgi = elemento[2];
+          user.imya = elemento[8];
+          user.familiya = elemento[9];
+          user.ocest = elemento[21];
+          user.zvanye = elemento[66];
+
+        
+          
+          
+         // user.familiyass = //elemento[5];
+          /*  
+          
+         ; */   
  
           users.push(user);
           console.log(user)
-        });
+        });  
 
-        res.status(200).json(users);
+      res.status(200).json(users);
+       
       }).then(() => {
         if (connection) {
           connection.close();
