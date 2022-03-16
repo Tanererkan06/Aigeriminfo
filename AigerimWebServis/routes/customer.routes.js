@@ -44,16 +44,16 @@ module.exports = app => {
           user.tarih = elemento[1];
           user.rubaslik = elemento[2];
           user.ruhaber = elemento[3];
-          const buff = Buffer.from(elemento[4],'utf-8');
+          const buff = Buffer.from(elemento[4], 'utf-8');
           const base64 = buff.toString('base64');
           user.ruresim = base64;
           user.kzbaslik = elemento[5];
           user.kzhaber = elemento[6];
-          const kzres = Buffer.from(elemento[4],'utf-8');
+          const kzres = Buffer.from(elemento[4], 'utf-8');
           const kzresbase64 = kzres.toString('base64');
-          user.kzresim = kzresbase64; 
+          user.kzresim = kzresbase64;
           users.push(user);
-        }); 
+        });
         res.status(200).json(users);
       }).then(() => {
         if (connection) {
@@ -324,20 +324,20 @@ ng_his_vractakvim.doktor_id='DR534'  and ng_his_vractakvim.servis_id=ng_his_glzr
 
       })
       .then((result) => {
-        result.rows.forEach((elemento) => { 
-         
-          let user = new Object();
-          
-            user.vracid = elemento[0]; 
-            user.perbilgi =elemento[1]; 
-            user.imya =elemento[2]; 
-            user.familiya =elemento[3]; 
-            user.ocest =elemento[4]; 
-            const userresim = Buffer.from(elemento[5],'utf-8');
-            const userresimbase64 = userresim.toString('base64');
-            user.userresimbase64 = userresimbase64;
+        result.rows.forEach((elemento) => {
 
+          let user = new Object();
+
+          user.vracid = elemento[1];
+          user.perbilgi = elemento[2];
+          user.imya = elemento[3];
+          user.familiya = elemento[4];
+           const buff = Buffer.from(elemento[5], 'utf-8');
+          const base64 = buff.toString('base64');
+          user.resim = base64;  
+ 
           users.push(user);
+          console.log(user)
         });
 
         res.status(200).json(users);
