@@ -312,6 +312,10 @@ ng_his_vractakvim.doktor_id='DR534'  and ng_his_vractakvim.servis_id=ng_his_glzr
   async function DoktorBilgi(req, res) {
     let users = new Array();
     var fs = require('fs');
+    const express = require('express');
+    const app = express();
+    app.use(express.static('public')); 
+    
     var path = require('path');
     connection = await oracledb.getConnection({
       user: dbConfig.USER,
@@ -327,7 +331,7 @@ ng_his_vractakvim.doktor_id='DR534'  and ng_his_vractakvim.servis_id=ng_his_glzr
         return connection.execute(`
         select   *  from   NG_HIS_PRSRSMM ,NG_HIS_RPSL  WHERE 
          NG_HIS_PRSRSMM.VRAC_ID=NG_HIS_RPSL.KULLAN AND  NG_HIS_RPSL.PKULL  IS NULL 
-          and ROWNUM <= 5 ORDER BY NG_HIS_PRSRSMM.VRAC_ID ASC  `);
+          and ROWNUM <= 15 ORDER BY NG_HIS_PRSRSMM.VRAC_ID ASC  `);
 
       })
       .then((result) => {
@@ -346,10 +350,11 @@ ng_his_vractakvim.doktor_id='DR534'  and ng_his_vractakvim.servis_id=ng_his_glzr
 
           data = base64.replace(/^data:image\/png;base64,/, '');
 
-          fs.writeFile(path.resolve(__dirname, '../tmp/' + user.vracid + '.png'), base64, 'base64', function (err) {
+          fs.writeFile(path.resolve(__dirname, '../public/tmp/' + user.vracid + '.png'), base64, 'base64', function (err) {
             if (err) throw err;
           });
-          // user.resim = '/tmp/'+user.vracid+'.png';
+         //app.use('/tmp', express.static('tmp'));
+          user.resim = __dirname+'/public/tmp/'+user.vracid+'.png';
           user.perbilgi = elemento[2];
           user.imya = elemento[8];
           user.familiya = elemento[9];

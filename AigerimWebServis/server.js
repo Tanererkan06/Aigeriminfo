@@ -1,37 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const cors = require("cors");
-/* const oracledb = require('oracledb');
-
-const config = {
-  user: 'ngsoft',
-  password: '123',
-  connectString : "localhost/orcle"
-}
-
-async function getEmployee (empId) {
-  let conn
-
-  try {
-    conn = await oracledb.getConnection(config)
-
-    const result = await conn.execute(
-      'select * from ng_haberler',
-    )
-
-    console.log(result.rows[0])
-  } catch (err) {
-    console.log('Ouch!', err)
-  } finally {
-    if (conn) { // conn görevi çalıştı, kapatılmalı
-      await conn.close()
-    }
-  }
-}
-
-getEmployee() */
-
- 
+const cors = require("cors"); 
 
 const app = express();
 app.use((req, res, next) => {
@@ -48,7 +17,8 @@ app.use((req, res, next) => {
 }); 
 
 app.use(bodyParser.json());
-
+app.use(express.static('public')); 
+app.use('/tmp', express.static('tmp'));
 
  //const db = require("./models");
 //const Role = db.role;
