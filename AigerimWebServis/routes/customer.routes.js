@@ -314,8 +314,8 @@ ng_his_vractakvim.doktor_id='DR534'  and ng_his_vractakvim.servis_id=ng_his_glzr
     var fs = require('fs');
     const express = require('express');
     const app = express();
-    app.use(express.static('public')); 
-    
+    app.use(express.static('public'));
+
     var path = require('path');
     connection = await oracledb.getConnection({
       user: dbConfig.USER,
@@ -331,7 +331,7 @@ ng_his_vractakvim.doktor_id='DR534'  and ng_his_vractakvim.servis_id=ng_his_glzr
         return connection.execute(`
         select   *  from   NG_HIS_PRSRSMM ,NG_HIS_RPSL  WHERE 
          NG_HIS_PRSRSMM.VRAC_ID=NG_HIS_RPSL.KULLAN AND  NG_HIS_RPSL.PKULL  IS NULL 
-          and ROWNUM <= 15 ORDER BY NG_HIS_PRSRSMM.VRAC_ID ASC  `);
+          and ROWNUM <= 15 ORDER BY NG_HIS_PRSRSMM.VRAC_ID ASC`);
 
       })
       .then((result) => {
@@ -344,34 +344,46 @@ ng_his_vractakvim.doktor_id='DR534'  and ng_his_vractakvim.servis_id=ng_his_glzr
           let user = new Object();
 
           user.vracid = elemento[0];
-           const buff = Buffer.from(elemento[1], 'utf-8');
-          const base64 = buff.toString('base64');
-
-          data = base64.replace(/^data:image\/png;base64,/, '');
-
-          fs.writeFile(path.resolve(__dirname, '../public/tmp/' + user.vracid + '.png'), base64, 'base64', function (err) {
-            if (err) throw err;
-          });
-         //app.use('/tmp', express.static('tmp'));
-          user.resim = '/tmp/'+user.vracid+'.png';
           user.perbilgi = elemento[2];
           user.imya = elemento[8];
           user.familiya = elemento[9];
           user.ocest = elemento[21];
-          user.zvanye = elemento[66]; 
+          user.zvanye = elemento[66];
+          user.resim = '/tmp/' + user.vracid + '.png';
+
           users.push(user);
-          console.log(user)
-           res.status(200).json(users);
+
         });
 
-       
+        res.status(200).json(users);
+
+        result.rows.forEach((elemento) => {
+
+          let user = new Object();
+
+          user.vracid = elemento[0];
+          user.resim = elemento[1];
+
+          const buffs = Buffer.from(elemento[1], 'utf-8');
+          const base64s = buffs.toString('base64');
+          data = base64s.replace(/^data:image\/png;base64,/, '');
+
+          fs.writeFile(path.resolve(__dirname, '../public/tmp/' + user.vracid + '.png'), data, 'base64', function (err) {
+            if (err) throw err;
+          });
+        });
+
+
+
+
 
       }).then(() => {
         if (connection) {
+
           connection.close();
         }
       }).catch((error) => {
-        res.status(500).json({ message: error.message || "Some error occurred!" });
+        //  res.status(500).json({ message: error.message || "Some error occurred!" });
       });
   };
 
