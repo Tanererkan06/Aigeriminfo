@@ -344,8 +344,7 @@ ng_his_vractakvim.doktor_id='DR534'  and ng_his_vractakvim.servis_id=ng_his_glzr
           let user = new Object();
 
           user.vracid = elemento[0];
-          // user.resim = elemento[1];
-          const buff = Buffer.from(elemento[1], 'utf-8');
+           const buff = Buffer.from(elemento[1], 'utf-8');
           const base64 = buff.toString('base64');
 
           data = base64.replace(/^data:image\/png;base64,/, '');
@@ -354,33 +353,25 @@ ng_his_vractakvim.doktor_id='DR534'  and ng_his_vractakvim.servis_id=ng_his_glzr
             if (err) throw err;
           });
          //app.use('/tmp', express.static('tmp'));
-          user.resim = __dirname+'/public/tmp/'+user.vracid+'.png';
+          user.resim = '/tmp/'+user.vracid+'.png';
           user.perbilgi = elemento[2];
           user.imya = elemento[8];
           user.familiya = elemento[9];
           user.ocest = elemento[21];
-          user.zvanye = elemento[66];
-
-
-
-
-          // user.familiyass = //elemento[5];
-          /*  
-          
-         ; */
-
+          user.zvanye = elemento[66]; 
           users.push(user);
           console.log(user)
+           res.status(200).json(users);
         });
 
-        res.status(200).json(users);
+       
 
       }).then(() => {
         if (connection) {
           connection.close();
         }
       }).catch((error) => {
-        //  res.status(500).json({ message: error.message || "Some error occurred!" });
+        res.status(500).json({ message: error.message || "Some error occurred!" });
       });
   };
 
