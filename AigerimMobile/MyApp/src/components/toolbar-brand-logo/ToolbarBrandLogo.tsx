@@ -6,5 +6,5 @@ export const ToolbarBrandLogo: React.FC = () => (
 );
 
 const styles = StyleSheet.create({
-  image: { width: 250, height: 250, resizeMode: "contain" }
+  image: { width: 150, height: 250, resizeMode: "contain",borderRadius:50 }
 });

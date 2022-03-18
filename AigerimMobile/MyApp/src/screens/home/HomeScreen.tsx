@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   ScrollView,
-  Text,
+  Text,Image,
   View,
-  FlatList,
+  FlatList,Dimensions ,
   TouchableOpacity
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -18,14 +18,14 @@ import {
   DepartmentItem,
   TouchableHighlight
 } from "../../components";
-import { DashboardItemsModel, DoctorModel, TypicodeUserModel } from "../../models";
-import { DashboardService, DoctorsService } from "../../services";
+const width = Dimensions.get('window').width;
+const hight = Dimensions.get('window').height;
+import { DashboardItemsModel, DoctorModel, TypicodeUserModel,DepartmentModel} from "../../models";
+import { DashboardService, DoctorsService,DepartmentService } from "../../services";
 import { useLocalization } from "../../localization";
 import NavigationNames from "../../navigations/NavigationNames";
-import { HomeMenuItemType } from "../../types";
-import { YMaps, Map } from 'react-yandex-maps';
-
-
+import { HomeMenuItemType } from "../../types"; 
+ 
 const generateMenuItems = (
   getString: (key: string) => string
 ): HomeMenuItemType[] => [
@@ -38,18 +38,12 @@ const generateMenuItems = (
     },
     {
       row1: getString("Lab Tests at Home"),
-      row2: getString("92 Diagnostics are available"),
+      row2: getString("Diagnostics are available"),
       iconName: "ios-flask",
       iconBack: "#35CDF7",
       action: "LabTestsAtHome"
     },
-    {
-      row1: getString("Online Healt Consultant"),
-      row2: getString("+14 Consultants"),
-      iconName: "ios-text",
-      iconBack: "#FA7F5D",
-      action: "OnlineHealtConsultant"
-    }
+   
   ];
 
 type TProps = {};
@@ -59,17 +53,24 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
   const { getString, changeLanguage } = useLocalization();
   const [dashboardItem, setDashboardItem] = useState<DashboardItemsModel>(null);
   const [doctors, setDoctors] = useState<DoctorModel[]>(null);
+  const [departman, setDeparmans] = useState<DepartmentModel[]>(null);
 
 
   useEffect(() => {
     DashboardService.getDashboardItems().then(item => {
       setDashboardItem(item);
     });
- 
+
     DoctorsService.getDoctors().then(typeUsers => {
-      setDoctors(typeUsers);
+      setDoctors(typeUsers); 
+
+    }); 
+     DepartmentService.getDepartment().then(items => {
+      setDeparmans(items);
     });
-  
+    /*  TypicodeUserService.getUsers().then(typeUsers => {
+        setTypicodeUsers(typeUsers);
+      });*/
   }, []);
   const onClickMenu = (item: HomeMenuItemType) => {
     switch (item.action) {
@@ -84,7 +85,7 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
         break;
     }
   };
-   
+
   if (dashboardItem === null) {
     return <Text>Loading</Text>;
   }
@@ -149,6 +150,7 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
       />
       <FlatList
         data={doctors}
+        
         keyExtractor={(item, index) => `key${index}ForDoctor`}
         renderItem={row => (
           <TouchableOpacity
@@ -172,8 +174,10 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
           navigation.navigate(NavigationNames.DepartmentListScreen)
         }
       />
+
+
       <FlatList
-        data={dashboardItem.departments}
+        data={departman}
         renderItem={row => (
           <TouchableOpacity
             onPress={() =>
@@ -191,11 +195,7 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
         keyExtractor={(item, index) => `key${index}ForDepartment`}
         contentContainerStyle={styles.departmentsContainer}
       />
-      <View>
-        <YMaps>
-          <Map defaultState={{ center: [55.75, 37.57], zoom: 9 }} />
-        </YMaps>
-      </View>
+         
 
     </ScrollView>
   );

@@ -7,8 +7,7 @@ import {
   TouchableOpacity
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { doctorsList } from "../../datas";
-import { DashboardItemsModel, DoctorModel, TypicodeUserModel } from "../../models";
+ import { DashboardItemsModel, DoctorModel, TypicodeUserModel } from "../../models";
 import { DashboardService, DoctorsService } from "../../services";
 import { DoctorItemRow, Divider } from "../../components";
 import NavigationNames from "../../navigations/NavigationNames";

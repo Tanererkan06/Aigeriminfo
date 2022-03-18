@@ -38,7 +38,7 @@ export const MediaDetailScreen: React.FC<TProps> = props => {
           style={styles.image}
         />
         <View style={styles.liveContainer}>
-          <Text style={styles.liveText}>{getString("LIVE")}</Text>
+          
         </View>
         <View style={styles.playButtonContainer}>
           <TouchableOpacity onPress={() => {}}>
