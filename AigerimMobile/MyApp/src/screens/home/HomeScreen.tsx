@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   ScrollView,
-  Text,Image,
+  Text, Image,
   View,
-  FlatList,Dimensions ,
+  FlatList, Dimensions,
   TouchableOpacity
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -20,12 +20,12 @@ import {
 } from "../../components";
 const width = Dimensions.get('window').width;
 const hight = Dimensions.get('window').height;
-import { DashboardItemsModel, DoctorModel, TypicodeUserModel,DepartmentModel} from "../../models";
-import { DashboardService, DoctorsService,DepartmentService } from "../../services";
+import { DashboardItemsModel, DoctorModel, TypicodeUserModel, DepartmentModel } from "../../models";
+import { DashboardService, DoctorsService, DepartmentService } from "../../services";
 import { useLocalization } from "../../localization";
 import NavigationNames from "../../navigations/NavigationNames";
-import { HomeMenuItemType } from "../../types"; 
- 
+import { HomeMenuItemType } from "../../types";
+
 const generateMenuItems = (
   getString: (key: string) => string
 ): HomeMenuItemType[] => [
@@ -43,7 +43,7 @@ const generateMenuItems = (
       iconBack: "#35CDF7",
       action: "LabTestsAtHome"
     },
-   
+
   ];
 
 type TProps = {};
@@ -62,10 +62,10 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
     });
 
     DoctorsService.getDoctors().then(typeUsers => {
-      setDoctors(typeUsers); 
+      setDoctors(typeUsers);
 
-    }); 
-     DepartmentService.getDepartment().then(items => {
+    });
+    DepartmentService.getDepartment().then(items => {
       setDeparmans(items);
     });
     /*  TypicodeUserService.getUsers().then(typeUsers => {
@@ -141,40 +141,6 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
       />
 
 
-      <SectionHeader
-        title={getString("All Specialists")}
-        rightTitle={getString("See More")}
-        rightAction={() =>
-          navigation.navigate(NavigationNames.DoctorListScreen)
-        }
-      />
-      <FlatList
-        data={doctors}
-        
-        keyExtractor={(item, index) => `key${index}ForDoctor`}
-        renderItem={row => (
-          <TouchableOpacity
-            style={styles.touchableDoctorItem}
-            onPress={() =>
-              navigation.navigate(NavigationNames.DoctorDetailScreen, {
-                model: JSON.stringify(row.item)
-              })
-            }
-          >
-            <DoctorItemRow item={row.item} />
-          </TouchableOpacity>
-        )}
-        ItemSeparatorComponent={() => <Divider h16 />}
-        scrollEnabled={false}
-      />
-      <SectionHeader
-        title={getString("Our Departments")}
-        rightTitle={getString("See More")}
-        rightAction={() =>
-          navigation.navigate(NavigationNames.DepartmentListScreen)
-        }
-      />
-
 
       <FlatList
         data={departman}
@@ -195,7 +161,66 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
         keyExtractor={(item, index) => `key${index}ForDepartment`}
         contentContainerStyle={styles.departmentsContainer}
       />
-         
+
+      <SectionHeader
+        title={getString("All Specialists")}
+        rightTitle={getString("See More")}
+        rightAction={() =>
+          navigation.navigate(NavigationNames.DoctorListScreen)
+        }
+      />
+
+      <FlatList
+        data={doctors}
+        horizontal={true}
+        keyExtractor={(item, index) => `key${index}ForDoctor`}
+        renderItem={row => (
+          <TouchableOpacity
+            style={styles.touchableDoctorItem}
+            onPress={() =>
+              navigation.navigate(NavigationNames.DoctorDetailScreen, {
+                model: JSON.stringify(row.item)
+              })
+            }
+          >
+            <DoctorItemRow item={row.item} />
+          </TouchableOpacity>
+        )}
+        //ItemSeparatorComponent={() => <Divider h16 />}
+        scrollEnabled={true}
+      />
+      <SectionHeader
+        title={getString("Our Departments")}
+        rightTitle={getString("See More")}
+        rightAction={() =>
+          navigation.navigate(NavigationNames.DepartmentListScreen)
+        }
+      /><FlatList
+        data={doctors}
+        horizontal={true}
+        keyExtractor={(item, index) => `key${index}ForDoctor`}
+        renderItem={row => (
+          <TouchableOpacity
+            style={styles.touchableDoctorItem}
+            onPress={() =>
+              navigation.navigate(NavigationNames.DoctorDetailScreen, {
+                model: JSON.stringify(row.item)
+              })
+            }
+          >
+            <DoctorItemRow item={row.item} />
+          </TouchableOpacity>
+        )}
+        //ItemSeparatorComponent={() => <Divider h16 />}
+        scrollEnabled={true}
+      />
+      <SectionHeader
+        title={getString("Our Departments")}
+        rightTitle={getString("See More")}
+        rightAction={() =>
+          navigation.navigate(NavigationNames.DepartmentListScreen)
+        }
+      />
 
     </ScrollView>
   );
