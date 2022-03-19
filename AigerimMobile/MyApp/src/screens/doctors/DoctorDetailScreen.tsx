@@ -90,17 +90,17 @@ export const DoctorDetailScreen: React.FC<TProps> = props => {
             defaultRating={model.rating}
           />
         </View>
-        <TouchableOpacity style={styles.rateButtonContainer}>
+       {/*  <TouchableOpacity style={styles.rateButtonContainer}>
           <Text style={styles.rateButtonTitle}>Rate & Write Message</Text>
           <Ionicons
             name="ios-arrow-forward"
             color={Theme.colors.black}
             size={26}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
 
-      <View style={styles.sectionContainer}>
+     {/*  <View style={styles.sectionContainer}>
         <Text style={styles.sectionTitle}>Reviews</Text>
         <Divider />
         <FlatList
@@ -110,7 +110,7 @@ export const DoctorDetailScreen: React.FC<TProps> = props => {
           renderItem={row => <DoctorReviewItemRow item={row.item} />}
           contentContainerStyle={{ paddingVertical: 16 }}
         />
-      </View>
+      </View> */}
     </ScrollView>
   );
 };

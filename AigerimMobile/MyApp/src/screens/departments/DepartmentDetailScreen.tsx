@@ -39,7 +39,7 @@ export const DepartmentDetailScreen: React.FC<TProps> = props => {
   // Params
   const model = JSON.parse(route.params["model"]) as DepartmentModel;
 
-  navigation.setOptions({ title: model.title });
+  navigation.setOptions({ title: model.title  });
 
   return (
     <>
@@ -49,18 +49,18 @@ export const DepartmentDetailScreen: React.FC<TProps> = props => {
           <Text style={styles.titleText}>{model.title}</Text>
           <Text style={styles.shortDescText}>{model.shortDescription}</Text>
           <View style={styles.htmlContent}>
-            <HtmlView
+           {/*  <HtmlView
               htmlContent={model.htmlContent}
               imagesMaxWidthOffset={32}
-            />
+            /> */}
           </View>
         </View>
         <Divider />
         <View style={styles.content}>
-          <Text style={styles.sectionTitleText}>
+         {/*  <Text style={styles.sectionTitleText}>
             {getString("Department Services")}
-          </Text>
-          <FlatList
+          </Text> */}
+          {/* <FlatList
             data={model.departmentServices}
             keyExtractor={(item, index) => `key${index}ForDepartmentService`}
             renderItem={({ item }) => (
@@ -81,31 +81,31 @@ export const DepartmentDetailScreen: React.FC<TProps> = props => {
               </View>
             )}
             style={styles.departmentsFlatList}
-          />
+          /> */}
         </View>
         <Divider />
         <View style={styles.content}>
-          <Text style={styles.sectionTitleText}>
+        {/*   <Text style={styles.sectionTitleText}>
             {getString("Recent Posts")}
-          </Text>
-          <FlatList
+          </Text> */}
+         {/*  <FlatList
             data={model.newsPosts}
             keyExtractor={(item, index) => `key${index}ForNewsPost`}
             renderItem={({ item }) => <NewsPostItemRow item={item} />}
             style={{ marginTop: 12 }}
-          />
+          /> */}
         </View>
         <Divider />
         <View style={[styles.content, { paddingHorizontal: 0 }]}>
-          <Text style={[styles.sectionTitleText, { marginStart: 16 }]}>
+        {/*   <Text style={[styles.sectionTitleText, { marginStart: 16 }]}>
             {getString("Photos")}
-          </Text>
+          </Text> */}
           <ScrollView
             horizontal={true}
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.scrollImageList}
           >
-            <View style={styles.viewContentImageList}>
+           {/*  <View style={styles.viewContentImageList}>
               {model.images.map((item, index) => {
                 return (
                   <TouchableOpacity
@@ -126,11 +126,11 @@ export const DepartmentDetailScreen: React.FC<TProps> = props => {
                   </TouchableOpacity>
                 );
               })}
-            </View>
+            </View> */}
           </ScrollView>
         </View>
       </ScrollView>
-      <PhotoViewerModal
+     {/*  <PhotoViewerModal
         items={model.images}
         selectedImageIndex={photoViewerConfig.selectedPhotoIndex}
         visible={photoViewerConfig.isShowed}
@@ -140,7 +140,7 @@ export const DepartmentDetailScreen: React.FC<TProps> = props => {
             isShowed: false
           });
         }}
-      />
+      /> */}
     </>
   );
 };

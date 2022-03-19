@@ -1,6 +1,7 @@
-import { DashboardItemsModel, AppointmentModel } from "../models";
-import { doctorsList, campaignList, departmentList } from "../datas";
-import moment from "moment";
+import { DashboardItemsModel, AppointmentModel, DoctorModel, TypicodeUserModel } from "../models";
+import {campaignList, departmentList } from "../datas";
+ import moment from "moment";
+ import {  DoctorsService } from "../services";
 
 export const globalAppointmentDate = moment(new Date())
   .add(7, "days")
@@ -31,7 +32,6 @@ export default class DashboardService {
         const model: DashboardItemsModel = {
           appointment: globalAppointment,
           campaigns: campaignList,
-          doctors: doctorsList,
           departments: departmentList
         };
         resolve(model);

@@ -23,6 +23,8 @@ export const DoctorItemRow: React.FC<TProps> = props => {
   return (
     <>
       <View style={[styles.container, props.style]}>
+       
+        <View style={styles.textContent}>
         <Avatar
           status={props.item.isOnline ? "online" : null}
           source={{
@@ -30,10 +32,10 @@ export const DoctorItemRow: React.FC<TProps> = props => {
           }}
           style={styles.avatar}
         />
-        <View style={styles.textContent}>
-          <Text style={styles.doctorNameText}>{props.item.fullName}</Text>
-          <Text style={styles.doctorTitleText}>{props.item.title}</Text>
-          <View style={{ alignSelf: "flex-start", marginTop: 2 }}>
+          
+          <View style={{ alignSelf: "center", marginTop: 2 }}>
+            <Text style={styles.doctorNameText}>{props.item.fullName}</Text>
+          <Text style={styles.doctorTitleText}>{props.item.title}s</Text>
             <AirbnbRating
               showRating={false}
               count={5}
@@ -67,23 +69,28 @@ export const DoctorItemRow: React.FC<TProps> = props => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    paddingVertical: 14
+    paddingVertical: 50
   },
   avatar: { alignSelf: "center" },
-  textContent: { flex: 1, paddingHorizontal: 14 },
+  textContent: { flex: 1, 
+    paddingHorizontal: 14
+   },
   doctorNameText: {
     fontSize: 15,
     fontWeight: "600",
+    alignSelf: "center",
+
     color: Theme.colors.black
   },
   doctorTitleText: {
-    marginTop: 4,
+     marginTop: 4,
+     alignSelf: "center",
     color: Theme.colors.gray,
     fontSize: 13
   },
   moreButton: {
     paddingHorizontal: 16,
     paddingVertical: 2,
-    alignSelf: "flex-start"
-  }
+    alignSelf: "center"
+    }
 });

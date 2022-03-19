@@ -13,14 +13,14 @@ import { useNavigation } from "@react-navigation/native";
 import { Divider, DoctorItemRow, Button } from "../../components";
 import { ConfirmAppointmentModal } from "../../modals";
 import moment from "moment";
-import { doctorsList } from "../../datas";
-import ReactNativeModal from "react-native-modal";
+ import ReactNativeModal from "react-native-modal";
 import { DoctorModel, AppointmentTimeModal } from "../../models";
 import { useLocalization } from "../../localization";
-
+import { DashboardService, TypicodeUserService } from "../../services";
 type TProps = {};
 
 const SCREEN_WIDTH = Dimensions.get("screen").width;
+
 
 const TIMES: AppointmentTimeModal[] = [
   { time: "09:00", available: false },
@@ -79,6 +79,7 @@ const AppoinmentTime: React.FC<{
 export const NewAppointmentScreen: React.FC<TProps> = props => {
   const navigation = useNavigation();
   const { getString } = useLocalization();
+  const [doctors, setDoctors] = useState<DoctorModel[]>(null);
 
   const [appointmentModal, setAppointmentModal] = useState({
     isVisible: false,
@@ -87,6 +88,10 @@ export const NewAppointmentScreen: React.FC<TProps> = props => {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   useEffect(() => {
+    TypicodeUserService.getUsers().then(typeUsers => {
+      setDoctors(typeUsers);
+
+    });
     navigation.setOptions({
       title: moment().format("MMMM YYYY"),
       headerStyle: {
@@ -125,7 +130,8 @@ export const NewAppointmentScreen: React.FC<TProps> = props => {
       <Divider style={{ marginTop: 12 }} />
       <Text style={styles.sectionTitle}>{getString("Available Doctors")}</Text>
       <FlatList
-        data={doctorsList}
+         data={doctors}
+
         style={{ marginTop: 8 }}
         keyExtractor={(item, index) => `key${index}ForDoctors`}
         renderItem={({ item }) => (

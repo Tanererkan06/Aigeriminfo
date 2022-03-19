@@ -86,26 +86,7 @@ export const MediaScreen: React.FC<TProps> = props => {
                 }}
                 style={styles.image}
               />
-              <View style={styles.liveContainer}>
-                <Text style={styles.liveText}>{getString("LIVE")}</Text>
-              </View>
-
-               {/* <View style={styles.doctorContainer}>
-                <Image
-                  source={{
-                    uri: item.doctor.imageUrl
-                  }}
-                  style={styles.doctorImage}
-                />
-               <View style={styles.doctorTextContainer}>
-                  <Text style={styles.doctorNameText}>
-                    {item.doctor.fullName}
-                  </Text>
-                  <Text style={styles.doctorTitleText}>
-                    {item.doctor.title}
-                  </Text>
-                </View> 
-              </View>*/}
+             
             </View>
             <View style={styles.textRowContainer}>
               <ScrollView

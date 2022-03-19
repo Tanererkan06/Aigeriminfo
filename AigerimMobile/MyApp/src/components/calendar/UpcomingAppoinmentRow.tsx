@@ -15,7 +15,7 @@ type TProps = {
 export const UpcomingAppoinmentRow: React.FC<TProps> = props => {
   return (
     <View style={[styles.container, props.style]}>
-      <Image source={require('../../../assets/header.png')} style={{ width: 400, height: 175, resizeMode: 'stretch', marginLeft: -10 }}
+      <Image source={require('../../../assets/header.png')} style={{ width: 370, height: 150, resizeMode: 'stretch', marginLeft:width/2-200 }}
       />
 
 
