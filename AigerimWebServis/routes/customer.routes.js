@@ -33,7 +33,7 @@ module.exports = app => {
         connection = c;
         oracledb.fetchAsBuffer = [oracledb.BLOB];
 
-        return connection.execute("SELECT id,Tarih,ru_baslik,ru_haber,ru_resim,kz_baslik,kz_haber,kz_resim FROM ng_haberler");
+        return connection.execute("SELECT * FROM ng_haberler");
 
       })
       .then((result) => {
@@ -43,24 +43,37 @@ module.exports = app => {
           user.id = elemento[0];
           user.tarih = elemento[1];
           user.rubaslik = elemento[2];
-          user.ruhaber = elemento[3];
-          const buff = Buffer.from(elemento[4], 'utf-8');
+          user.ruresim = elemento[3];
+          user.ruresim = elemento[4];
+
+
+        user.ruhaber = elemento[3];
+            const buff = Buffer.from(elemento[4], 'utf-8');
           const base64 = buff.toString('base64');
-          user.ruresim = base64;
+          user.ruresim = base64; 
           user.kzbaslik = elemento[5];
-          user.kzhaber = elemento[6];
-          const kzres = Buffer.from(elemento[4], 'utf-8');
+          user.kzhaber = elemento[6]; 
+        //  user.kzresim = elemento[7]; 
+
+          const kzres = Buffer.from(elemento[7], 'utf-8');
           const kzresbase64 = kzres.toString('base64');
-          user.kzresim = kzresbase64;
-          users.push(user);
+          user.kzresim = kzresbase64;  
+          user.tur = elemento[8];  
+          user.aktif = elemento[9]; 
+           users.push(user);
         });
         res.status(200).json(users);
+
+
+
+
+        
       }).then(() => {
         if (connection) {
-          connection.close();
+         // connection.close();
         }
       }).catch((error) => {
-        //  res.status(500).json({ message: error.message || "Some error occurred!" });
+       res.status(500).json({ message: error.message || "Some error occurred!" });
       });
   };
   //Select DBKOD,DBAD from NG_HIS_LNKDBS
@@ -174,6 +187,43 @@ module.exports = app => {
         res.status(500).json({ message: error.message || "Some error occurred!" });
       });
   };
+
+  
+  async function Kategoriler(req, res) {
+    let users = new Array();
+
+    connection = await oracledb.getConnection({
+      user: dbConfig.USER,
+      password: dbConfig.PASSWORD,
+      connectString: dbConfig.ConnectString
+    })
+      .then((c) => {
+        connection = c;
+        oracledb.fetchAsBuffer = [oracledb.BLOB];
+        return connection.execute("select KABINET,ISIM,SINIFI,PROFS from ng_his_glzr");
+      })
+      .then((result) => {
+        result.rows.forEach((elemento) => {
+          let user = new Object();
+          user.kabinet = elemento[0];
+          user.isim = elemento[1];
+          user.sinifi = elemento[2];
+          user.profs = elemento[3];
+          users.push(user);
+          console.log(user);
+        });
+
+        res.status(200).json(users);
+      }).then(() => {
+        if (connection) {
+          connection.close();
+        }
+      }).catch((error) => {
+        res.status(500).json({ message: error.message || "Some error occurred!" });
+      });
+  };
+
+  
 
   //DoktorSecimi
   //select doktor_id,soy||' '||ad||' '||baba vr,profs from ng_his_vrtkmad where PROFS='UZ260' and servis_id ='13001' and doktor_id is not null GROUP BY soy,ad,baba,profs,doktor_id  order by soy,ad
@@ -383,7 +433,7 @@ ng_his_vractakvim.doktor_id='DR534'  and ng_his_vractakvim.servis_id=ng_his_glzr
           connection.close();
         }
       }).catch((error) => {
-        //  res.status(500).json({ message: error.message || "Some error occurred!" });
+          res.status(500).json({ message: error.message || "Some error occurred!" });
       });
   };
 
@@ -430,5 +480,8 @@ ng_his_vractakvim.doktor_id='DR534'  and ng_his_vractakvim.servis_id=ng_his_glzr
     DoktorBilgi(req, res);
   })
 
-
+  //Kategoriler
+  app.get('/Kategoriler', function (req, res) {
+    Kategoriler(req, res);
+  })
 };
