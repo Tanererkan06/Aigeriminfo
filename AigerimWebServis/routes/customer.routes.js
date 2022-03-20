@@ -472,7 +472,7 @@ ng_his_vractakvim.doktor_id='DR534'  and ng_his_vractakvim.servis_id=ng_his_glzr
     UygunTarihSecimi(req, res);
   })
 
-  app.get('/UygunTarihSecimi', function (req, res) {
+  app.get('/UygunSaatSecimi', function (req, res) {
     UygunSaatSecimi(req, res);
   })
 
