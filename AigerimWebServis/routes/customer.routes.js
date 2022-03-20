@@ -47,13 +47,13 @@ module.exports = app => {
 
         result.rows.forEach((elemento) => {
           let user = new Object();
-          user.tarih = elemento[1];
+          user.id = elemento[0];
          
           const buffs = Buffer.from(elemento[4], 'utf-8');
           const base64s = buffs.toString('base64');
           data = base64s.replace(/^data:image\/png;base64,/, '');
 
-          fs.writeFile(path.resolve(__dirname, '../public/tmp/haber' + user.tarih + '.png'), data, 'base64', function (err) {
+          fs.writeFile(path.resolve(__dirname, '../public/tmp/haber/' + user.id + '.png'), data, 'base64', function (err) {
             if (err) throw err;
           });
         });
