@@ -82,6 +82,95 @@ module.exports = app => {
         res.status(500).json({ message: error.message || "Some error occurred!" });
       });
   }; 
+//select * from ng_slider 
+  async function Slider(req, res) {
+    let users = new Array();
+    var fs = require('fs');
+    const express = require('express');
+    const app = express();
+    app.use(express.static('public'));
+    var path = require('path');
+    connection = await oracledb.getConnection({
+      user: dbConfig.USER,
+      password: dbConfig.PASSWORD,
+      connectString: dbConfig.ConnectString
+    })
+      .then((c) => {
+        connection = c;
+        oracledb.fetchAsBuffer = [oracledb.BLOB];
+        return connection.execute("SELECT * FROM ng_slider");
+      })
+      .then((result) => {
+        result.rows.forEach((elemento) => {
+          let user = new Object();
+ 
+          user.ru = elemento[0];
+          user.kz = elemento[1];  
+          user.ruhaber = elemento[2];
+          //const buff = Buffer.from(elemento[4], 'utf-8');
+         // const base64 = buff.toString('base64');
+         user.resimru = '/tmp/slider/' +"ru"+user.ru + '.png';
+        //  user.ruresim = base64;
+          user.kzbaslik = elemento[5];
+          user.kzhaber = elemento[6]; 
+          //const kzres = Buffer.from(elemento[7], 'utf-8');
+         // const kzresbase64 = kzres.toString('base64');
+         // user.kzresim = kzresbase64;
+         user.resim = '/tmp/slider/' +"kz"+user.kz + '.png';
+
+          user.tur = elemento[8];
+          user.aktif = elemento[9];
+          users.push(user); 
+ 
+        
+        });
+        res.status(200).json(users); 
+
+        result.rows.forEach((elemento) => {
+          let user = new Object();
+          user.id = elemento[1];
+         
+          const buffs = Buffer.from(elemento[2], 'utf-8');
+          const base64s = buffs.toString('base64');
+          data = base64s.replace(/^data:image\/png;base64,/, '');
+
+          fs.writeFile(path.resolve(__dirname, '../public/tmp/slider/' + "ru"+user.id + '.png'), data, 'base64', function (err) {
+            if (err) throw err;
+          });
+       
+
+         const buffskz = Buffer.from(elemento[3], 'utf-8');
+          const base64kz = buffskz.toString('base64');
+          datakz = base64kz.replace(/^data:image\/png;base64,/, '');
+         
+          fs.writeFile(path.resolve(__dirname, '../public/tmp/slider/' + "kz"+user.id + '.png'), datakz, 'base64', function (err) {
+            if (err) throw err;
+          });
+
+
+        });
+
+
+
+      }).then(() => {
+        if (connection) {
+          connection.close();
+        }
+      }).catch((error) => {
+        res.status(500).json({ message: error.message || "Some error occurred!" });
+      });
+  }; 
+
+
+
+
+
+
+
+
+
+
+
   async function HastaneSecimi(req, res) {
     let users = new Array();
 
@@ -451,5 +540,8 @@ module.exports = app => {
   }) 
    app.get('/Kategoriler', function (req, res) {
     Kategoriler(req, res);
+  })
+  app.get('/Slider', function (req, res) {
+    Slider(req, res);
   })
 };
