@@ -31,14 +31,14 @@ module.exports = app => {
           user.ruhaber = elemento[3];
           //const buff = Buffer.from(elemento[4], 'utf-8');
          // const base64 = buff.toString('base64');
-         user.resimru = '/tmp/haber' +"ru"+user.id + '.png';
-          user.ruresim = base64;
+         user.resimru = '/tmp/haber/' +"ru"+user.id + '.png';
+        //  user.ruresim = base64;
           user.kzbaslik = elemento[5];
           user.kzhaber = elemento[6]; 
           //const kzres = Buffer.from(elemento[7], 'utf-8');
          // const kzresbase64 = kzres.toString('base64');
          // user.kzresim = kzresbase64;
-         user.resim = '/tmp/haber' +"kz"+user.id + '.png';
+         user.resim = '/tmp/haber/' +"kz"+user.id + '.png';
 
           user.tur = elemento[8];
           user.aktif = elemento[9];
