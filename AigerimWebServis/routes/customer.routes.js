@@ -1,29 +1,16 @@
 module.exports = app => {
   const dbConfig = require("../config/db.config.js");
   const oracledb = require('oracledb');
-  const fs = require('fs');
-  oracledb.fetchAsString = [oracledb.CLOB];
+ 
+  oracledb.fetchAsString = [oracledb.CLOB];  
 
-
-
-  /* const dbConfig = {
-    user: dbConfig.USER,
-    password: dbConfig.PASSWORD,
-    connectString: dbConfig.ConnectString,
-    poolMin: 10,
-    poolMax: 10,
-    poolIncrement: 0
-  }; */
-
-  /*
-  HASTA RANDEVULARI NG_HIS_PASRANDEVU
-  */
-
-
-  //SELECT id,Tarih,ru_baslik,ru_haber,ru_resim,kz_baslik,kz_haber,kz_resim FROM ng_haberler
   async function haberler(req, res) {
     let users = new Array();
-
+    var fs = require('fs');
+    const express = require('express');
+    const app = express();
+    app.use(express.static('public'));
+    var path = require('path');
     connection = await oracledb.getConnection({
       user: dbConfig.USER,
       password: dbConfig.PASSWORD,
@@ -32,9 +19,7 @@ module.exports = app => {
       .then((c) => {
         connection = c;
         oracledb.fetchAsBuffer = [oracledb.BLOB];
-
         return connection.execute("SELECT * FROM ng_haberler");
-
       })
       .then((result) => {
         result.rows.forEach((elemento) => {
@@ -42,42 +27,47 @@ module.exports = app => {
 
           user.id = elemento[0];
           user.tarih = elemento[1];
-          user.rubaslik = elemento[2];
-          user.ruresim = elemento[3];
-          user.ruresim = elemento[4];
-
-
-        user.ruhaber = elemento[3];
-            const buff = Buffer.from(elemento[4], 'utf-8');
+          user.rubaslik = elemento[2];  
+          user.ruhaber = elemento[3];
+          const buff = Buffer.from(elemento[4], 'utf-8');
           const base64 = buff.toString('base64');
-          user.ruresim = base64; 
+          user.ruresim = base64;
           user.kzbaslik = elemento[5];
           user.kzhaber = elemento[6]; 
-        //  user.kzresim = elemento[7]; 
-
           const kzres = Buffer.from(elemento[7], 'utf-8');
           const kzresbase64 = kzres.toString('base64');
-          user.kzresim = kzresbase64;  
-          user.tur = elemento[8];  
-          user.aktif = elemento[9]; 
-           users.push(user);
-        });
-        res.status(200).json(users);
-
-
-
-
+          user.kzresim = kzresbase64;
+          user.tur = elemento[8];
+          user.aktif = elemento[9];
+          users.push(user); 
+ 
         
+        });
+        res.status(200).json(users); 
+
+        result.rows.forEach((elemento) => {
+          let user = new Object();
+          user.tarih = elemento[1];
+         
+          const buffs = Buffer.from(elemento[4], 'utf-8');
+          const base64s = buffs.toString('base64');
+          data = base64s.replace(/^data:image\/png;base64,/, '');
+
+          fs.writeFile(path.resolve(__dirname, '../public/tmp/haber' + user.tarih + '.png'), data, 'base64', function (err) {
+            if (err) throw err;
+          });
+        });
+
+ 
+
       }).then(() => {
         if (connection) {
-         // connection.close();
+          connection.close();
         }
       }).catch((error) => {
-       res.status(500).json({ message: error.message || "Some error occurred!" });
+        res.status(500).json({ message: error.message || "Some error occurred!" });
       });
-  };
-  //Select DBKOD,DBAD from NG_HIS_LNKDBS
-  //HastaneSecimi
+  }; 
   async function HastaneSecimi(req, res) {
     let users = new Array();
 
@@ -112,9 +102,7 @@ module.exports = app => {
       }).catch((error) => {
         //  res.status(500).json({ message: error.message || "Some error occurred!" });
       });
-  };
-  //PoliklinikSecimi
-  //select profs,isim,kiosk from ng_his_kabuzman where kiosk='X' order by isim
+  }; 
   async function PoliklinikSecimi(req, res) {
     let users = new Array();
 
@@ -148,9 +136,7 @@ module.exports = app => {
       }).catch((error) => {
         //  res.status(500).json({ message: error.message || "Some error occurred!" });
       });
-  };
-  //select KABINET,ISIM,SINIFI from ng_his_glzr WHERE PROFS='UZ259' and SINIFI='P'
-  //UzmanlikSecimi
+  }; 
   async function UzmanlikSecimi(req, res) {
     let users = new Array();
 
@@ -186,9 +172,7 @@ module.exports = app => {
       }).catch((error) => {
         res.status(500).json({ message: error.message || "Some error occurred!" });
       });
-  };
-
-  
+  }; 
   async function Kategoriler(req, res) {
     let users = new Array();
 
@@ -200,52 +184,52 @@ module.exports = app => {
       .then((c) => {
         connection = c;
         oracledb.fetchAsBuffer = [oracledb.BLOB];
-        return connection.execute("select profs,isim,aciklama,resim from ng_his_kabuzman  where kiosk='X' order by isim ");
+        return connection.execute("select * from ng_his_kabuzman  where kiosk='X' order by isim ");
       })
       .then((result) => {
         result.rows.forEach((elemento) => {
           let user = new Object();
-         
-         // user.prof = elemento[0]; 
-           user.profs = elemento[0];
+
+          // user.prof = elemento[0]; 
+          user.profs = elemento[0];
 
           user.isim = elemento[1];
-          user.aciklama = elemento[2];
-          
-           
-           const buff = Buffer.from(JSON.stringify(elemento[2]), 'utf-8');
+          user.aciklama = elemento[5];
+
+
+          /*  const buff = Buffer.from(JSON.stringify(elemento[3]), 'utf-8');
           const base64 = buff.toString('base64');
-          user.resim = base64;  
-          
-          //user.resim = elemento[4];
+          user.resim = base64; */
 
-               
-         /*  const kategiriresim = Buffer.from(elemento[4], 'utf-8');
-          user.resim=kategiriresim; */
-         /*  const base64s = buffs.toString('base64');
-          data = base64s.replace(/^data:image\/png;base64,/, '');
+         // user.resim = elemento[17];
 
-          fs.writeFile(path.resolve(__dirname, '../public/tmp/' + user.isim + '.png'), data, 'base64', function (err) {
-            if (err) throw err;
-          }); */
+
+          /*  const kategiriresim = Buffer.from(elemento[4], 'utf-8');
+           user.resim=kategiriresim; */
+          /*  const base64s = buffs.toString('base64');
+           data = base64s.replace(/^data:image\/png;base64,/, '');
+ 
+           fs.writeFile(path.resolve(__dirname, '../public/tmp/' + user.isim + '.png'), data, 'base64', function (err) {
+             if (err) throw err;
+           }); */
           users.push(user);
-         // console.log(user);
+          // console.log(user);
         });
 
         res.status(200).json(users);
+
+      
+
+
+
       }).then(() => {
         if (connection) {
-        //  connection.close();
+          //  connection.close();
         }
       }).catch((error) => {
         res.status(500).json({ message: error.message || "Some error occurred!" });
       });
-  };
-
-  
-
-  //DoktorSecimi
-  //select doktor_id,soy||' '||ad||' '||baba vr,profs from ng_his_vrtkmad where PROFS='UZ260' and servis_id ='13001' and doktor_id is not null GROUP BY soy,ad,baba,profs,doktor_id  order by soy,ad
+  };  
   async function DoktorSecimi(req, res) {
     let users = new Array();
 
@@ -284,21 +268,7 @@ module.exports = app => {
       }).catch((error) => {
         //  res.status(500).json({ message: error.message || "Some error occurred!" });
       });
-  };
-  //UygunTarihSecimi
-  //select * from  ng_his_vractakvim
-  //
-
-  //tamamı 
-  /*
-  select ng_his_vractakvim.datar, 'прием' d  ,ng_his_vractakvim.bassaat,ng_his_vractakvim.bitsaat,ng_his_vractakvim.servis_id ,ng_his_glzr.isim,NG_HIS_PRSRSMM.RESIM,NG_HIS_PRSRSMM.VRAC_ID,NG_HIS_PRSRSMM.PERBILGI,
-NG_HIS_RPSL.IMYA , NG_HIS_RPSL.FAMILYA ,  NG_HIS_RPSL.OCEST
-from  NG_HIS_PRSRSMM ,NG_HIS_RPSL,ng_his_glzr,ng_his_vractakvim
-WHERE  NG_HIS_PRSRSMM.VRAC_ID=NG_HIS_RPSL.KULLAN AND  NG_HIS_RPSL.PKULL  IS NULL
-and
-ng_his_vractakvim.doktor_id='DR534'  and ng_his_vractakvim.servis_id=ng_his_glzr.kabinet and ng_his_vractakvim.datar>=to_char(sysdate,'dd/mm/yyyy') and ng_his_vractakvim.servis_id in (select kabinet from ng_his_glzr where sinifi <>'S')
-  
-  */
+  }; 
   async function UygunTarihSecimi(req, res) {
     let users = new Array();
 
@@ -336,9 +306,7 @@ ng_his_vractakvim.doktor_id='DR534'  and ng_his_vractakvim.servis_id=ng_his_glzr
       }).catch((error) => {
         //  res.status(500).json({ message: error.message || "Some error occurred!" });
       });
-  };
-  //UygunSaatSecimi
-  //select * from  ng_his_vractakvim
+  }; 
   async function UygunSaatSecimi(req, res) {
     let users = new Array();
 
@@ -376,15 +344,13 @@ ng_his_vractakvim.doktor_id='DR534'  and ng_his_vractakvim.servis_id=ng_his_glzr
       }).catch((error) => {
         //  res.status(500).json({ message: error.message || "Some error occurred!" });
       });
-  };
-
+  }; 
   async function DoktorBilgi(req, res) {
     let users = new Array();
     var fs = require('fs');
     const express = require('express');
     const app = express();
     app.use(express.static('public'));
-
     var path = require('path');
     connection = await oracledb.getConnection({
       user: dbConfig.USER,
@@ -404,10 +370,7 @@ ng_his_vractakvim.doktor_id='DR534'  and ng_his_vractakvim.servis_id=ng_his_glzr
 
       })
       .then((result) => {
-
-
-
-
+        
         result.rows.forEach((elemento) => {
 
           let user = new Object();
@@ -427,12 +390,9 @@ ng_his_vractakvim.doktor_id='DR534'  and ng_his_vractakvim.servis_id=ng_his_glzr
         res.status(200).json(users);
 
         result.rows.forEach((elemento) => {
-
           let user = new Object();
-
           user.vracid = elemento[0];
           user.resim = elemento[1];
-
           const buffs = Buffer.from(elemento[1], 'utf-8');
           const base64s = buffs.toString('base64');
           data = base64s.replace(/^data:image\/png;base64,/, '');
@@ -442,65 +402,40 @@ ng_his_vractakvim.doktor_id='DR534'  and ng_his_vractakvim.servis_id=ng_his_glzr
           });
         });
 
-
-
-
-
       }).then(() => {
         if (connection) {
 
           connection.close();
         }
       }).catch((error) => {
-          res.status(500).json({ message: error.message || "Some error occurred!" });
+        res.status(500).json({ message: error.message || "Some error occurred!" });
       });
-  };
-
-
-
+  }; 
   app.get('/haberler', function (req, res) {
     haberler(req, res);
-  })
-
+  }) 
   app.get('/HastaneSecimi', function (req, res) {
     HastaneSecimi(req, res);
-  })
-
-  //PoliklinikSecimi
-  /*
-  ’P’  POLIKLINIK (HEM POLIKNIK VE DOKTOR SECILECEK)
-       =’R’  RADYOLOJI  (HEM POLIKNIK VE DOKTOR SECILECEK)
-       =’L’   LABORATUVAR (SADECE POLIKNIK SECILECEK DOKTORA YOK)
-   
-  */
+  }) 
   app.get('/PoliklinikSecimi', function (req, res) {
     PoliklinikSecimi(req, res);
-  })
-
+  }) 
   app.get('/UzmanlikSecimi', function (req, res) {
     UzmanlikSecimi(req, res);
-  })
-
+  }) 
   app.get('/DoktorSecimi', function (req, res) {
     DoktorSecimi(req, res);
-  })
-
-
-  //UZ024
+  }) 
   app.get('/UygunTarihSecimi', function (req, res) {
     UygunTarihSecimi(req, res);
-  })
-
+  }) 
   app.get('/UygunSaatSecimi', function (req, res) {
     UygunSaatSecimi(req, res);
-  })
-
+  }) 
   app.get('/DoktorBilgi', function (req, res) {
     DoktorBilgi(req, res);
-  })
-
-  //Kategoriler
-  app.get('/Kategoriler', function (req, res) {
+  }) 
+   app.get('/Kategoriler', function (req, res) {
     Kategoriler(req, res);
   })
 };
