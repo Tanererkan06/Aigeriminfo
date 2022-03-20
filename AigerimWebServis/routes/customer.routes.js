@@ -200,23 +200,42 @@ module.exports = app => {
       .then((c) => {
         connection = c;
         oracledb.fetchAsBuffer = [oracledb.BLOB];
-        return connection.execute("select KABINET,ISIM,SINIFI,PROFS from ng_his_glzr");
+        return connection.execute("select profs,isim,aciklama,resim from ng_his_kabuzman  where kiosk='X' order by isim ");
       })
       .then((result) => {
         result.rows.forEach((elemento) => {
           let user = new Object();
-          user.kabinet = elemento[0];
+         
+         // user.prof = elemento[0]; 
+           user.profs = elemento[0];
+
           user.isim = elemento[1];
-          user.sinifi = elemento[2];
-          user.profs = elemento[3];
+          user.aciklama = elemento[2];
+          
+           
+           const buff = Buffer.from(JSON.stringify(elemento[2]), 'utf-8');
+          const base64 = buff.toString('base64');
+          user.resim = base64;  
+          
+          //user.resim = elemento[4];
+
+               
+         /*  const kategiriresim = Buffer.from(elemento[4], 'utf-8');
+          user.resim=kategiriresim; */
+         /*  const base64s = buffs.toString('base64');
+          data = base64s.replace(/^data:image\/png;base64,/, '');
+
+          fs.writeFile(path.resolve(__dirname, '../public/tmp/' + user.isim + '.png'), data, 'base64', function (err) {
+            if (err) throw err;
+          }); */
           users.push(user);
-          console.log(user);
+         // console.log(user);
         });
 
         res.status(200).json(users);
       }).then(() => {
         if (connection) {
-          connection.close();
+        //  connection.close();
         }
       }).catch((error) => {
         res.status(500).json({ message: error.message || "Some error occurred!" });
