@@ -82,8 +82,7 @@ module.exports = app => {
         res.status(500).json({ message: error.message || "Some error occurred!" });
       });
   };
-  //select * from ng_slider 
-  async function Slider(req, res) {
+   async function Slider(req, res) {
     let users = new Array();
     var fs = require('fs');
     const express = require('express');
@@ -297,8 +296,7 @@ module.exports = app => {
           // const kzresbase64 = kzres.toString('base64');
           // user.kzresim = kzresbase64;
           
-
-
+          users.push(user);
         });
         res.status(200).json(users);
 
