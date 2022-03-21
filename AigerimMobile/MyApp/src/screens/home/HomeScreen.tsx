@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   ScrollView,
-  Text,Image,
+  Text, Image,
   View,
-  FlatList,Dimensions ,
+  FlatList, Dimensions,
   TouchableOpacity
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -20,12 +20,13 @@ import {
 } from "../../components";
 const width = Dimensions.get('window').width;
 const hight = Dimensions.get('window').height;
-import { DashboardItemsModel, DoctorModel, TypicodeUserModel,DepartmentModel} from "../../models";
-import { DashboardService, DoctorsService,DepartmentService } from "../../services";
+import { DashboardItemsModel, DoctorModel, TypicodeUserModel, DepartmentModel } from "../../models";
+import { DashboardService, DoctorsService, DepartmentService } from "../../services";
 import { useLocalization } from "../../localization";
 import NavigationNames from "../../navigations/NavigationNames";
-import { HomeMenuItemType } from "../../types"; 
- 
+import { HomeMenuItemType } from "../../types";
+import Carousel from "react-native-snap-carousel";
+
 const generateMenuItems = (
   getString: (key: string) => string
 ): HomeMenuItemType[] => [
@@ -43,10 +44,51 @@ const generateMenuItems = (
       iconBack: "#35CDF7",
       action: "LabTestsAtHome"
     },
-   
+
   ];
 
-type TProps = {};
+type TProps = {
+  activeIndex: 0,
+
+  carouselItems: [
+    {
+      title: "Item 1",
+      text: "Text 1",
+    },
+    {
+      title: "Item 2",
+      text: "Text 2",
+    },
+    {
+      title: "Item 3",
+      text: "Text 3",
+    },
+    {
+      title: "Item 4",
+      text: "Text 4",
+    },
+    {
+      title: "Item 5",
+      text: "Text 5",
+    },
+  ]
+};
+
+/* _renderItem({item,index}){
+  return (
+    <View style={{
+        backgroundColor:'floralwhite',
+        borderRadius: 5,
+        height: 250,
+        padding: 50,
+        marginLeft: 25,
+        marginRight: 25, }}>
+      <Text style={{fontSize: 30}}>{item.title}</Text>
+      <Text>{item.text}</Text>
+    </View>
+
+  )
+} */
 
 export const HomeScreen: React.FC<TProps> = asyncprops => {
   const navigation = useNavigation();
@@ -62,16 +104,18 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
     });
 
     DoctorsService.getDoctors().then(typeUsers => {
-      setDoctors(typeUsers); 
+      setDoctors(typeUsers);
 
-    }); 
-     DepartmentService.getDepartment().then(items => {
+    });
+    DepartmentService.getDepartment().then(items => {
       setDeparmans(items);
     });
     /*  TypicodeUserService.getUsers().then(typeUsers => {
         setTypicodeUsers(typeUsers);
       });*/
   }, []);
+
+
   const onClickMenu = (item: HomeMenuItemType) => {
     switch (item.action) {
       case "BookAnAppoinment":
@@ -86,19 +130,59 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
     }
   };
 
-  if (dashboardItem === null) {
-    return <Text>Loading</Text>;
-  }
 
+
+
+
+
+  if (dashboardItem === null) {
+    return <Text>L
+      oading</Text>;
+  }
+  function _renderItem(item: TProps) {
+    return (
+      <View style={{
+        backgroundColor: 'floralwhite',
+        borderRadius: 5,
+        height: 250,
+        padding: 50,
+        marginLeft: 25,
+        marginRight: 25,
+      }}>
+        <Text style={{ fontSize: 30 }}>{item.carouselItems.title}</Text>
+        <Text>{item.text}</Text>
+      </View>
+
+    );
+  }
   return (
+
+
+
+
+
     <ScrollView
       contentContainerStyle={styles.container}
       showsVerticalScrollIndicator={false}
     >
-      <UpcomingAppoinmentRow
+      {/*  <UpcomingAppoinmentRow
         style={styles.upcomingAppoinmentRow}
         item={dashboardItem.appointment}
-      />
+      /> */}
+
+
+   {/*    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', }}>
+        <Carousel
+          layout={"default"}
+          ref={ref => this.carousel = ref}
+          data={this.state.carouselItems}
+          sliderWidth={300}
+          itemWidth={300}
+          renderItem={this._renderItem}
+          onSnapToItem={index => this.setState({ activeIndex: index })} />
+      </View>
+ */}
+
       <SectionHeader title={getString("What are you looking for?")} />
       <FlatList
         data={generateMenuItems(getString)}
@@ -141,7 +225,7 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
       />
 
 
-<SectionHeader
+      <SectionHeader
         title={getString("Our Departments")}
         rightTitle={getString("See More")}
         rightAction={() =>
@@ -178,7 +262,7 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
           navigation.navigate(NavigationNames.DoctorListScreen)
         }
       />
-     
+
       <FlatList
         data={doctors}
         horizontal={true}
@@ -202,9 +286,9 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
       <View>
         <Text>asd</Text>
       </View>
-      
-     
-         
+
+
+
 
     </ScrollView>
   );

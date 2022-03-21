@@ -3,7 +3,7 @@ import { DoctorModel, TypicodeUserModel, ReviewModel, DepartmentModel, Departmen
 export default class DepartmentService {
     public static getDepartment(): Promise<DepartmentModel[]> {
 
-        var typeiCodeUsers2 = fetch('http://25.46.200.59:3002/PoliklinikSecimi')
+        var typeiCodeUsers2 = fetch('http://25.46.200.59:3002/kategoriler')
             .then((response) => response.json())
             .then((json) => {
                 var typeiCodeUsers: TypicodeUserModel[] = json;
@@ -24,7 +24,7 @@ export default class DepartmentService {
 
 
                 deparmans.title = departman.isim;
-               // deparmans.imageUrl = departman.imageUrl;
+                 deparmans.imageUrl =  "http://25.46.200.59:3002/tmp/kategoriler/"+departman.id+".png";
                 deparmans.shortDescription = departman.aciklama;
                 deparmans.htmlContent = departman.htmlContent;
            /*

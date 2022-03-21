@@ -112,7 +112,7 @@ export const MediaScreen: React.FC<TProps> = props => {
                   </View>
                 ))} */}
               </ScrollView>
-              <Text style={styles.titleText}>{item.title}sssss</Text>
+              <Text style={styles.titleText}>{item.title}</Text>
               <Text style={styles.minuteText}>
                {/*  {moment(item.startedDate)
                   .startOf("hour")
