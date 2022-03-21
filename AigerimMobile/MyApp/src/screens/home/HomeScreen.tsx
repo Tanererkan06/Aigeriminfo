@@ -138,8 +138,8 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
   if (dashboardItem === null) {
     return <Text>L
       loading</Text>;
-  } 
-  return ( 
+  }
+  return (
 
     <ScrollView
       contentContainerStyle={styles.container}
@@ -151,7 +151,7 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
       /> */}
 
 
-   {/*    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', }}>
+      {/*    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', }}>
         <Carousel
           layout={"default"}
           ref={ref => this.carousel = ref}
@@ -184,7 +184,7 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
       /> */}
 
 
-    {/*   <FlatList
+      {/*   <FlatList
         data={dashboardItem.campaigns}
         renderItem={row => (
           <TouchableOpacity
@@ -263,8 +263,89 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
         scrollEnabled={true}
       />
 
-      <View>
-        <Text>asd</Text>
+      <View
+        style={{
+          width: width,
+          flexDirection: "row",
+          height: hight / 4,
+          borderColor: "white",
+          backgroundColor: "#08324d",
+
+        }}
+      >
+        <View style={{
+          //backgroundColor: "blue", 
+          flex: 0.5,
+
+        }} >
+          <Text style={styles.innerText}>О клинике
+
+          </Text>
+          <Text style={styles.innerText}>
+            Услуги
+          </Text>
+          <Text style={styles.innerText}>
+            Прайс-лист
+            
+          </Text>
+          <Text style={styles.innerText}>
+
+            Специалисты
+            
+          </Text>
+          <Text style={styles.innerText}>
+
+
+             Контакты
+          </Text>
+          <Text style={styles.innerText}>
+
+
+            Статьи
+            
+          </Text>
+          <Text style={styles.innerText}>
+
+
+          
+            Контакты
+          </Text>
+
+        </View>
+        <View style={{
+          flex: 0.5
+        }} >
+          <Text style={styles.innerText}>Задать вопрос
+           </Text>
+            <Text style={styles.innerText}> 
+            Записаться на прием
+          </Text>
+            <Text style={styles.innerText}> 
+           
+            Оставить отзыв
+             </Text>
+            <Text style={styles.innerText}> 
+            
+            Оставить отзыв
+            </Text>
+            <Text style={styles.innerText}> 
+            
+            Написать в администрацию</Text>
+        </View>
+        
+        <View style={{
+          flex: 0.5,
+
+        }} >
+          <Text style={styles.innerText}>
+            03000, РК, г.Актобе ул. Пацаева 7/1
+            03000, РК, г.Актобе ул. Шернияза 35
+            03000, РК, г.Актобе ул.Маресьева 87
+            +7 (7132) 905-100
+            +7 (775) 0 905-100
+            +7 (778) 0 905 100
+            call@aigerim.info</Text>
+        </View>
       </View>
 
 
@@ -275,6 +356,13 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
 };
 
 const styles = StyleSheet.create({
+  baseText: {
+    fontWeight: 'bold'
+  },
+  innerText: {
+    color: 'white',
+    fontSize: 12,
+  },
   container: { paddingVertical: 24 },
   upcomingAppoinmentRow: {
     marginHorizontal: 16
