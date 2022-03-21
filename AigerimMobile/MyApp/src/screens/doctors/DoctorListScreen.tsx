@@ -44,7 +44,7 @@ export const DoctorListScreen: React.FC<TProps> = props => {
         </TouchableOpacity>
       )}
       keyExtractor={(item, index) => `key${index}ForDoctor`}
-      ItemSeparatorComponent={() => <Divider />}
+     // ItemSeparatorComponent={() => <Divider />}
       contentContainerStyle={{ paddingVertical: 12 }}
       style={styles.container}
     />

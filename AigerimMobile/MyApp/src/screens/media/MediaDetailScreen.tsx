@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -10,13 +10,25 @@ import {
 import { useRoute, useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { Theme } from "../../theme";
-import { MediaModel } from "../../models";
+import { DashboardItemsModel, DoctorModel, TypicodeUserModel ,MediaModel} from "../../models";
+
+import { DashboardService, DoctorsService,MediaService } from "../../services";
 import { useLocalization } from "../../localization";
 import { Divider, HtmlView } from "../../components";
 
 type TProps = {};
 
 export const MediaDetailScreen: React.FC<TProps> = props => {
+  const [media, setMedia] = useState<MediaModel[]>(null);
+
+  useEffect(() => {
+
+    MediaService.getMedia().then(typeUsers => {
+      setMedia(typeUsers);
+    });
+  
+  }, []);
+
   const { getString } = useLocalization();
   const route = useRoute();
   const navigation = useNavigation();
@@ -31,15 +43,15 @@ export const MediaDetailScreen: React.FC<TProps> = props => {
       contentContainerStyle={styles.contentContainer}
     >
       <View style={styles.headerImage}>
-        <Image
+        {/* <Image
           source={{
             uri: model.imageUrl
           }}
           style={styles.image}
-        />
-        <View style={styles.liveContainer}>
+        /> */}
+        {/* <View style={styles.liveContainer}>
           
-        </View>
+        </View> */}
         <View style={styles.playButtonContainer}>
           <TouchableOpacity onPress={() => {}}>
             <Ionicons name="ios-play-circle" color="white" size={66} />
@@ -50,18 +62,18 @@ export const MediaDetailScreen: React.FC<TProps> = props => {
       <View style={styles.titleContainer}>
         <Text style={styles.titleText}>{model.title}</Text>
       </View>
-      <Divider style={styles.divider} />
+      {/* <Divider style={styles.divider} /> */}
       <View style={styles.doctorContainer}>
-        <Image
+        {/* <Image
           source={{ uri: model.doctor.imageUrl }}
           style={styles.doctorImage}
-        />
+        /> */}
         <View style={styles.doctorInfoRows}>
-          <Text style={styles.doctorNameText}>{model.doctor.fullName}</Text>
-          <Text style={styles.doctorTitleText}>{model.doctor.title}</Text>
+{/*           <Text style={styles.doctorNameText}>{model.doctor.fullName}</Text>
+         <Text style={styles.doctorTitleText}>{model.doctor.title}</Text> */} 
         </View>
       </View>
-      <Divider style={styles.divider} />
+    {/*   <Divider style={styles.divider} /> */}
       <View style={styles.detailContainer}>
         <Text style={styles.detailTitleText}>{getString("Details")}</Text>
         <HtmlView htmlContent={model.htmlContent} imagesMaxWidthOffset={40} />

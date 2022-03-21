@@ -6,25 +6,24 @@ import {
   TouchableOpacity,
   View
 } from "react-native";
-import { departmentList } from "../../datas";
-import { DepartmentItem } from "../../components";
+ import { DepartmentItem } from "../../components";
 import { useNavigation } from "@react-navigation/native";
 import NavigationNames from "../../navigations/NavigationNames";
-import { DashboardItemsModel, DoctorModel, TypicodeUserModel ,MediaModel} from "../../models";
+import { DashboardItemsModel, DoctorModel, TypicodeUserModel, DepartmentModel } from "../../models";
 
-import { DashboardService, DoctorsService,MediaService } from "../../services";
+import { DashboardService, DoctorsService, DepartmentService } from "../../services";
 const SCREEN_WIDTH = Dimensions.get("screen").width;
 
 type TProps = {};
 
 export const DepartmentListScreen: React.FC<TProps> = props => {
 
-  const [media, setMedia] = useState<MediaModel[]>(null);
+  const [departman, setDeparmans] = useState<DepartmentModel[]>(null);
 
   useEffect(() => {
 
-    MediaService.getMedia().then(typeUsers => {
-      setMedia(typeUsers);
+    DepartmentService.getDepartment().then(items => {
+      setDeparmans(items);
     });
   
   }, []);
@@ -32,7 +31,7 @@ export const DepartmentListScreen: React.FC<TProps> = props => {
   const navigation = useNavigation();
   return (
     <FlatList
-      data={media}
+      data={departman}
       keyExtractor={(item, index) => `key${index}ForDepartment`}
       renderItem={row => (
         <TouchableOpacity
