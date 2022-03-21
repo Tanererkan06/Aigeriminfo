@@ -106,17 +106,17 @@ module.exports = app => {
  
           user.ru = elemento[0];
           user.kz = elemento[1];  
-          user.ruhaber = elemento[2];
+         
           //const buff = Buffer.from(elemento[4], 'utf-8');
          // const base64 = buff.toString('base64');
-         user.resimru = '/tmp/slider/' +"ru"+user.ru + '.png';
+         user.resimru = '/tmp/slider/'+"ru"+user.ru+'.png';
         //  user.ruresim = base64;
           user.kzbaslik = elemento[5];
           user.kzhaber = elemento[6]; 
           //const kzres = Buffer.from(elemento[7], 'utf-8');
          // const kzresbase64 = kzres.toString('base64');
          // user.kzresim = kzresbase64;
-         user.resim = '/tmp/slider/' +"kz"+user.kz + '.png';
+         user.resim = '/tmp/slider/'+"kz"+user.kz+'.png';
 
           user.tur = elemento[8];
           user.aktif = elemento[9];
@@ -134,7 +134,7 @@ module.exports = app => {
           const base64s = buffs.toString('base64');
           data = base64s.replace(/^data:image\/png;base64,/, '');
 
-          fs.writeFile(path.resolve(__dirname, '../public/tmp/slider/' + "ru"+user.id + '.png'), data, 'base64', function (err) {
+          fs.writeFile(path.resolve(__dirname, '../public/tmp/slider/'+"ru"+user.id+'.png'), data, 'base64', function (err) {
             if (err) throw err;
           });
        
@@ -143,7 +143,7 @@ module.exports = app => {
           const base64kz = buffskz.toString('base64');
           datakz = base64kz.replace(/^data:image\/png;base64,/, '');
          
-          fs.writeFile(path.resolve(__dirname, '../public/tmp/slider/' + "kz"+user.id + '.png'), datakz, 'base64', function (err) {
+          fs.writeFile(path.resolve(__dirname, '../public/tmp/slider/'+"kz"+user.id+'.png'), datakz, 'base64', function (err) {
             if (err) throw err;
           });
 
