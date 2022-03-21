@@ -27,26 +27,7 @@ export default class MediaService {
                 yenihaberler.imageUrl1 = "http://25.46.200.59:3002/tmp/haber/"+"kz"+media.id+".png";
  
                 yenihaberler.title2 = media.kzbaslik;
-                yenihaberler.htmlContent1 = media.kzhaber;
-
-                /*  
-                 imageUrl: string;
-        title: string;
-        tags: string[];
-        htmlContent: string;
-        doctor: DoctorModel;
-        isLive: boolean;
-        startedDate: Date;
-                
-                
-                doctor.fullName = user.imya +" "+ user.familiya;
-                  doctor.about = user.perbilgi;
-                  doctor.title = user.zvanye;
-                  doctor.imageUrl = "http://25.46.200.59:3002/tmp/"+user.vracid+".png";
-                  doctor.rating = 5;
-                  doctor.isOnline = true; */
-
-                console.log(yenihaberler),
+                yenihaberler.htmlContent1 = media.kzhaber; 
 
                     doctorModel.push(yenihaberler);
             }

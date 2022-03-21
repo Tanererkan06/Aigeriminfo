@@ -1,22 +1,30 @@
 import React from "react";
 import { View, Text, StyleSheet, ViewStyle, Image, Dimensions } from "react-native";
+
 import { Theme } from "../../theme";
 import { Ionicons } from "@expo/vector-icons";
 import { Avatar } from "../avatar";
 import { AppointmentModel } from "../../models/AppointmentModel";
+import Carousel from "react-native-snap-carousel";
+
 import moment from "moment";
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
+
 type TProps = {
   style?: ViewStyle;
   item: AppointmentModel;
 };
 
 export const UpcomingAppoinmentRow: React.FC<TProps> = props => {
+
+
+
+  
   return (
     <View style={[styles.container, props.style]}>
-      <Image source={require('../../../assets/header.png')} style={{ width: 370, height: 150, resizeMode: 'stretch', marginLeft:width/2-200 }}
-      />
+     {/*  <Image source={require('../../../assets/header.png')} style={{ width: 370, height: 150, resizeMode: 'stretch', marginLeft:width/2-200 }}
+      /> */}
 
 
     </View>
