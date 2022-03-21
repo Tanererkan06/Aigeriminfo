@@ -159,18 +159,7 @@ module.exports = app => {
       }).catch((error) => {
         res.status(500).json({ message: error.message || "Some error occurred!" });
       });
-  }; 
-
-
-
-
-
-
-
-
-
-
-
+  };  
   async function HastaneSecimi(req, res) {
     let users = new Array();
 
@@ -298,31 +287,32 @@ module.exports = app => {
 
           user.isim = elemento[1];
           user.aciklama = elemento[5];
+          user.resim = '/tmp/kategoriler/' + user.kz + '.png';
 
-
-          /*  const buff = Buffer.from(JSON.stringify(elemento[3]), 'utf-8');
-          const base64 = buff.toString('base64');
-          user.resim = base64; */
-
-         // user.resim = elemento[17];
-
-
-          /*  const kategiriresim = Buffer.from(elemento[4], 'utf-8');
-           user.resim=kategiriresim; */
-          /*  const base64s = buffs.toString('base64');
-           data = base64s.replace(/^data:image\/png;base64,/, '');
  
-           fs.writeFile(path.resolve(__dirname, '../public/tmp/' + user.isim + '.png'), data, 'base64', function (err) {
-             if (err) throw err;
-           }); */
           users.push(user);
-          // console.log(user);
+            console.log(user);
         });
 
         res.status(200).json(users);
 
       
+        result.rows.forEach((elemento) => {
+          let user = new Object();
+          user.id = elemento[1];
+         
+          const buffs = Buffer.from(elemento[2], 'utf-8');
+          const base64s = buffs.toString('base64');
+          data = base64s.replace(/^data:image\/png;base64,/, '');
 
+          fs.writeFile(path.resolve(__dirname, '../public/tmp/kategoriler/' + user.id + '.png'), data, 'base64', function (err) {
+            if (err) throw err;
+          });
+       
+ 
+
+
+        });
 
 
       }).then(() => {
