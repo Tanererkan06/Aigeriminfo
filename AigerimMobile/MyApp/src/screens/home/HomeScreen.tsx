@@ -137,29 +137,9 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
 
   if (dashboardItem === null) {
     return <Text>L
-      oading</Text>;
-  }
-  function _renderItem(item: TProps) {
-    return (
-      <View style={{
-        backgroundColor: 'floralwhite',
-        borderRadius: 5,
-        height: 250,
-        padding: 50,
-        marginLeft: 25,
-        marginRight: 25,
-      }}>
-        <Text style={{ fontSize: 30 }}>{item.carouselItems.title}</Text>
-        <Text>{item.text}</Text>
-      </View>
-
-    );
-  }
-  return (
-
-
-
-
+      loading</Text>;
+  } 
+  return ( 
 
     <ScrollView
       contentContainerStyle={styles.container}
@@ -195,16 +175,16 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
         ItemSeparatorComponent={() => <Divider h16 />}
         scrollEnabled={false}
       />
-      <SectionHeader
+      {/* <SectionHeader
         title={getString("New Campaigns")}
         rightTitle={getString("See More")}
         rightAction={() =>
           navigation.navigate(NavigationNames.CampaignListScreen)
         }
-      />
+      /> */}
 
 
-      <FlatList
+    {/*   <FlatList
         data={dashboardItem.campaigns}
         renderItem={row => (
           <TouchableOpacity
@@ -222,7 +202,7 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
         ItemSeparatorComponent={() => <View style={styles.horizontalDivider} />}
         contentContainerStyle={styles.campaignsContainer}
         keyExtractor={(item, index) => `key${index}ForCampaign`}
-      />
+      /> */}
 
 
       <SectionHeader

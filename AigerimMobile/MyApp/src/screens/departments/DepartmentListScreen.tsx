@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   FlatList,
@@ -10,16 +10,29 @@ import { departmentList } from "../../datas";
 import { DepartmentItem } from "../../components";
 import { useNavigation } from "@react-navigation/native";
 import NavigationNames from "../../navigations/NavigationNames";
+import { DashboardItemsModel, DoctorModel, TypicodeUserModel ,MediaModel} from "../../models";
 
+import { DashboardService, DoctorsService,MediaService } from "../../services";
 const SCREEN_WIDTH = Dimensions.get("screen").width;
 
 type TProps = {};
 
 export const DepartmentListScreen: React.FC<TProps> = props => {
+
+  const [media, setMedia] = useState<MediaModel[]>(null);
+
+  useEffect(() => {
+
+    MediaService.getMedia().then(typeUsers => {
+      setMedia(typeUsers);
+    });
+  
+  }, []);
+
   const navigation = useNavigation();
   return (
     <FlatList
-      data={departmentList}
+      data={media}
       keyExtractor={(item, index) => `key${index}ForDepartment`}
       renderItem={row => (
         <TouchableOpacity
