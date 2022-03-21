@@ -287,7 +287,8 @@ module.exports = app => {
           let user = new Object();
 
           user.id = elemento[0];
-          user.tarih = elemento[1]; 
+          user.isim = elemento[1]; 
+          user.aciklama = elemento[5]; 
           //const buff = Buffer.from(elemento[4], 'utf-8');
           // const base64 = buff.toString('base64');
           user.resimru = '/tmp/kategoriler/' +user.id + '.png';
