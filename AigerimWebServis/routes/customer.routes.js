@@ -290,7 +290,7 @@ module.exports = app => {
           user.tarih = elemento[1]; 
           //const buff = Buffer.from(elemento[4], 'utf-8');
           // const base64 = buff.toString('base64');
-          user.resimru = '/tmp/kategoriler/' + "ru" + user.id + '.png';
+          user.resimru = '/tmp/kategoriler/' +user.id + '.png';
           //  user.ruresim = base64; 
           //const kzres = Buffer.from(elemento[7], 'utf-8');
           // const kzresbase64 = kzres.toString('base64');
