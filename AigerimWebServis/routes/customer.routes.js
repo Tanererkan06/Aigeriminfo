@@ -1,8 +1,8 @@
 module.exports = app => {
   const dbConfig = require("../config/db.config.js");
   const oracledb = require('oracledb');
- 
-  oracledb.fetchAsString = [oracledb.CLOB];  
+
+  oracledb.fetchAsString = [oracledb.CLOB];
 
   async function haberler(req, res) {
     let users = new Array();
@@ -27,45 +27,45 @@ module.exports = app => {
 
           user.id = elemento[0];
           user.tarih = elemento[1];
-          user.rubaslik = elemento[2];  
+          user.rubaslik = elemento[2];
           user.ruhaber = elemento[3];
           //const buff = Buffer.from(elemento[4], 'utf-8');
-         // const base64 = buff.toString('base64');
-         user.resimru = '/tmp/haber/' +"ru"+user.id + '.png';
-        //  user.ruresim = base64;
+          // const base64 = buff.toString('base64');
+          user.resimru = '/tmp/haber/' + "ru" + user.id + '.png';
+          //  user.ruresim = base64;
           user.kzbaslik = elemento[5];
-          user.kzhaber = elemento[6]; 
+          user.kzhaber = elemento[6];
           //const kzres = Buffer.from(elemento[7], 'utf-8');
-         // const kzresbase64 = kzres.toString('base64');
-         // user.kzresim = kzresbase64;
-         user.resim = '/tmp/haber/' +"kz"+user.id + '.png';
+          // const kzresbase64 = kzres.toString('base64');
+          // user.kzresim = kzresbase64;
+          user.resim = '/tmp/haber/' + "kz" + user.id + '.png';
 
           user.tur = elemento[8];
           user.aktif = elemento[9];
-          users.push(user); 
- 
-        
+          users.push(user);
+
+
         });
-        res.status(200).json(users); 
+        res.status(200).json(users);
 
         result.rows.forEach((elemento) => {
           let user = new Object();
           user.id = elemento[0];
-         
+
           const buffs = Buffer.from(elemento[4], 'utf-8');
           const base64s = buffs.toString('base64');
           data = base64s.replace(/^data:image\/png;base64,/, '');
 
-          fs.writeFile(path.resolve(__dirname, '../public/tmp/haber/' + "ru"+user.id + '.png'), data, 'base64', function (err) {
+          fs.writeFile(path.resolve(__dirname, '../public/tmp/haber/' + "ru" + user.id + '.png'), data, 'base64', function (err) {
             if (err) throw err;
           });
-       
 
-         const buffskz = Buffer.from(elemento[7], 'utf-8');
+
+          const buffskz = Buffer.from(elemento[7], 'utf-8');
           const base64kz = buffskz.toString('base64');
           datakz = base64kz.replace(/^data:image\/png;base64,/, '');
-         
-          fs.writeFile(path.resolve(__dirname, '../public/tmp/haber/' + "kz"+user.id + '.png'), datakz, 'base64', function (err) {
+
+          fs.writeFile(path.resolve(__dirname, '../public/tmp/haber/' + "kz" + user.id + '.png'), datakz, 'base64', function (err) {
             if (err) throw err;
           });
 
@@ -81,8 +81,8 @@ module.exports = app => {
       }).catch((error) => {
         res.status(500).json({ message: error.message || "Some error occurred!" });
       });
-  }; 
-//select * from ng_slider 
+  };
+  //select * from ng_slider 
   async function Slider(req, res) {
     let users = new Array();
     var fs = require('fs');
@@ -103,47 +103,47 @@ module.exports = app => {
       .then((result) => {
         result.rows.forEach((elemento) => {
           let user = new Object();
- 
+
           user.ru = elemento[0];
-          user.kz = elemento[1];  
-         
+          user.kz = elemento[1];
+
           //const buff = Buffer.from(elemento[4], 'utf-8');
-         // const base64 = buff.toString('base64');
-         user.resimru = '/tmp/slider/'+"ru"+user.ru+'.png';
-        //  user.ruresim = base64;
+          // const base64 = buff.toString('base64');
+          user.resimru = '/tmp/slider/' + "ru" + user.ru + '.png';
+          //  user.ruresim = base64;
           user.kzbaslik = elemento[5];
-          user.kzhaber = elemento[6]; 
+          user.kzhaber = elemento[6];
           //const kzres = Buffer.from(elemento[7], 'utf-8');
-         // const kzresbase64 = kzres.toString('base64');
-         // user.kzresim = kzresbase64;
-         user.resim = '/tmp/slider/'+"kz"+user.kz+'.png';
+          // const kzresbase64 = kzres.toString('base64');
+          // user.kzresim = kzresbase64;
+          user.resim = '/tmp/slider/' + "kz" + user.kz + '.png';
 
           user.tur = elemento[8];
           user.aktif = elemento[9];
-          users.push(user); 
- 
-        
+          users.push(user);
+
+
         });
-        res.status(200).json(users); 
+        res.status(200).json(users);
 
         result.rows.forEach((elemento) => {
           let user = new Object();
           user.id = elemento[1];
-         
+
           const buffs = Buffer.from(elemento[2], 'utf-8');
           const base64s = buffs.toString('base64');
           data = base64s.replace(/^data:image\/png;base64,/, '');
 
-          fs.writeFile(path.resolve(__dirname, '../public/tmp/slider/'+"ru"+user.id+'.png'), data, 'base64', function (err) {
+          fs.writeFile(path.resolve(__dirname, '../public/tmp/slider/' + "ru" + user.id + '.png'), data, 'base64', function (err) {
             if (err) throw err;
           });
-       
 
-         const buffskz = Buffer.from(elemento[3], 'utf-8');
+
+          const buffskz = Buffer.from(elemento[3], 'utf-8');
           const base64kz = buffskz.toString('base64');
           datakz = base64kz.replace(/^data:image\/png;base64,/, '');
-         
-          fs.writeFile(path.resolve(__dirname, '../public/tmp/slider/'+"kz"+user.id+'.png'), datakz, 'base64', function (err) {
+
+          fs.writeFile(path.resolve(__dirname, '../public/tmp/slider/' + "kz" + user.id + '.png'), datakz, 'base64', function (err) {
             if (err) throw err;
           });
 
@@ -159,7 +159,7 @@ module.exports = app => {
       }).catch((error) => {
         res.status(500).json({ message: error.message || "Some error occurred!" });
       });
-  };  
+  };
   async function HastaneSecimi(req, res) {
     let users = new Array();
 
@@ -194,7 +194,7 @@ module.exports = app => {
       }).catch((error) => {
         //  res.status(500).json({ message: error.message || "Some error occurred!" });
       });
-  }; 
+  };
   async function PoliklinikSecimi(req, res) {
     let users = new Array();
 
@@ -228,7 +228,7 @@ module.exports = app => {
       }).catch((error) => {
         //  res.status(500).json({ message: error.message || "Some error occurred!" });
       });
-  }; 
+  };
   async function UzmanlikSecimi(req, res) {
     let users = new Array();
 
@@ -264,10 +264,15 @@ module.exports = app => {
       }).catch((error) => {
         res.status(500).json({ message: error.message || "Some error occurred!" });
       });
-  }; 
+  };
+
   async function Kategoriler(req, res) {
     let users = new Array();
-
+    var fs = require('fs');
+    const express = require('express');
+    const app = express();
+    app.use(express.static('public'));
+    var path = require('path');
     connection = await oracledb.getConnection({
       user: dbConfig.USER,
       password: dbConfig.PASSWORD,
@@ -276,53 +281,55 @@ module.exports = app => {
       .then((c) => {
         connection = c;
         oracledb.fetchAsBuffer = [oracledb.BLOB];
-        return connection.execute("select * from ng_his_kabuzman  where kiosk='X' order by isim ");
+        return connection.execute("select t.*, t.rowid from ng_his_kabuzman t  where kiosk='X' order by isim");
       })
       .then((result) => {
         result.rows.forEach((elemento) => {
           let user = new Object();
 
-          // user.prof = elemento[0]; 
-          user.profs = elemento[0];
+          user.id = elemento[0];
+          user.tarih = elemento[1]; 
+          //const buff = Buffer.from(elemento[4], 'utf-8');
+          // const base64 = buff.toString('base64');
+          user.resimru = '/tmp/kategoriler/' + "ru" + user.id + '.png';
+          //  user.ruresim = base64; 
+          //const kzres = Buffer.from(elemento[7], 'utf-8');
+          // const kzresbase64 = kzres.toString('base64');
+          // user.kzresim = kzresbase64;
+          
 
-          user.isim = elemento[1];
-          user.aciklama = elemento[5];
-          user.resim = '/tmp/kategoriler/' + user.kz + '.png';
 
- 
-          users.push(user);
-            console.log(user);
         });
-
         res.status(200).json(users);
 
-      
         result.rows.forEach((elemento) => {
           let user = new Object();
-          user.id = elemento[1];
-         
-          const buffs = Buffer.from(elemento[2], 'utf-8');
-          const base64s = buffs.toString('base64');
-          data = base64s.replace(/^data:image\/png;base64,/, '');
+          user.id = elemento[0]; 
 
-          fs.writeFile(path.resolve(__dirname, '../public/tmp/kategoriler/' + user.id + '.png'), data, 'base64', function (err) {
+          const buffskz = Buffer.from(elemento[18], 'utf-8');
+          const base64kz = buffskz.toString('base64');
+          datakz = base64kz.replace(/^data:image\/png;base64,/, '');
+
+          fs.writeFile(path.resolve(__dirname, '../public/tmp/kategoriler/' + user.id + '.png'), datakz, 'base64', function (err) {
             if (err) throw err;
           });
-       
- 
 
 
         });
+
 
 
       }).then(() => {
         if (connection) {
-          //  connection.close();
+          connection.close();
         }
       }).catch((error) => {
         res.status(500).json({ message: error.message || "Some error occurred!" });
       });
-  };  
+  };
+  //select t.*, t.rowid from ng_his_kabuzman t  where kiosk='X' order by isim
+  
+
   async function DoktorSecimi(req, res) {
     let users = new Array();
 
@@ -361,7 +368,7 @@ module.exports = app => {
       }).catch((error) => {
         //  res.status(500).json({ message: error.message || "Some error occurred!" });
       });
-  }; 
+  };
   async function UygunTarihSecimi(req, res) {
     let users = new Array();
 
@@ -399,7 +406,7 @@ module.exports = app => {
       }).catch((error) => {
         //  res.status(500).json({ message: error.message || "Some error occurred!" });
       });
-  }; 
+  };
   async function UygunSaatSecimi(req, res) {
     let users = new Array();
 
@@ -437,7 +444,7 @@ module.exports = app => {
       }).catch((error) => {
         //  res.status(500).json({ message: error.message || "Some error occurred!" });
       });
-  }; 
+  };
   async function DoktorBilgi(req, res) {
     let users = new Array();
     var fs = require('fs');
@@ -463,7 +470,7 @@ module.exports = app => {
 
       })
       .then((result) => {
-        
+
         result.rows.forEach((elemento) => {
 
           let user = new Object();
@@ -503,32 +510,32 @@ module.exports = app => {
       }).catch((error) => {
         res.status(500).json({ message: error.message || "Some error occurred!" });
       });
-  }; 
+  };
   app.get('/haberler', function (req, res) {
     haberler(req, res);
-  }) 
+  })
   app.get('/HastaneSecimi', function (req, res) {
     HastaneSecimi(req, res);
-  }) 
+  })
   app.get('/PoliklinikSecimi', function (req, res) {
     PoliklinikSecimi(req, res);
-  }) 
+  })
   app.get('/UzmanlikSecimi', function (req, res) {
     UzmanlikSecimi(req, res);
-  }) 
+  })
   app.get('/DoktorSecimi', function (req, res) {
     DoktorSecimi(req, res);
-  }) 
+  })
   app.get('/UygunTarihSecimi', function (req, res) {
     UygunTarihSecimi(req, res);
-  }) 
+  })
   app.get('/UygunSaatSecimi', function (req, res) {
     UygunSaatSecimi(req, res);
-  }) 
+  })
   app.get('/DoktorBilgi', function (req, res) {
     DoktorBilgi(req, res);
-  }) 
-   app.get('/Kategoriler', function (req, res) {
+  })
+  app.get('/Kategoriler', function (req, res) {
     Kategoriler(req, res);
   })
   app.get('/Slider', function (req, res) {
