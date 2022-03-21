@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   FlatList,
   View,
@@ -12,7 +12,9 @@ import { Theme } from "../../theme";
 import { Divider } from "../../components";
 import { useLocalization } from "../../localization";
 import { StoryViewerModal } from "../../modals";
-import { storyList, mediaList } from "../../datas";
+//import { storyList, mediaList } from "../../datas";
+import { DashboardItemsModel, DoctorModel, TypicodeUserModel,DepartmentModel,MediaModel} from "../../models";
+import { DashboardService, DoctorsService,DepartmentService,MediaService } from "../../services";
 import { useNavigation } from "@react-navigation/native";
 import NavigationNames from "../../navigations/NavigationNames";
 import moment from "moment";
@@ -53,13 +55,24 @@ export const MediaScreen: React.FC<TProps> = props => {
 
   const [isShowedStoryModal, setIsShowedStoryModal] = useState(false);
   const [selectedStoryIndex, setSelectedStoryIndex] = useState(0);
+  const [media, setMedia] = useState<MediaModel[]>(null);
+
+
+  useEffect(() => {
+    MediaService.getMedia().then(item => {
+      setMedia(item);
+    });
+
+    
+  }, []);
+
 
   const { getString } = useLocalization();
 
   return (
     <View style={styles.container}>
       <FlatList
-        data={mediaList}
+        data={media}
         keyExtractor={(item, index) => `key${index}ForMedia`}
         ListHeaderComponent={() => (
           <StorySection
@@ -93,17 +106,17 @@ export const MediaScreen: React.FC<TProps> = props => {
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
               >
-                {item.tags.map((item, index) => (
+               {/*  {item.tags.map((item, index) => (
                   <View key={`key${index}ForTag`} style={styles.tagContainer}>
                     <Text style={styles.tagText}>{item}</Text>
                   </View>
-                ))}
+                ))} */}
               </ScrollView>
-              <Text style={styles.titleText}>{item.title}</Text>
+              <Text style={styles.titleText}>{item.title}sssss</Text>
               <Text style={styles.minuteText}>
-                {moment(item.startedDate)
+               {/*  {moment(item.startedDate)
                   .startOf("hour")
-                  .fromNow()}
+                  .fromNow()} */}
               </Text>
             </View>
           </TouchableOpacity>
@@ -111,12 +124,12 @@ export const MediaScreen: React.FC<TProps> = props => {
         ItemSeparatorComponent={() => <Divider />}
         showsVerticalScrollIndicator={false}
       />
-      <StoryViewerModal
+     {/*  <StoryViewerModal
         isShowed={isShowedStoryModal}
         selectedIndex={selectedStoryIndex}
         stories={storyList}
         onSwipeComplete={() => setIsShowedStoryModal(false)}
-      />
+      /> */}
     </View>
   );
 };

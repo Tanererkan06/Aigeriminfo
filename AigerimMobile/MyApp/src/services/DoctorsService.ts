@@ -4,7 +4,7 @@ export default class DoctorsService {
   public static getDoctors(): Promise<DoctorModel[]> {
        
     var typeiCodeUsers2 = fetch('http://25.46.200.59:3002/DoktorBilgi')
-        .then((response) => response.json())
+         .then((response) => response.json())
         .then((json) => {
             var typeiCodeUsers: TypicodeUserModel[] = json;
             console.log(typeiCodeUsers)

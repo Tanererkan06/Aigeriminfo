@@ -21,10 +21,7 @@ export const DoctorListScreen: React.FC<TProps> = props => {
   const [doctors, setDoctors] = useState<DoctorModel[]>(null);
 
   useEffect(() => {
-/*     DashboardService.getDashboardItems().then(item => {
-      setDashboardItem(item);
-    }); */
- 
+
     DoctorsService.getDoctors().then(typeUsers => {
       setDoctors(typeUsers);
     });
