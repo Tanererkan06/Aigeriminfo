@@ -67,7 +67,10 @@ export default class Slider extends React.Component {
                   ref={ref => this.carousel = ref}
                   data={this.state.carouselItems}
                   sliderWidth={100}
+                  autoplayInterval={3000}
                   itemWidth={335}
+                  autoplay={true}
+                  loop={true}
                   renderItem={this._renderItem}
                   onSnapToItem = { index => this.setState({activeIndex:index}) } />
             </View>
