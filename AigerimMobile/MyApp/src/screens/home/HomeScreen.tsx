@@ -175,34 +175,7 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
         ItemSeparatorComponent={() => <Divider h16 />}
         scrollEnabled={false}
       />
-      {/* <SectionHeader
-        title={getString("New Campaigns")}
-        rightTitle={getString("See More")}
-        rightAction={() =>
-          navigation.navigate(NavigationNames.CampaignListScreen)
-        }
-      /> */}
-
-
-      {/*   <FlatList
-        data={dashboardItem.campaigns}
-        renderItem={row => (
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate(NavigationNames.CampaignDetailScreen, {
-                model: JSON.stringify(row.item)
-              })
-            }
-          >
-            <DashboardCampaignsListItem item={row.item} />
-          </TouchableOpacity>
-        )}
-        showsHorizontalScrollIndicator={false}
-        horizontal={true}
-        ItemSeparatorComponent={() => <View style={styles.horizontalDivider} />}
-        contentContainerStyle={styles.campaignsContainer}
-        keyExtractor={(item, index) => `key${index}ForCampaign`}
-      /> */}
+  
 
 
       <SectionHeader
@@ -259,18 +232,21 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
             <DoctorItemRow item={row.item} />
           </TouchableOpacity>
         )}
-        //ItemSeparatorComponent={() => <Divider h16 />}
+        ItemSeparatorComponent={() => <Divider h16 />}
         scrollEnabled={true}
       />
 
       <View
         style={{
           width: width,
+        
           flexDirection: "row",
           height: hight / 4,
           borderColor: "white",
           backgroundColor: "#08324d",
-
+          //alt zemin 
+          //#052940
+          //#08324d
         }}
       >
         <View style={{
@@ -286,28 +262,28 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
           </Text>
           <Text style={styles.innerText}>
             Прайс-лист
-            
+
           </Text>
           <Text style={styles.innerText}>
 
             Специалисты
-            
+
           </Text>
           <Text style={styles.innerText}>
 
 
-             Контакты
+            Контакты
           </Text>
           <Text style={styles.innerText}>
 
 
             Статьи
-            
+
           </Text>
           <Text style={styles.innerText}>
 
 
-          
+
             Контакты
           </Text>
 
@@ -316,23 +292,23 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
           flex: 0.5
         }} >
           <Text style={styles.innerText}>Задать вопрос
-           </Text>
-            <Text style={styles.innerText}> 
+          </Text>
+          <Text style={styles.innerText}>
             Записаться на прием
           </Text>
-            <Text style={styles.innerText}> 
-           
+          <Text style={styles.innerText}>
+
             Оставить отзыв
-             </Text>
-            <Text style={styles.innerText}> 
-            
+          </Text>
+          <Text style={styles.innerText}>
+
             Оставить отзыв
-            </Text>
-            <Text style={styles.innerText}> 
-            
+          </Text>
+          <Text style={styles.innerText}>
+
             Написать в администрацию</Text>
         </View>
-        
+
         <View style={{
           flex: 0.5,
 
@@ -346,15 +322,36 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
             +7 (778) 0 905 100
             call@aigerim.info</Text>
         </View>
+        {/* <Text style={styles.innerText}>
+         Клиника «Айгерим» © 2022</Text> */}
+        {/* <View style={{
+          //flex: 0.5
+        }} >
+          <Text style={styles.innerText}>Задать вопрос </Text>
+         </View> */}
+
       </View>
 
+      <View
+        style={{
+           //flexDirection: "row",
+           height: 50,
+          // padding: 20
+          width: width  
+        }}
+      >
+        <View style={{ backgroundColor: "#052940"  }} >
+        <Text style={styles.innerText}>Клиника «Айгерим» © 2022</Text>
+        </View>
 
+
+      </View>
 
 
     </ScrollView>
   );
 };
-
+//#052940
 const styles = StyleSheet.create({
   baseText: {
     fontWeight: 'bold'
@@ -363,10 +360,18 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 12,
   },
-  container: { paddingVertical: 24 },
-  upcomingAppoinmentRow: {
-    marginHorizontal: 16
-  },
+  container: 
+ 
+
+   { 
+     paddingVertical: 24 , 
+     
+
+    },
+  upcomingAppoinmentRow: 
+  {
+    marginHorizontal: 16,
+   },
   touchableDoctorItem: {
     paddingStart: 16,
     paddingEnd: 8
