@@ -41,9 +41,9 @@ export default class Slider extends React.Component {
     }
     async getMovies() {
       try {
-        const response = await fetch('https://reactnative.dev/movies.json');
+        const response = await fetch('http://25.46.200.59:3002/slider');
         const json = await response.json();
-        this.setState({ data: json.movies });
+        this.setState({ data: json });
         console.log(json)
       } catch (error) {
         console.log(error);
@@ -67,8 +67,8 @@ export default class Slider extends React.Component {
               padding: 50,
               marginLeft: 5,
               marginRight: 10, }}>
-            <Text style={{fontSize: 30}}>{item.title}</Text>
-            <Text>{item.text}</Text>
+            <Text style={{fontSize: 30}}>{item.title1}</Text>
+            <Text>{item.title2}</Text>
           </View>
 
         )
