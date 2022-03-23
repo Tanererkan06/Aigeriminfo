@@ -13,7 +13,8 @@ export default class Slider extends React.Component {
         super(props);
         this.state = {
           activeIndex:0,
-          
+          data: [],
+          isLoading: true,
           carouselItems: [
           {
               title:"Item 1",
@@ -38,8 +39,25 @@ export default class Slider extends React.Component {
         ]
       }
     }
+    async getMovies() {
+      try {
+        const response = await fetch('https://reactnative.dev/movies.json');
+        const json = await response.json();
+        this.setState({ data: json.movies });
+        console.log(json)
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.setState({ isLoading: false });
+      }
+    }
+    componentDidMount() 
+    {
+      this.getMovies();
+    }
 
-    _renderItem({item,index}){
+    _renderItem({item,index})
+    {
         return (
           <View style={{
               //backgroundColor:'floralwhite',
@@ -65,7 +83,7 @@ export default class Slider extends React.Component {
                 <Carousel
                   layout={"default"}
                   ref={ref => this.carousel = ref}
-                  data={this.state.carouselItems}
+                  data={this.state.data}
                   sliderWidth={100}
                   autoplayInterval={3000}
                   itemWidth={335}
