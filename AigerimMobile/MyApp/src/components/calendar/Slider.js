@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {
   Text, 
-  View,
+  View,Image,StyleSheet,
   SafeAreaView } from 'react-native';
 
 import Carousel from 'react-native-snap-carousel';
@@ -64,11 +64,27 @@ export default class Slider extends React.Component {
               borderRadius: 5,
               borderBottomColor:"black",
               height: 150,
-              padding: 50,
+           
+              // padding: 50,
               marginLeft: 5,
-              marginRight: 10, }}>
-            <Text style={{fontSize: 30}}>{item.title1}</Text>
-            <Text>{item.title2}</Text>
+              marginRight: 20, }}>
+                 <Image
+          style={styles.tinyLogo}
+          source={{uri: "http://25.46.200.59:3002/"+item.image}}
+        />
+            {/* <Text style={{fontSize: 30}}>{item.title1}</Text> */}
+            <Text style={{
+              //backgroundColor:'floralwhite',
+              borderRadius: 5,
+              borderBottomColor:"black",
+              alignSelf:"center",
+              fontSize:25,
+              color:"black",
+              height: 150,
+              // padding: 50,
+              fontWeight:"bold",
+              marginLeft: 5,
+              marginRight: 10, }}>{item.title2}</Text>
           </View>
 
         )
@@ -97,3 +113,18 @@ export default class Slider extends React.Component {
     }
 }
 
+const styles = StyleSheet.create({
+  container: {
+    // paddingTop: 50,
+  },
+  tinyLogo: {
+    width: 250,
+    alignSelf:"center",
+    height: 110,
+    borderRadius:5,
+  },
+  logo: {
+    width: 66,
+    height: 58,
+  },
+});

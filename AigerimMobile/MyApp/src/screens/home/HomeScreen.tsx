@@ -26,6 +26,8 @@ import { useLocalization } from "../../localization";
 import NavigationNames from "../../navigations/NavigationNames";
 import { HomeMenuItemType } from "../../types";
 import Carousel from "react-native-snap-carousel";
+import  Nitelik  from "../home/nitelik";
+
 
 const generateMenuItems = (
   getString: (key: string) => string
@@ -49,26 +51,13 @@ const generateMenuItems = (
 
 type TProps = {
 };
-
-/* _renderItem({item,index}){
-  return (
-    <View style={{
-        backgroundColor:'floralwhite',
-        borderRadius: 5,
-        height: 250,
-        padding: 50,
-        marginLeft: 25,
-        marginRight: 25, }}>
-      <Text style={{fontSize: 30}}>{item.title}</Text>
-      <Text>{item.text}</Text>
-    </View>
-
-  )
-} */
+ 
 
 export const HomeScreen: React.FC<TProps> = asyncprops => {
   const navigation = useNavigation();
   const { getString, changeLanguage } = useLocalization();
+
+  
   const [dashboardItem, setDashboardItem] = useState<DashboardItemsModel>(null);
   const [doctors, setDoctors] = useState<DoctorModel[]>(null);
   const [departman, setDeparmans] = useState<DepartmentModel[]>(null);
@@ -179,6 +168,8 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
           navigation.navigate(NavigationNames.DoctorListScreen)
         }
       />
+
+               <Nitelik/>
 
       <FlatList
         data={doctors}
