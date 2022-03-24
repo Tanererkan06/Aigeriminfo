@@ -57,7 +57,7 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
   const navigation = useNavigation();
   const { getString, changeLanguage } = useLocalization();
 
-  
+
   const [dashboardItem, setDashboardItem] = useState<DashboardItemsModel>(null);
   const [doctors, setDoctors] = useState<DoctorModel[]>(null);
   const [departman, setDeparmans] = useState<DepartmentModel[]>(null);
@@ -113,7 +113,7 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
         item={dashboardItem.appointment}
       /> 
 
-
+<Nitelik/>
   
 
       <SectionHeader title={getString("What are you looking for?")} />
@@ -169,7 +169,7 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
         }
       />
 
-               <Nitelik/>
+           
 
       <FlatList
         data={doctors}

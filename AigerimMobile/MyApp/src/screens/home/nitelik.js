@@ -11,7 +11,7 @@ import {
 
 import Carousel from 'react-native-snap-carousel';
 
-export default class nitelik extends React.Component {
+export default class Nitelik extends React.Component {
 
 
   constructor(props) {
@@ -22,7 +22,7 @@ export default class nitelik extends React.Component {
       isLoading: true,
     }
   }
-  
+
   async getMovies() {
     try {
       const response = await fetch('http://25.46.200.59:3002/nitelik');
@@ -45,45 +45,80 @@ export default class nitelik extends React.Component {
         style={{
           flexDirection: "row",
           height: 100,
-          padding: 20,
-          margin:15,
-         }}
+          alignSelf: "center",
+          justifyContent: "center",
+          textAlign:"center",
+          margin: 4,
+          
+          padding:5
+
+        }}
       >
-        <View style={{
-     
-          flex: 0.3
-        }} >
-          <Text >{item.uzman}</Text>
-          <Text >СПЕЦИАЛИСТОВ</Text>
 
-
-
-        </View>
-        <View style={{
-         
-          flex: 0.5
-        }} >
-          <Text >{item.uzman}</Text>
-
-          <Text >ПАЦИЕНТОВ</Text>
-        </View>
         <View style={{
           
-          flex: 0.5
         }} >
-          <Text >{item.uzman}</Text>
 
-          <Text >КЛИНИКИ</Text>
+          <View style={{ flex: 4  }} >
+            <Text style={{ fontSize: 12 }}> СПЕЦИАЛИСТОВ </Text>
+
+          </View>
+          <View style={{ flex: 4 }} >
+            <Text style={{ fontSize: 12 }}>{item.klinik}</Text>
+
+          </View>
+
+
+        </View>
+
+        <View style={{
+          
+        }} >
+
+          <View style={{ flex: 2  }} >
+            <Text style={{ fontSize: 12 }}> ПАЦИЕНТОВ </Text>
+
+          </View>
+          <View style={{ flex: 2  }} >
+            <Text style={{ fontSize: 12 }}>{item.klinik}</Text>
+
+          </View>
+
+
+        </View>
+
+        <View style={{
+          
+        }} >
+
+          <View style={{ flex: 2  }} >
+            <Text style={{ fontSize: 15 }}> КЛИНИКИ </Text>
+
+          </View>
+          <View style={{ flex: 2 }} >
+            <Text style={{ fontSize: 25 }}>{item.klinik}</Text>
+
+          </View>
+
+
         </View>
         <View style={{
-          flex: 0.5
+           
         }} >
-          <Text >{item.uzman}</Text>
-          <Text >КАБИНЕТОВ</Text>
+
+          <View style={{ flex: 2 }} >
+            <Text style={{ fontSize: 15 }}> КАБИНЕТОВ </Text>
+
+          </View>
+          <View style={{ flex: 2  }} >
+            <Text style={{ fontSize: 25 }}>{item.klinik}</Text>
+
+          </View>
+
 
         </View>
       </View>
-    
+
 
     )
   }
@@ -95,14 +130,16 @@ export default class nitelik extends React.Component {
         // backgroundColor:'rebeccapurple',
         paddingTop: 5, paddingBottom: 5,
       }}>
-        <View style={{ flex: 1, ImageBackground,flexDirection: 'row', justifyContent: 'center', }}>
-          <FlatList
+        <ImageBackground source={require('../../../assets/subscribe.jpg')} resizeMode="cover" style={styles.image}>
+          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', }}>
+            <FlatList
 
-            data={this.state.data}
+              data={this.state.data}
 
-            renderItem={this._renderItem}
-          />
-        </View>
+              renderItem={this._renderItem}
+            />
+          </View>
+        </ImageBackground>
       </SafeAreaView>
     );
   }
@@ -110,7 +147,19 @@ export default class nitelik extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    // paddingTop: 50,
+    flex: 1,
+  },
+  image: {
+    flex: 1,
+    justifyContent: "center"
+  },
+  text: {
+    color: "black",
+    fontSize: 12,
+    lineHeight: 84,
+    fontWeight: "bold",
+    textAlign: "center",
+    //backgroundColor: "#000000c0"
   },
   tinyLogo: {
     width: 250,
