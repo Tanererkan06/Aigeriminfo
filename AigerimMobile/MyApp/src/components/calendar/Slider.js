@@ -5,7 +5,7 @@ import {
   SafeAreaView } from 'react-native';
 
 import Carousel from 'react-native-snap-carousel';
-
+import {IntlProvider,FormattedMessage,FormattedNumber,FormattedDate} from 'react-intl';
 export default class Slider extends React.Component {
 
  

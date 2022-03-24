@@ -62,7 +62,7 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
   const [doctors, setDoctors] = useState<DoctorModel[]>(null);
   const [departman, setDeparmans] = useState<DepartmentModel[]>(null);
 
-
+//departmandan gelen verileri dil secimine göre doldur
   useEffect(() => {
     DashboardService.getDashboardItems().then(item => {
       setDashboardItem(item);
@@ -112,7 +112,7 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
         style={styles.upcomingAppoinmentRow}
         item={dashboardItem.appointment}
       /> 
-
+   
 <Nitelik/>
   
 
