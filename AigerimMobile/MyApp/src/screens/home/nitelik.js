@@ -47,24 +47,28 @@ export default class Nitelik extends React.Component {
           height: 100,
           alignSelf: "center",
           justifyContent: "center",
-          textAlign:"center",
+          textAlign: "center",
           margin: 4,
-          fontSize: 12,
-          padding:5
+          fontSize: 15,
+          fontWeight: "bold",
+          padding: 5,
+          marginTop: 50
 
         }}
       >
 
         <View style={{
-          flex: 3
+          flex: 4,
+          textAlign: "center",
+          alignContent: "center"
         }} >
 
-          <View   >
-            <Text> СПЕЦИАЛИСТОВ </Text>
 
-          </View>
+          <Text style={{ textAlign: "center", fontWeight: "bold", }}> СПЕЦИАЛИСТОВ </Text>
+
+
           <View   >
-            <Text  >{item.klinik}</Text>
+            <Text style={{ textAlign: "center", fontWeight: "bold", }}>{item.klinik}</Text>
 
           </View>
 
@@ -72,15 +76,16 @@ export default class Nitelik extends React.Component {
         </View>
 
         <View style={{
-          flex: 2 
+          flex: 3,
+          textAlign: "center",
         }} >
 
-          <View  >
-            <Text > ПАЦИЕНТОВ </Text>
 
-          </View>
+          <Text style={{ textAlign: "center", fontWeight: "bold", }}> ПАЦИЕНТОВ </Text>
+
+
           <View  >
-            <Text  >{item.klinik}</Text>
+            <Text style={{ textAlign: "center", fontWeight: "bold", }}>{item.klinik}</Text>
 
           </View>
 
@@ -88,30 +93,32 @@ export default class Nitelik extends React.Component {
         </View>
 
         <View style={{
-          flex: 2
+          flex: 3,
+          textAlign: "center",
         }} >
 
-          <View  >
-            <Text  > КЛИНИКИ </Text>
 
-          </View>
+          <Text style={{ textAlign: "center", fontWeight: "bold", }}> КЛИНИКИ </Text>
+
+
           <View   >
-            <Text  >{item.klinik}</Text>
+            <Text style={{ textAlign: "center", fontWeight: "bold", }}>{item.klinik}</Text>
 
           </View>
 
 
         </View>
         <View style={{
-           flex: 2 
+          flex: 3,
+          textAlign: "center",
         }} >
 
-          <View  >
-            <Text  > КАБИНЕТОВ </Text>
 
-          </View>
+          <Text style={{ textAlign: "center", fontWeight: "bold", }}> КАБИНЕТОВ </Text>
+
+
           <View   >
-            <Text  >{item.klinik}</Text>
+            <Text style={{ textAlign: "center", fontWeight: "bold", }}>{item.klinik}</Text>
 
           </View>
 
