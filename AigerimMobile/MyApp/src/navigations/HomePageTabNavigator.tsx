@@ -155,7 +155,7 @@ const HomePageTabNavigator = () => (
       component={CalendarTabStack}
     />
     <Tab.Screen name={NavigationNames.MediaTab} component={MediaTabStack} />
-    <Tab.Screen name={NavigationNames.MenuTab} component={MenuTabStack} />
+   {/*  <Tab.Screen name={NavigationNames.MenuTab} component={MenuTabStack} /> */}
   </Tab.Navigator>
 );
 
