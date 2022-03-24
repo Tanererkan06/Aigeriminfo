@@ -4,7 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import HomePageTabNavigator from "./HomePageTabNavigator";
 import NavigationNames from "./NavigationNames";
 import { useLocalization } from "../localization";
-
+ import {Provider} from 'react-redux';
 const Stack = createStackNavigator();
 
 export default function() {
