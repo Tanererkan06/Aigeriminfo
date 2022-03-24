@@ -49,22 +49,22 @@ export default class Nitelik extends React.Component {
           justifyContent: "center",
           textAlign:"center",
           margin: 4,
-          
+          fontSize: 12,
           padding:5
 
         }}
       >
 
         <View style={{
-          
+          flex: 3
         }} >
 
-          <View style={{ flex: 4  }} >
-            <Text style={{ fontSize: 12 }}> СПЕЦИАЛИСТОВ </Text>
+          <View   >
+            <Text> СПЕЦИАЛИСТОВ </Text>
 
           </View>
-          <View style={{ flex: 4 }} >
-            <Text style={{ fontSize: 12 }}>{item.klinik}</Text>
+          <View   >
+            <Text  >{item.klinik}</Text>
 
           </View>
 
@@ -72,15 +72,15 @@ export default class Nitelik extends React.Component {
         </View>
 
         <View style={{
-          
+          flex: 2 
         }} >
 
-          <View style={{ flex: 2  }} >
-            <Text style={{ fontSize: 12 }}> ПАЦИЕНТОВ </Text>
+          <View  >
+            <Text > ПАЦИЕНТОВ </Text>
 
           </View>
-          <View style={{ flex: 2  }} >
-            <Text style={{ fontSize: 12 }}>{item.klinik}</Text>
+          <View  >
+            <Text  >{item.klinik}</Text>
 
           </View>
 
@@ -88,30 +88,30 @@ export default class Nitelik extends React.Component {
         </View>
 
         <View style={{
-          
+          flex: 2
         }} >
 
-          <View style={{ flex: 2  }} >
-            <Text style={{ fontSize: 15 }}> КЛИНИКИ </Text>
+          <View  >
+            <Text  > КЛИНИКИ </Text>
 
           </View>
-          <View style={{ flex: 2 }} >
-            <Text style={{ fontSize: 25 }}>{item.klinik}</Text>
+          <View   >
+            <Text  >{item.klinik}</Text>
 
           </View>
 
 
         </View>
         <View style={{
-           
+           flex: 2 
         }} >
 
-          <View style={{ flex: 2 }} >
-            <Text style={{ fontSize: 15 }}> КАБИНЕТОВ </Text>
+          <View  >
+            <Text  > КАБИНЕТОВ </Text>
 
           </View>
-          <View style={{ flex: 2  }} >
-            <Text style={{ fontSize: 25 }}>{item.klinik}</Text>
+          <View   >
+            <Text  >{item.klinik}</Text>
 
           </View>
 
