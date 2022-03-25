@@ -9,6 +9,9 @@ import {
   TouchableOpacity, SafeAreaView
 } from "react-native";
 
+export const SLIDER_WIDTH = Dimensions.get('window').width + 30;
+export const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.8);
+
 import Carousel from 'react-native-snap-carousel';
 
 export default class Slider extends React.Component {
@@ -39,33 +42,34 @@ export default class Slider extends React.Component {
     this.getMovies();
   }
 
-  _renderItem = ({item, index}) => {
+  _renderItem = ({ item, index }) => {
     return (
       <View
-      style={{
-        borderWidth: 1,
-        padding: 20,
-        borderRadius: 20,
-        alignItems: 'center',
-        backgroundColor: 'white',
-      }}>
-      <Image source={{uri: "http://25.46.200.59:3002/"+item.image}} style={{width: 200, height: 200}} />
-      {/* <Text style={{marginVertical: 10, fontSize: 20, fontWeight: 'bold'}}>
-        {item.name}
-      </Text> */}
-    </View>
+        style={{
+          /*  borderWidth: 1, */
+          padding: 20,
+          borderRadius: 20,
+          alignItems: 'center',
+          justifyContent: "center",
+          backgroundColor: 'white',
+        }}>
+        <Image source={{ uri: "http://25.46.200.59:3002/" + item.image }} style={{ width: 200, height: 200 }} />
+        <Text style={{ marginVertical: 10, fontSize: 20, fontWeight: 'bold' }}>
+          {item.title}
+        </Text>
+      </View>
     );
-}
+  }
 
   render() {
     return (
       <Carousel
-              ref={(c) => { this._carousel = c; }}
-              data={this.state.data}
-              renderItem={this._renderItem}
-              sliderWidth={100}
-              itemWidth={100}
-            />
+        ref={(c) => { this._carousel = c; }}
+        data={this.state.data}
+        renderItem={this._renderItem}
+        sliderWidth={SLIDER_WIDTH}
+        itemWidth={ITEM_WIDTH}
+      />
     );
   }
 }
