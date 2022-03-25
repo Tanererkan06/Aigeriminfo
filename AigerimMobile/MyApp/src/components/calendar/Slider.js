@@ -1,127 +1,106 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  Text, 
-  View,Image,StyleSheet,
-  SafeAreaView } from 'react-native';
+  Text,
+  View, Image, StyleSheet,
+  SafeAreaView,Dimensions
+} from 'react-native';
 
-import Carousel from 'react-native-snap-carousel';
-import {IntlProvider,FormattedMessage,FormattedNumber,FormattedDate} from 'react-intl';
-export default class Slider extends React.Component {
+import Carousel, {Pagination} from 'react-native-snap-carousel';
+import { IntlProvider, FormattedMessage, FormattedNumber, FormattedDate } from 'react-intl';
+  export const SLIDER_WIDTH = Dimensions.get('window').width + 30;
+  export const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.8);
 
- 
-    constructor(props){
-        super(props);
-        this.state = {
-          activeIndex:0,
-          data: [],
-          isLoading: true,
-          carouselItems: [
-          {
-              title:"Item 1",
-              text: "Text 1",
-          },
-          {
-              title:"Item 2",
-              text: "Text 2",
-          },
-          {
-              title:"Item 3",
-              text: "Text 3",
-          },
-          {
-              title:"Item 4",
-              text: "Text 4",
-          },
-          {
-              title:"Item 5",
-              text: "Text 5",
-          },
-        ]
-      }
-    }
-    async getMovies() {
-      try {
-        const response = await fetch('http://25.46.200.59:3002/slider');
-        const json = await response.json();
-        this.setState({ data: json });
-        console.log(json)
-      } catch (error) {
-        console.log(error);
-      } finally {
-        this.setState({ isLoading: false });
-      }
-    }
-    componentDidMount() 
-    {
-      this.getMovies();
-    }
+const Slider = () => {
+  const [isLoading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
 
-    _renderItem({item,index})
-    {
-        return (
-          <View style={{
-              //backgroundColor:'floralwhite',
-              borderRadius: 5,
-              borderBottomColor:"black",
-              height: 150,
-           
-              // padding: 50,
-              marginLeft: 5,
-              marginRight: 20, }}>
-                 <Image
-          style={styles.tinyLogo}
-          source={{uri: "http://25.46.200.59:3002/"+item.image}}
-        />
-            {/* <Text style={{fontSize: 30}}>{item.title1}</Text> */}
-            <Text style={{
-              //backgroundColor:'floralwhite',
-              borderRadius: 5,
-              borderBottomColor:"black",
-              alignSelf:"center",
-              fontSize:25,
-              color:"black",
-              height: 150,
-              // padding: 50,
-              fontWeight:"bold",
-              marginLeft: 5,
-              marginRight: 10, }}>{item.title2}</Text>
-          </View>
 
-        )
-    }
 
-    render() {
-        return (
-          <SafeAreaView style={{flex: 1, 
-         // backgroundColor:'rebeccapurple',
-           paddingTop: 5, paddingBottom:5,}}>
-            <View style={{ flex: 1, flexDirection:'row', justifyContent: 'center', }}>
-                <Carousel
-                  layout={"default"}
-                  ref={ref => this.carousel = ref}
-                  data={this.state.data}
-                  sliderWidth={100}
-                  autoplayInterval={3000}
-                  itemWidth={335}
-                  autoplay={true}
-                  loop={true}
-                  renderItem={this._renderItem}
-                  onSnapToItem = { index => this.setState({activeIndex:index}) } />
-            </View>
-          </SafeAreaView>
-        );
+  const getMovies = async () => {
+     try {
+      const response = await fetch('http://25.46.200.59:3002/slider');
+      const json = await response.json();
+      setData(json);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
+  }
+const messages = {
+      "kz":
+      {
+        title: item.title1,
+        image:item.image1
+      },
+      "ru":
+      {
+        title: item.title,
+        image:item.image
+      },
+
+      
+
+    }
+  const _renderItem = ({item}) => {
+  {
+    return (
+      <View
+        style={{
+          borderWidth: 1,
+          padding: 20,
+          borderRadius: 20,
+          alignItems: 'center',
+          backgroundColor: 'white',
+        }}>
+        <Image source={{uri: item.image}} style={{width: 200, height: 200}} />
+        <Text style={{marginVertical: 10, fontSize: 20, fontWeight: 'bold'}}>
+          {item.title}
+        </Text>
+      </View>
+    );
+
+    
+  }
+
+  useEffect(() => {
+    getMovies();
+  }, []);
+
+  
+
+  return (
+    <SafeAreaView style={{
+      flex: 1,
+      // backgroundColor:'rebeccapurple',
+      paddingTop: 5, paddingBottom: 5,
+    }}>
+      <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', }}>
+        <Carousel
+          layout={"default"}
+        
+          data={data}
+          sliderWidth={100}
+          autoplayInterval={3000}
+          itemWidth={ITEM_WIDTH}
+          autoplay={true}
+          loop={true}
+          renderItem={_renderItem}  />
+      </View>
+    </SafeAreaView>
+  );
+}; 
 }
-
+export default Slider;
 const styles = StyleSheet.create({
   container: {
     // paddingTop: 50,
   },
   tinyLogo: {
     width: 250,
-    alignSelf:"center",
+    alignSelf: "center",
     height: 110,
-    borderRadius:5,
+    borderRadius: 5,
   },
   logo: {
     width: 66,
