@@ -53,7 +53,7 @@ export default class Slider extends React.Component {
           justifyContent: "center",
           backgroundColor: 'white',
         }}>
-        <Image source={{ uri: "http://25.46.200.59:3002/" + item.image }} style={{ width: 200, height: 200 }} />
+        <Image source={{ uri: "http://25.46.200.59:3002/" + item.image }} style={{ width: 350, height: 300 }} />
         <Text style={{ marginVertical: 10, fontSize: 20, fontWeight: 'bold' }}>
           {item.title}
         </Text>
@@ -64,6 +64,9 @@ export default class Slider extends React.Component {
   render() {
     return (
       <Carousel
+      loop={true}
+      autoplayInterval={3000}
+      autoplay={true}
         ref={(c) => { this._carousel = c; }}
         data={this.state.data}
         renderItem={this._renderItem}

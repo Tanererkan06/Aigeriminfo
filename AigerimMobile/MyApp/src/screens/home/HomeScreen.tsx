@@ -108,15 +108,10 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
       contentContainerStyle={styles.container}
       showsVerticalScrollIndicator={false}
     >
-      {/*  <UpcomingAppoinmentRow
-        style={styles.upcomingAppoinmentRow}
-        item={dashboardItem.appointment}
-      />  */}
-
-
-
-      <Nitelik />
+        
       <Slider />
+      <Nitelik />
+
 
       <SectionHeader title={getString("What are you looking for?")} />
       <FlatList
