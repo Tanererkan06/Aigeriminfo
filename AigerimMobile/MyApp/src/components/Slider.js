@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
-  Text,
+  ActivityIndicator, FlatList,Text,
   View, Image, StyleSheet,
   SafeAreaView,Dimensions
 } from 'react-native';
@@ -9,9 +9,11 @@ import Carousel, {Pagination} from 'react-native-snap-carousel';
 import { IntlProvider, FormattedMessage, FormattedNumber, FormattedDate } from 'react-intl';
   export const SLIDER_WIDTH = Dimensions.get('window').width + 30;
   export const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.8);
-
+//http://25.46.200.59:3002/slider
 const Slider = () => {
   const [isLoading, setLoading] = useState(true);
+  const [index, setIndex] = useState(0);
+  const isCarousel = useRef(null);
   const [data, setData] = useState([]);
 
 
@@ -27,6 +29,45 @@ const Slider = () => {
       setLoading(false);
     }
   }
+
+  useEffect(() => {
+    getMovies();
+  }, []);
+
+  const renderItem = ({item}) => {
+    return (
+      <View
+        style={{
+          borderWidth: 1,
+          padding: 20,
+          borderRadius: 20,
+          alignItems: 'center',
+          backgroundColor: 'white',
+        }}>
+        <Image source={{uri: item.image}} style={{width: 200, height: 200}} />
+        <Text style={{marginVertical: 10, fontSize: 20, fontWeight: 'bold'}}>
+          {item.title}
+        </Text>
+      </View>
+    );
+  };
+  
+
+  return (
+    <View style={{ flex: 1, padding: 24 }}>
+      {isLoading ? <ActivityIndicator/> : (
+         <Carousel
+         ref={isCarousel}
+         data={data}
+         renderItem={renderItem}
+         sliderWidth={SLIDER_WIDTH}
+         itemWidth={ITEM_WIDTH}
+         onSnapToItem={index => setIndex(index)}
+       />
+      )}
+    </View>
+  );
+
 const messages = {
       "kz":
       {
@@ -42,7 +83,7 @@ const messages = {
       
 
     }
-  const _renderItem = ({item}) => {
+/*   const _renderItem = ({item}) => {
   {
     return (
       <View
@@ -89,9 +130,17 @@ const messages = {
       </View>
     </SafeAreaView>
   );
-}; 
+};  */
 }
 export default Slider;
+
+
+
+
+
+
+
+
 const styles = StyleSheet.create({
   container: {
     // paddingTop: 50,
