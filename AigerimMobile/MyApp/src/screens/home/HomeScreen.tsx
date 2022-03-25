@@ -113,10 +113,10 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
         item={dashboardItem.appointment}
       />  */}
 
-    
+
 
       <Nitelik />
-       <Slider />
+      <Slider />
 
       <SectionHeader title={getString("What are you looking for?")} />
       <FlatList

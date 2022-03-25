@@ -25,7 +25,7 @@ export default class Slider extends React.Component {
 
   async getMovies() {
     try {
-      const response = await fetch('http://25.46.200.59:3002/nitelik');
+      const response = await fetch('http://25.46.200.59:3002/slider');
       const json = await response.json();
       this.setState({ data: json });
       console.log(json)
@@ -42,7 +42,7 @@ export default class Slider extends React.Component {
   _renderItem = ({item, index}) => {
     return (
         <View style={styles.slide}>
-            <Text style={styles.title}>{ item.title }</Text>
+            <Text>{ item.title }</Text>
         </View>
     );
 }
@@ -51,7 +51,7 @@ export default class Slider extends React.Component {
     return (
       <Carousel
               ref={(c) => { this._carousel = c; }}
-              data={this.state.entries}
+              data={this.state.data}
               renderItem={this._renderItem}
               sliderWidth={100}
               itemWidth={100}
