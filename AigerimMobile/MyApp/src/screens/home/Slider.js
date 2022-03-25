@@ -41,9 +41,19 @@ export default class Slider extends React.Component {
 
   _renderItem = ({item, index}) => {
     return (
-        <View style={styles.slide}>
-            <Text>{ item.title }</Text>
-        </View>
+      <View
+      style={{
+        borderWidth: 1,
+        padding: 20,
+        borderRadius: 20,
+        alignItems: 'center',
+        backgroundColor: 'white',
+      }}>
+      <Image source={{uri: "http://25.46.200.59:3002/"+item.image}} style={{width: 200, height: 200}} />
+      {/* <Text style={{marginVertical: 10, fontSize: 20, fontWeight: 'bold'}}>
+        {item.name}
+      </Text> */}
+    </View>
     );
 }
 
