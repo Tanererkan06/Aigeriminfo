@@ -5,8 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Avatar } from "../avatar";
 import { AppointmentModel } from "../../models/AppointmentModel";
 import Carousel from "react-native-snap-carousel";
-import Slider  from "../Slider";
-import moment from "moment";
+ import moment from "moment";
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
@@ -26,8 +25,7 @@ export const UpcomingAppoinmentRow: React.FC<TProps> = props => {
   
   return (
     <View style={[styles.container, props.style]}>
-    <Slider  />    
-      
+       
 
 
     </View>

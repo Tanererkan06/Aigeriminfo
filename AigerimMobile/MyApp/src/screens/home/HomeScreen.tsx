@@ -26,7 +26,8 @@ import { useLocalization } from "../../localization";
 import NavigationNames from "../../navigations/NavigationNames";
 import { HomeMenuItemType } from "../../types";
 import Carousel from "react-native-snap-carousel";
-import  Nitelik  from "../home/nitelik";
+import Nitelik from "../home/nitelik";
+import Slider from "../home/Slider";
 
 
 const generateMenuItems = (
@@ -51,18 +52,18 @@ const generateMenuItems = (
 
 type TProps = {
 };
- 
+
 
 export const HomeScreen: React.FC<TProps> = asyncprops => {
   const navigation = useNavigation();
   const { getString, changeLanguage } = useLocalization();
 
 
-  const [dashboardItem, setDashboardItem] = useState<DashboardItemsModel>(null);
-  const [doctors, setDoctors] = useState<DoctorModel[]>(null);
-  const [departman, setDeparmans] = useState<DepartmentModel[]>(null);
+  const [dashboardItem, setDashboardItem] = useState<DashboardItemsModel>();
+  const [doctors, setDoctors] = useState<DoctorModel[]>();
+  const [departman, setDeparmans] = useState<DepartmentModel[]>();
 
-//departmandan gelen verileri dil secimine göre doldur
+  //departmandan gelen verileri dil secimine göre
   useEffect(() => {
     DashboardService.getDashboardItems().then(item => {
       setDashboardItem(item);
@@ -75,7 +76,7 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
     DepartmentService.getDepartment().then(items => {
       setDeparmans(items);
     });
-    
+
   }, []);
 
 
@@ -99,8 +100,7 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
 
 
   if (dashboardItem === null) {
-    return <Text>L
-      loading</Text>;
+    return <Text> loading</Text>;
   }
   return (
 
@@ -108,13 +108,15 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
       contentContainerStyle={styles.container}
       showsVerticalScrollIndicator={false}
     >
-       <UpcomingAppoinmentRow
+      {/*  <UpcomingAppoinmentRow
         style={styles.upcomingAppoinmentRow}
         item={dashboardItem.appointment}
-      /> 
-   
-<Nitelik/>
-  
+      />  */}
+
+    
+
+      <Nitelik />
+  <Slider />
 
       <SectionHeader title={getString("What are you looking for?")} />
       <FlatList
@@ -128,7 +130,7 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
         ItemSeparatorComponent={() => <Divider h16 />}
         scrollEnabled={false}
       />
-  
+
 
 
       <SectionHeader
@@ -169,7 +171,7 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
         }
       />
 
-           
+
 
       <FlatList
         data={doctors}
@@ -194,7 +196,7 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
       <View
         style={{
           width: width,
-        
+
           flexDirection: "row",
           height: hight / 4,
           borderColor: "white",
@@ -289,14 +291,14 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
 
       <View
         style={{
-           //flexDirection: "row",
-           height: 50,
+          //flexDirection: "row",
+          height: 50,
           // padding: 20
-          width: width  
+          width: width
         }}
       >
-        <View style={{ backgroundColor: "#052940"  }} >
-            <Text style={styles.innerText}>Клиника «Айгерим» © 2022</Text>
+        <View style={{ backgroundColor: "#052940" }} >
+          <Text style={styles.innerText}>Клиника «Айгерим» © 2022</Text>
         </View>
 
 
@@ -315,18 +317,18 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 12,
   },
-  container: 
- 
+  container:
 
-   { 
-     paddingVertical: 24 , 
-     
 
-    },
-  upcomingAppoinmentRow: 
+  {
+    paddingVertical: 24,
+
+
+  },
+  upcomingAppoinmentRow:
   {
     marginHorizontal: 16,
-   },
+  },
   touchableDoctorItem: {
     paddingStart: 16,
     paddingEnd: 8
