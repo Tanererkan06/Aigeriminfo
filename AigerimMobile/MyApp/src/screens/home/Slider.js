@@ -37,6 +37,7 @@ export default Slider = () => {
   const isCarousel = useRef(null);
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
+  
 
   const getMovies = async () => {
     try {
