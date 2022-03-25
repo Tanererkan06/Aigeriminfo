@@ -1,57 +1,89 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { ActivityIndicator, FlatList, Text, View,Dimensions,Image } from 'react-native';
- import Carousel from 'react-native-snap-carousel';
- export const SLIDER_WIDTH = Dimensions.get('window').width + 30;
-export const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.8);
+import * as React from 'react';
+
+import {
+  StyleSheet,
+  ScrollView,
+  Text, Image,
+  View,
+  FlatList, Dimensions, ImageBackground,
+  TouchableOpacity, SafeAreaView
+} from "react-native";
+
+import Carousel from 'react-native-snap-carousel';
+
+export default class Slider extends React.Component {
 
 
-const renderItem = ({item}) => {
-  return (
-    <View
-      style={{
-        borderWidth: 1,
-        padding: 20,
-        borderRadius: 20,
-        alignItems: 'center',
-        backgroundColor: 'white',
-      }}>
-      <Image source={{uri: item.url}} style={{width: 200, height: 200}} />
-      <Text style={{marginVertical: 10, fontSize: 20, fontWeight: 'bold'}}>
-        {item.name}
-      </Text>
-    </View>
-  );
-};
-export default App = () => {
-  const [isLoading, setLoading] = useState(true);
-  const [data, setData] = useState([]);
-
-  const getMovies = async () => {
-     try {
-      const response = await fetch('https://reactnative.dev/movies.json');
-      const json = await response.json();
-      setData(json.movies);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeIndex: 0,
+      data: [],
+      isLoading: true,
     }
   }
 
-  useEffect(() => {
-    getMovies();
-  }, []);
+  async getMovies() {
+    try {
+      const response = await fetch('http://25.46.200.59:3002/nitelik');
+      const json = await response.json();
+      this.setState({ data: json });
+      console.log(json)
+    } catch (error) {
+      console.log(error);
+    } finally {
+      this.setState({ isLoading: false });
+    }
+  }
+  componentDidMount() {
+    this.getMovies();
+  }
 
-  return (
-    <View style={{ flex: 1, padding: 24 }}>
-      {isLoading ? <ActivityIndicator/> : (
+  _renderItem = ({item, index}) => {
+    return (
+        <View style={styles.slide}>
+            <Text style={styles.title}>{ item.title }</Text>
+        </View>
+    );
+}
+
+  render() {
+    return (
       <Carousel
-      data={data}
-      renderItem={renderItem}
-      sliderWidth={SLIDER_WIDTH}
-      itemWidth={ITEM_WIDTH}
-    />
-      )}
-    </View>
-  );
-};
+              ref={(c) => { this._carousel = c; }}
+              data={this.state.entries}
+              renderItem={this._renderItem}
+              sliderWidth={100}
+              itemWidth={100}
+            />
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  image: {
+    flex: 1,
+    justifyContent: "center"
+  },
+  text: {
+    color: "black",
+    fontSize: 12,
+    lineHeight: 84,
+    fontWeight: "bold",
+    textAlign: "center",
+    //backgroundColor: "#000000c0"
+  },
+  tinyLogo: {
+    width: 250,
+    alignSelf: "center",
+    height: 110,
+    borderRadius: 5,
+  },
+  logo: {
+    width: 66,
+    height: 58,
+  },
+});

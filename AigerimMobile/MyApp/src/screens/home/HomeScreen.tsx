@@ -116,7 +116,7 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
     
 
       <Nitelik />
-  <Slider />
+       <Slider />
 
       <SectionHeader title={getString("What are you looking for?")} />
       <FlatList
