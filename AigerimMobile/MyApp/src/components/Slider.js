@@ -22,7 +22,7 @@ const Slider = () => {
      try {
       const response = await fetch('http://25.46.200.59:3002/slider');
       const json = await response.json();
-      setData(json);
+      setData(json.image);
     } catch (error) {
       console.error(error);
     } finally {
