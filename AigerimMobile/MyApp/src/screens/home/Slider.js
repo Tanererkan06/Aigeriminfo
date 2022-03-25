@@ -12,9 +12,9 @@ import {
 export const SLIDER_WIDTH = Dimensions.get('window').width + 30;
 export const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.8);
 
-import {Carousel,getInputRangeFromIndexes}  from 'react-native-snap-carousel';
+import Carousel from 'react-native-snap-carousel';
  
- 
+
 const renderItem = ({item}) => {
   return (
     <View
@@ -53,8 +53,6 @@ export default Slider = () => {
  useEffect(() => {
    getMovies();
  }, []);
-
- 
   return (
     <View style={{marginVertical: 10}}>
       <Carousel
@@ -70,9 +68,6 @@ export default Slider = () => {
    
     </View>
   );
-
-
-  
 };
 
 // define your styles
