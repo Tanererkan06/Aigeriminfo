@@ -12,20 +12,20 @@ import {
 export const SLIDER_WIDTH = Dimensions.get('window').width + 30;
 export const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.8);
 
-import Carousel from 'react-native-snap-carousel';
+import {Carousel,getInputRangeFromIndexes}  from 'react-native-snap-carousel';
  
-
+ 
 const renderItem = ({item}) => {
   return (
     <View
       style={{
-        borderWidth: 1,
+        /* borderWidth: 1, */
         padding: 20,
         borderRadius: 20,
         alignItems: 'center',
         backgroundColor: 'white',
       }}>
-      <Image source={{uri: "http://25.46.200.59:3002/"+item.image1}} style={{width: 200, height: 200}} />
+      <Image source={{uri: "http://25.46.200.59:3002/"+item.image1}} style={{width: 350, height: 300}} />
       <Text style={{marginVertical: 10, fontSize: 20, fontWeight: 'bold'}}>
         {item.title1}
       </Text>
@@ -53,9 +53,13 @@ export default Slider = () => {
  useEffect(() => {
    getMovies();
  }, []);
+
+ 
   return (
     <View style={{marginVertical: 10}}>
       <Carousel
+      loop={true}
+      autoplay={true}
         ref={isCarousel}
         data={data}
         renderItem={renderItem}
@@ -66,6 +70,9 @@ export default Slider = () => {
    
     </View>
   );
+
+
+  
 };
 
 // define your styles
