@@ -1,9 +1,9 @@
-import {Language} from '../redux/types';
+import {Language} from '../../src/types';
 
 const list: Language[] = [
   {
     id: 1,
-    language: 'ru',
+    title: 'ru',
     isDone: true,
   },
   {
