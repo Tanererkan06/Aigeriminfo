@@ -65,4 +65,28 @@ export function setLanguageStatus({id}: {id: number}) {
   };
 }
 
+export function addTaskToList({text}:{text:string}){
+  return (dispatch: (arg0: any) => void)=>{
+    return languageService.addTaskToList({text}).then(
+      response=>{
+        dispatch(addTaskToListSuccess(response));
+      },
+      error=>{
+          dispatch(addTaskToListError('Server Error'))
+      }
+    )
+  }
+}
+export function deleteTaskFromList({id}: {id: number}) {
+  return dispatch => {
+    return taskService.deleteTaskFromList({id}).then(
+      response => {
+        dispatch(deleteTaskFromListSuccess(response));
+      },
+      error => {
+        dispatch(deleteTaskFromListError('Server Error'));
+      },
+    );
+  };
+}
  
