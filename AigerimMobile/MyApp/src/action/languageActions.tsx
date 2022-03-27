@@ -65,28 +65,28 @@ export function setLanguageStatus({id}: {id: number}) {
   };
 }
 
+ 
 export function addTaskToList({text}:{text:string}){
   return (dispatch: (arg0: any) => void)=>{
-    return languageService.addTaskToList({text}).then(
+    return languageService.addLanguageToList({text}).then(
       response=>{
-        dispatch(addTaskToListSuccess(response));
+        dispatch(addLanguageToListSuccess(response));
       },
       error=>{
-          dispatch(addTaskToListError('Server Error'))
+          dispatch(addLanguageToListError('Server Error'))
       }
     )
   }
 }
 export function deleteTaskFromList({id}: {id: number}) {
-  return dispatch => {
-    return taskService.deleteTaskFromList({id}).then(
+  return (dispatch: (arg0: any) => void) => {
+    return languageService.deleteLanguageFromList({id}).then(
       response => {
-        dispatch(deleteTaskFromListSuccess(response));
+        dispatch(deleteLanguageFromListSuccess(response));
       },
       error => {
-        dispatch(deleteTaskFromListError('Server Error'));
+        dispatch(deleteLanguageFromListError('Server Error'));
       },
     );
   };
 }
- 

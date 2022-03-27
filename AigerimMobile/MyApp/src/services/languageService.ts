@@ -29,7 +29,9 @@ const data = {
 
 export const languageService = {
   getLangugeList,
-  setLangugeList
+  setLangugeList,
+  addLanguageToList,
+  deleteLanguageFromList,
 };
 async function getLangugeList(): Promise<Language[]> {
   return data.list;
@@ -44,4 +46,17 @@ async function setLangugeList({id}: {id: number}): Promise<Language[]> {
   return list;
 }
  
- 
+async function addLanguageToList({text}:{text:string}):Promise<Language[]>{
+  const list=data.list;
+  const taskItem:Language={
+   id:list.length+1,
+   isDone:false,
+   title:text
+  }
+  list.push(taskItem)
+  return list;
+}
+async function deleteLanguageFromList({id}:{id:number}):Promise<Language[]>{
+  data.list = data.list.filter(item => item.id !== id);
+  return data.list;
+}
