@@ -1,5 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, ViewStyle, Image, Dimensions } from "react-native";
+import LanguageList from "../LanguageList"
+
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -12,6 +14,7 @@ export const ToolbarBrandLogo: React.FC = () => (
         flexDirection: "row",
       }}
     >
+       <LanguageList/>
       <Image style={styles.image} source={require("../../../assets/logo.jpg")} />
       <Image style={styles.mini} source={require("../../../assets/ru.png")} />
       <Image style={styles.mini} source={require("../../../assets/kz.png")} />
