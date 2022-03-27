@@ -14,12 +14,12 @@ const list: Language[] = [
   {
     id: 3,
     title: 'tr',
-    isDone: true,
+    isDone: false,
   },
   {
     id: 4,
     title: 'en',
-    isDone: true,
+    isDone: false,
   },
 ];
 
