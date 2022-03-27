@@ -4,6 +4,51 @@ module.exports = app => {
 
   oracledb.fetchAsString = [oracledb.CLOB];
 
+
+  async function nitelik(req, res) {
+    let users = new Array();
+    var fs = require('fs');
+    const express = require('express');
+    const app = express();
+    app.use(express.static('public'));
+    var path = require('path');
+    connection = await oracledb.getConnection({
+      user: dbConfig.USER,
+      password: dbConfig.PASSWORD,
+      connectString: dbConfig.ConnectString
+    })
+      .then((c) => {
+        connection = c;
+        oracledb.fetchAsBuffer = [oracledb.BLOB];
+        return connection.execute("SELECT * FROM ng_nitelik");
+      })
+      .then((result) => {
+        result.rows.forEach((elemento) => {
+          let user = new Object();
+
+          user.uzman = elemento[0];
+          user.hastalar = elemento[1];
+          user.klinik = elemento[2];
+          user.uzmanlik = elemento[2];
+
+          users.push(user);
+
+
+        });
+        res.status(200).json(users);
+
+       
+
+
+
+      }).then(() => {
+        if (connection) {
+          connection.close();
+        }
+      }).catch((error) => {
+        res.status(500).json({ message: error.message || "Some error occurred!" });
+      });
+  };
   async function haberler(req, res) {
     let users = new Array();
     var fs = require('fs');
@@ -103,19 +148,19 @@ module.exports = app => {
         result.rows.forEach((elemento) => {
           let user = new Object();
 
-          user.ru = elemento[0];
-          user.kz = elemento[1];
+          user.title = elemento[0];
+          user.title1 = elemento[1];
 
           //const buff = Buffer.from(elemento[4], 'utf-8');
           // const base64 = buff.toString('base64');
-          user.resimru = '/tmp/slider/' + "ru" + user.ru + '.png';
+          user.image = '/tmp/slider/' + "ru" + user.title + '.png';
           //  user.ruresim = base64;
           user.kzbaslik = elemento[5];
           user.kzhaber = elemento[6];
           //const kzres = Buffer.from(elemento[7], 'utf-8');
           // const kzresbase64 = kzres.toString('base64');
           // user.kzresim = kzresbase64;
-          user.resim = '/tmp/slider/' + "kz" + user.kz + '.png';
+          user.image1 = '/tmp/slider/' + "kz" + user.title1 + '.png';
 
           user.tur = elemento[8];
           user.aktif = elemento[9];
@@ -263,8 +308,7 @@ module.exports = app => {
       }).catch((error) => {
         res.status(500).json({ message: error.message || "Some error occurred!" });
       });
-  };
-
+  }; 
   async function Kategoriler(req, res) {
     let users = new Array();
     var fs = require('fs');
@@ -288,7 +332,7 @@ module.exports = app => {
 
           user.id = elemento[0];
           user.isim = elemento[1]; 
-          user.aciklama = elemento[5]; 
+          user.aciklama = elemento[5 ]; 
           //const buff = Buffer.from(elemento[4], 'utf-8');
           // const base64 = buff.toString('base64');
           user.resimru = '/tmp/kategoriler/' +user.id + '.png';
@@ -325,10 +369,7 @@ module.exports = app => {
       }).catch((error) => {
         res.status(500).json({ message: error.message || "Some error occurred!" });
       });
-  };
-  //select t.*, t.rowid from ng_his_kabuzman t  where kiosk='X' order by isim
-  
-
+  }; 
   async function DoktorSecimi(req, res) {
     let users = new Array();
 
@@ -379,7 +420,7 @@ module.exports = app => {
       .then((c) => {
         connection = c;
         oracledb.fetchAsBuffer = [oracledb.BLOB];
-        return connection.execute("select ng_his_vractakvim.datar, 'прием' d  ,ng_his_vractakvim.bassaat,ng_his_vractakvim.bitsaat,ng_his_vractakvim.servis_id ,ng_his_glzr.isim from ng_his_glzr,ng_his_vractakvim  where ng_his_vractakvim.doktor_id=:doktor_id  and ng_his_vractakvim.servis_id=ng_his_glzr.kabinet and ng_his_vractakvim.datar>=to_char(sysdate,'dd/mm/yyyy') and ng_his_vractakvim.servis_id in (select kabinet from ng_his_glzr where sinifi <>'S')", {
+        return connection.execute("select ng_his_vractakvim.datar, 'прием' d  ,ng_his_vractakvim.bassaat,ng_his_vractakvim.bitsaat,ng_his_vractakvim.servis_id ,ng_his_glzr.isim from ng_his_glzr,ng_his_vractakvim where ng_his_vractakvim.doktor_id=:doktor_id ", {
 
           doktor_id: req.body.doktor_id
         });
@@ -539,5 +580,9 @@ module.exports = app => {
   })
   app.get('/Slider', function (req, res) {
     Slider(req, res);
+  })
+
+  app.get('/nitelik', function (req, res) {
+    nitelik(req, res);
   })
 };
