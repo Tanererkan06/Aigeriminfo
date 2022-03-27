@@ -6,8 +6,8 @@ import App from "./src";
 /* import configureStore from './src/store';
  */ 
  LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
-  /*LogBox.ignoreLogs(["Possible Unhandled Promise Rejection"]);
-  
+  LogBox.ignoreLogs(["Possible Unhandled Promise Rejection"]);
+  /*
   LogBox.ignoreLogs(['Warning: ...']);
   LogBox.ignoreLogs(["VirtualizedLists should never be nested"]); */
  

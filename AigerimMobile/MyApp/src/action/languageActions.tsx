@@ -66,7 +66,7 @@ export function setLanguageStatus({id}: {id: number}) {
 }
 
  
-export function addTaskToList({text}:{text:string}){
+export function addLanguageToList({text}:{text:string}){
   return (dispatch: (arg0: any) => void)=>{
     return languageService.addLanguageToList({text}).then(
       response=>{
@@ -78,7 +78,7 @@ export function addTaskToList({text}:{text:string}){
     )
   }
 }
-export function deleteTaskFromList({id}: {id: number}) {
+export function deleteLanguageFromList({id}: {id: number}) {
   return (dispatch: (arg0: any) => void) => {
     return languageService.deleteLanguageFromList({id}).then(
       response => {
