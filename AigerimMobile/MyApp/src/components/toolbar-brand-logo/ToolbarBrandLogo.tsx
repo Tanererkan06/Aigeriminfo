@@ -8,21 +8,22 @@ const height = Dimensions.get('window').height;
 
 export const ToolbarBrandLogo: React.FC = () => (
   <View>
-
+ 
     <View
       style={{
-        flexDirection: "row",
+     /*    flexDirection: "row", */
       }}
     >
-       <LanguageList/>
-      <Image style={styles.image} source={require("../../../assets/logo.jpg")} />
-      <Image style={styles.mini} source={require("../../../assets/ru.png")} />
+     <LanguageList/>
+   {/*   <Image style={styles.image} source={require("../../../assets/logo.jpg")} />  */}
+    
+      {/*  <Image style={styles.mini} source={require("../../../assets/ru.png")} />
       <Image style={styles.mini} source={require("../../../assets/kz.png")} />
       <Image style={styles.mini} source={require("../../../assets/en.png")} />
-      <Image style={styles.mini} source={require("../../../assets/tr.png")} />
+      <Image style={styles.mini} source={require("../../../assets/tr.png")} /> */}
       
  
- 
+  
     </View>
 
 
