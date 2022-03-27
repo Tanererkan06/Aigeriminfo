@@ -18,7 +18,7 @@ i18n.use(initReactI18next).init({
 
 moment.locale("ru");
 i18n.addResources("ru", I18N_NAME_SPACE, require("./locales/ru.json"));
-i18n.addResources("kz", I18N_NAME_SPACE, require("./locales/ru.json"));
+i18n.addResources("kz", I18N_NAME_SPACE, require("./locales/kz.json"));
 i18n.addResources("en", I18N_NAME_SPACE, require("./locales/en.json"));
 i18n.addResources("tr", I18N_NAME_SPACE, require("./locales/tr.json"));
 

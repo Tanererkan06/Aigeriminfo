@@ -25,27 +25,7 @@ const StorySection: React.FC<{
   onClickStoryItem: (index: number) => void;
 }> = props => (
   <>
-    {/* <FlatList
-      data={storyList}
-      keyExtractor={(item, index) => `key${index}ForStory`}
-      renderItem={row => (
-        <TouchableOpacity
-          style={styles.storyItemContainer}
-          onPress={() => props.onClickStoryItem(row.index)}
-        >
-          <Image
-            source={{
-              uri: row.item.imageUrl
-            }}
-            style={styles.storyItemImage}
-          />
-        </TouchableOpacity>
-      )}
-      horizontal={true}
-      showsHorizontalScrollIndicator={false}
-      ItemSeparatorComponent={() => <View style={styles.horizontalDivider} />}
-      contentContainerStyle={styles.storyContentContainer}
-    /> */}
+ 
     <Divider />
   </>
 );
@@ -106,17 +86,11 @@ export const MediaScreen: React.FC<TProps> = props => {
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
               >
-               {/*  {item.tags.map((item, index) => (
-                  <View key={`key${index}ForTag`} style={styles.tagContainer}>
-                    <Text style={styles.tagText}>{item}</Text>
-                  </View>
-                ))} */}
+          
               </ScrollView>
               <Text style={styles.titleText}>{item.title}</Text>
               <Text style={styles.minuteText}>
-               {/*  {moment(item.startedDate)
-                  .startOf("hour")
-                  .fromNow()} */}
+              
               </Text>
             </View>
           </TouchableOpacity>
@@ -124,12 +98,7 @@ export const MediaScreen: React.FC<TProps> = props => {
         ItemSeparatorComponent={() => <Divider />}
         showsVerticalScrollIndicator={false}
       />
-     {/*  <StoryViewerModal
-        isShowed={isShowedStoryModal}
-        selectedIndex={selectedStoryIndex}
-        stories={storyList}
-        onSwipeComplete={() => setIsShowedStoryModal(false)}
-      /> */}
+    
     </View>
   );
 };

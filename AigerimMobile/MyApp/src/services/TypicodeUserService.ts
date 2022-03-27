@@ -30,7 +30,7 @@ export default class TypicodeUserService {
                 var doctor = {} as DoctorModel;
                 doctor.fullName = user.imya;
                 doctor.about = user.ocest;
-                doctor.title = user.familya;
+                doctor.title = user.familiya;
                 doctor.imageUrl = "https://github.com/publsoft/publsoft.github.io/raw/master/projects/medical-demo/assets/images/doctor1.jpg";
                 doctor.rating = 5;
                 doctor.isOnline = true;
