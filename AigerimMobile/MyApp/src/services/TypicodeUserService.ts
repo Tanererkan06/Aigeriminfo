@@ -14,14 +14,7 @@ export default class TypicodeUserService {
                 console.error(error);
             });
 
-            /*
-             user.resim= elemento[0];
-          user.vracid= elemento[1];
-          user.perbilgi= elemento[2];
-          user.imya= elemento[3];
-          user.familya= elemento[4];
-          user.ocest= elemento[5];
-            */
+           
         return typeiCodeUsers2.then((items) => {
             var items2 = items as TypicodeUserModel[];
             var doctorModel = [] as DoctorModel[];

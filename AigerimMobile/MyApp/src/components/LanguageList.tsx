@@ -40,37 +40,37 @@ const LanguageListCompenent = () => {
 
 
       <FlatList
-        style={{width:screenWidth}}
+        style={{ width: screenWidth }}
         horizontal
         data={LanguageList}
         renderItem={LanguageList => (
-         
-            <View style={{ flexDirection: 'row' }}>
 
-               <Text
-                  style={{
-                   /*  backgroundColor: 'green' , */
-                    textAlign: 'center',
-                    color: 'black',
-                    padding: 5,  
-                    marginRight:10,
-                    margin: 1,
-                  }}>
-                   {LanguageList.item.title}
-                   
-                </Text>  
-              <RadioButton
-                key={"lang_"+LanguageList.item.id}
+          <View style={{ flexDirection: 'row' }}>
+            <RadioButton
+              key={"lang_" + LanguageList.item.id}
 
-                value={LanguageList.item.title}
-                status={checked === LanguageList.item.id ? 'checked' : 'unchecked'}
-                onPress={() => SetLanguageStatus(LanguageList.item.id)} 
-              />
+              value={LanguageList.item.title}
+              status={checked === LanguageList.item.id ? 'checked' : 'unchecked'}
+              onPress={() => SetLanguageStatus(LanguageList.item.id)}
+            />
+            <Text
+              style={{
+                /*  backgroundColor: 'green' , */
+                textAlign: 'center',
+                color: 'black',
+                padding: 5,
+                marginRight: 10,
+                margin: 1,
+              }}>
+              {LanguageList.item.title}
 
-            </View>
+            </Text>
 
 
-         
+          </View>
+
+
+
         )}
         keyExtractor={item => item.id.toString()}
       />
