@@ -33,25 +33,4 @@ export default class TypicodeUserService {
             return doctorModel;
         }); 
     }
-    /*
-    public static getUsersReal(): Promise<DoctorModel[]> {
-        return fetch('https://jsonplaceholder.typicode.com/users/'
-        ).then((response) => response.json()).then((json) => {
-            var typeiCodeUsers: TypicodeUserModel[] = json;
-            var doctorModel = [] as DoctorModel[];
-            for (var i = 0; i < typeiCodeUsers.length; i++) {
-                var user = typeiCodeUsers[i];
-                var doctor = {} as DoctorModel;
-                doctor.fullName = user.name;
-                doctor.about = user.company.catchPhrase;
-                doctor.title = user.company.name;
-                doctor.imageUrl = "https://github.com/publsoft/publsoft.github.io/raw/master/projects/medical-demo/assets/images/doctor1.jpg";
-                doctor.rating = 5;
-                doctor.isOnline = true;
-                doctor.reviews=[] as ReviewModel[]
-                doctorModel.push(doctor);
-            }
-            return doctorModel;
-        });
-    }*/
-} 
+  } 
