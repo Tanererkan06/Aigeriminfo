@@ -29,6 +29,7 @@ const LanguageListCompenent = () => {
     setChecked(id)
     dispatch(setLanguageStatus({ id }));
     getLanguageList();
+    console.log(id)
   }
   useEffect(() => {
     getLanguages();

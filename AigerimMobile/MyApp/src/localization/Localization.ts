@@ -8,8 +8,8 @@ const I18N_NAME_SPACE = "translation";
 
 i18n.use(initReactI18next).init({
   resources: {},
-  lng: "ru",
-  fallbackLng: "ru",
+  lng: "en",
+  fallbackLng: "en",
   ns: I18N_NAME_SPACE,
   interpolation: {
     escapeValue: false
