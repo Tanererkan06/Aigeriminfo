@@ -39,7 +39,7 @@ const LanguageListCompenent = () => {
   }
   
   return (
-    <View style={{margin: 20}}>
+    <View style={{marginTop: -130,paddingLeft:250}}>
   
    
       <FlatList
