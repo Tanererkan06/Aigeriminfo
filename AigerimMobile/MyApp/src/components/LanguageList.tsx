@@ -27,7 +27,7 @@ const LanguageListCompenent = () => {
   useEffect(() => {
     getLanguages();
   }, []);
-  function AddLanguageToList(text: string) {
+/*   function AddLanguageToList(text: string) {
     dispatch(addLanguageToList({text}));
     getLanguages();
     SetLanguage('');
@@ -36,11 +36,11 @@ const LanguageListCompenent = () => {
     dispatch(deleteLanguageFromList({id}));
     getLanguages();
     SetLanguage('');
-  }
+  } */
   
   return (
     <View style={{ width:screenWidth/2,  
-    /* flexDirection: "row", */
+   flexDirection: "row",  
   }}
     >
  
@@ -66,8 +66,8 @@ const LanguageListCompenent = () => {
                     backgroundColor: LanguageList.item.isDone ? 'green' : 'red',
                     textAlign: 'center',
                     color: 'white',
-                   /*  padding: 2,
-                    margin: 2, */
+                    padding: 2,
+                    margin: 2,  
                   }}>
                    
                   {LanguageList.item.title}
