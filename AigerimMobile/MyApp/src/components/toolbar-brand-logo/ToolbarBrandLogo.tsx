@@ -8,9 +8,9 @@ export const ToolbarBrandLogo: React.FC = () => (
   <View>
     <Image style={styles.image} source={require("../../../assets/logo.jpg")} />
     <View style={{ marginTop: -90 }}  >
-    
+    <LanguageList /> 
     </View>
-<LanguageList /> 
+
 
   </View>
 

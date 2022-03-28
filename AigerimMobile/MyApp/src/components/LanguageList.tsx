@@ -7,12 +7,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { screenWidth } from 'react-native-calendars/src/expandableCalendar/commons';
 import {useDispatch, useSelector} from 'react-redux';
 import {addLanguageToList, deleteLanguageFromList, getLanguageList, setLanguageStatus} from '../action/languageActions';
 import { RootState } from '../reducers';
  
- 
+//Use Effect kullanarak datalarımızı UI'a çekiyoruz.
+
 const LanguageListCompenent = () => {
   const dispatch = useDispatch();
   const {LanguageList} = useSelector((state: RootState) => state.language);
@@ -27,7 +27,7 @@ const LanguageListCompenent = () => {
   useEffect(() => {
     getLanguages();
   }, []);
-/*   function AddLanguageToList(text: string) {
+  function AddLanguageToList(text: string) {
     dispatch(addLanguageToList({text}));
     getLanguages();
     SetLanguage('');
@@ -36,46 +36,34 @@ const LanguageListCompenent = () => {
     dispatch(deleteLanguageFromList({id}));
     getLanguages();
     SetLanguage('');
-  } */
+  }
   
   return (
-    <View style={{ width:screenWidth/2,  
-   flexDirection: "row",  
-  }}
-    >
- 
+    <View style={{margin: 20}}>
+  
+   
       <FlatList
         style={{margin: 10}}
+     horizontal 
         data={LanguageList}
-        horizontal={true}
         renderItem={LanguageList => (
           <TouchableOpacity onPress={() => SetLanguageStatus(LanguageList.item.id)}>
-            <View 
-          style={{flexDirection:'row'}}  
-            >
-              <View
-                style={{
-                  flexDirection: 'row',
-                  borderColor: 'black',
-                  borderWidth: 2,
-/*                   marginTop: 2,
- */                  width: '85%',
-                }}>
+            <View style={{flexDirection:'row'}}>
+         
                 <Text
                   style={{
                     backgroundColor: LanguageList.item.isDone ? 'green' : 'red',
                     textAlign: 'center',
                     color: 'white',
-                    padding: 2,
-                    margin: 2,  
+                    padding: 10,
+                    margin: 10,
                   }}>
-                   
-                  {LanguageList.item.title}
+                   {LanguageList.item.title}
                 </Text>
-                
+                 
               </View>
+             
             
-            </View>
           </TouchableOpacity>
         )}
         keyExtractor={item => item.id.toString()}
