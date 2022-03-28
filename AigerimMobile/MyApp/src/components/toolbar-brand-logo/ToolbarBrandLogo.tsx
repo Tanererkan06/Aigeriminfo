@@ -1,16 +1,16 @@
 import React from "react";
 import { View, Text, StyleSheet, ViewStyle, Image, Dimensions } from "react-native";
-
-const width = Dimensions.get('window').width;
+import LanguageList  from "../LanguageList";
+ const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 export const ToolbarBrandLogo: React.FC = () => (
   <View>
     <Image style={styles.image} source={require("../../../assets/logo.jpg")} />
-    <View style={{ backgroundColor: "red" ,marginTop: -80 }}  >
-      <Text>Hello World!</Text>
+    <View style={{ marginTop: -90 }}  >
+    
     </View>
-
+<LanguageList /> 
 
   </View>
 
