@@ -55,8 +55,8 @@ const LanguageListCompenent = () => {
                     backgroundColor: LanguageList.item.isDone ? 'green' : 'red',
                     textAlign: 'center',
                     color: 'white',
-                    padding: 10,
-                    margin: 10,
+                    padding: 5,
+                    margin: 1,
                   }}>
                    {LanguageList.item.title}
                 </Text>
