@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Alert,
   FlatList,
@@ -7,64 +7,70 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import {addLanguageToList, deleteLanguageFromList, getLanguageList, setLanguageStatus} from '../action/languageActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { addLanguageToList, deleteLanguageFromList, getLanguageList, setLanguageStatus } from '../action/languageActions';
 import { RootState } from '../reducers';
- 
+import { RadioButton } from 'react-native-paper';
+import RadioForm from 'react-native-simple-radio-button';
+import { screenWidth } from 'react-native-calendars/src/expandableCalendar/commons';
+
 //Use Effect kullanarak datalarımızı UI'a çekiyoruz.
 
 const LanguageListCompenent = () => {
   const dispatch = useDispatch();
-  const {LanguageList} = useSelector((state: RootState) => state.language);
+  const { LanguageList } = useSelector((state: RootState) => state.language);
   const [Language, SetLanguage] = useState('');
+  const [checked, setChecked] = React.useState(1); //initial choice
+
   function getLanguages() {
     dispatch(getLanguageList());
   }
   function SetLanguageStatus(id: number) {
-    dispatch(setLanguageStatus({id}));
+    setChecked(id)
+    dispatch(setLanguageStatus({ id }));
     getLanguageList();
   }
   useEffect(() => {
     getLanguages();
   }, []);
-  function AddLanguageToList(text: string) {
-    dispatch(addLanguageToList({text}));
-    getLanguages();
-    SetLanguage('');
-  }
-  function DeleteLanguageFromList(id: number) {
-    dispatch(deleteLanguageFromList({id}));
-    getLanguages();
-    SetLanguage('');
-  }
-  
+
+
   return (
-    <View style={{marginTop: -130,paddingLeft:250}}>
-  
-   
+    <View style={{ marginTop: -100, paddingLeft: 210 }}>
+
+
       <FlatList
-        style={{margin: 10}}
-     horizontal 
+        style={{width:screenWidth}}
+        horizontal
         data={LanguageList}
         renderItem={LanguageList => (
-          <TouchableOpacity onPress={() => SetLanguageStatus(LanguageList.item.id)}>
-            <View style={{flexDirection:'row'}}>
          
-                <Text
+            <View style={{ flexDirection: 'row' }}>
+
+               <Text
                   style={{
-                    backgroundColor: LanguageList.item.isDone ? 'green' : 'red',
+                   /*  backgroundColor: 'green' , */
                     textAlign: 'center',
-                    color: 'white',
-                    padding: 5,
+                    color: 'black',
+                    padding: 5,  
+                    marginRight:10,
                     margin: 1,
                   }}>
                    {LanguageList.item.title}
-                </Text>
-                 
-              </View>
-             
-            
-          </TouchableOpacity>
+                   
+                </Text>  
+              <RadioButton
+                key={"lang_"+LanguageList.item.id}
+
+                value={LanguageList.item.title}
+                status={checked === LanguageList.item.id ? 'checked' : 'unchecked'}
+                onPress={() => SetLanguageStatus(LanguageList.item.id)} 
+              />
+
+            </View>
+
+
+         
         )}
         keyExtractor={item => item.id.toString()}
       />

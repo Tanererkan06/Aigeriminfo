@@ -1,10 +1,10 @@
-import {Language} from '../../src/types';
+import {Language} from '../types';
 
 const list: Language[] = [
   {
     id: 1,
     title: 'ru',
-    isDone: true,
+    isDone: false,
   },
   {
     id: 2,
