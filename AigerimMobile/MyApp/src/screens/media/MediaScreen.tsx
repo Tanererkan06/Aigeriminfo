@@ -21,6 +21,18 @@ import moment from "moment";
 import { useDispatch, useSelector } from 'react-redux';
 import { addLanguageToList, deleteLanguageFromList, getLanguageList, setLanguageStatus } from '../../action/languageActions';
 import { RootState } from '../../reducers';
+import { IntlProvider, MessageFormatElement } from 'react-intl';
+
+export const getCurrentTranslation: (
+  locale: string
+) =>
+  | Record<string, string>
+  | Record<string, MessageFormatElement[]>
+  | undefined = (locale) => {
+  const language = locale.split(/[-_]/)[0];
+  const messages = translations[language] ?? translations['en']; //fallback
+  return messages;
+};
 
 type TProps = {};
 
@@ -59,6 +71,8 @@ export const MediaScreen: React.FC<TProps> = props => {
   const { getString } = useLocalization();
 
   return (
+    <IntlProvider messages={getCurrentTranslation(locale)} locale={locale} defaultLocale='en'>
+
     <View style={styles.container}>
       <FlatList
         data={media}
@@ -109,6 +123,8 @@ export const MediaScreen: React.FC<TProps> = props => {
       />
     
     </View>
+    </IntlProvider>
+
   );
 };
 
