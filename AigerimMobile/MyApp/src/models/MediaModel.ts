@@ -1,4 +1,4 @@
-import { DoctorModel } from ./ DoctorModel;
+import { DoctorModel } from "./DoctorModel";
 
 export interface MediaModel {
   imageUrl: string;

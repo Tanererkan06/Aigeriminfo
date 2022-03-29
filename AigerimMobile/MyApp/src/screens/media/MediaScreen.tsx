@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
- import {
+import {
   FlatList,
   View,
   Text,
@@ -13,17 +13,20 @@ import { Divider } from "../../components";
 import { useLocalization } from "../../localization";
 import { StoryViewerModal } from "../../modals";
 //import { storyList, mediaList } from "../../datas";
-import { DashboardItemsModel, DoctorModel, TypicodeUserModel,DepartmentModel,MediaModel} from "../../models";
-import { DashboardService, DoctorsService,DepartmentService,MediaService } from "../../services";
+import { DashboardItemsModel, DoctorModel, TypicodeUserModel, DepartmentModel, MediaModel } from "../../models";
+import { DashboardService, DoctorsService, DepartmentService, MediaService } from "../../services";
 import { useNavigation } from "@react-navigation/native";
 import NavigationNames from "../../navigations/NavigationNames";
 import moment from "moment";
 import { useDispatch, useSelector } from 'react-redux';
 import { addLanguageToList, deleteLanguageFromList, getLanguageList, setLanguageStatus } from '../../action/languageActions';
 import { RootState } from '../../reducers';
-import { IntlProvider, MessageFormatElement } from 'react-intl';
+import { IntlProvider, MessageFormatElement, FormattedMessage, FormattedRelativeTime, useIntl } from 'react-intl';
 
-export const getCurrentTranslation: (
+
+
+
+/* export const getCurrentTranslation: (
   locale: string
 ) =>
   | Record<string, string>
@@ -32,7 +35,7 @@ export const getCurrentTranslation: (
   const language = locale.split(/[-_]/)[0];
   const messages = translations[language] ?? translations['en']; //fallback
   return messages;
-};
+}; */
 
 type TProps = {};
 
@@ -40,7 +43,7 @@ const StorySection: React.FC<{
   onClickStoryItem: (index: number) => void;
 }> = props => (
   <>
- 
+
     <Divider />
   </>
 );
@@ -55,23 +58,105 @@ export const MediaScreen: React.FC<TProps> = props => {
 
   function getLanguages() {
     dispatch(getLanguageList());
-    
+
+  }
+
+  function Media(item: string | any[]) {
+    for (var i = 0; i < item.length; i++) {
+
+
+      var MediaModel = {} as MediaModel[];
+
+      for (var i = 0; i < MediaModel.length; i++) {
+        var user = item[i];
+        var media = MediaModel[i];
+        const mediaitem = {
+          "ru": {
+            rubaslik: "string",
+            ruhaber: "string",
+            ruresim: "string",
+            htmlContent1: "string",  
+          },
+          "kz": {
+            kzbaslik: "string",
+            kzhaber: "string",
+            kzresim: "string",
+            htmlContent: "string",  
+          }
+          
+        }
+
+
+
+        /* MediaModel.fullName = user.imya +" "+ user.familiya;
+        MediaModel.about = user.perbilgi;
+        MediaModel.title = user.zvanye;
+        MediaModel.imageUrl = "http://25.46.200.59:3002/tmp/"+user.vracid+".png";
+        MediaModel.rating = 5;
+        MediaModel.isOnline = true; */
+
+        console.log(MediaModel),
+
+          MediaModel.push(user);
+      }
+
+
+
+      return MediaModel;
+
+    }
   }
   useEffect(() => {
-   
-    
+
+
     MediaService.getMedia().then(item => {
+      /* const languages={
+        "title": item.title,
+        "tarih": " ",
+        "rubaslik": " ",
+        "ruhaber": "",
+        "resimru": "",
+        "kzbaslik": "",
+        "kzhaber": "",
+        "resim": "",
+        "tur":  "",
+        "aktif":""
+      } */
       setMedia(item);
+      Media(item);
+
+
+
+
     });
 
-    
+
+
   }, []);
 
 
   const { getString } = useLocalization();
-
+  /* const messages = {
+    simple: 'Hello world',
+    placeholder: 'Hello {name}',
+    date: 'Hello {ts, date}',
+    time: 'Hello {ts, time}',
+    number: 'Hello {num, number}',
+    plural: 'I have {num, plural, one {# dog} other {# dogs}}',
+    select: 'I am a {gender, select, male {boy} female {girl}}',
+    selectordinal: `I am the {order, selectordinal, 
+          one {#st person} 
+          two {#nd person}
+          =3 {#rd person} 
+          other {#th person}
+      }`,
+    richtext: 'I have <bold>{num, plural, one {# dog} other {# dogs}}</bold>',
+    richertext:
+      'I have & < &nbsp; <bold>{num, plural, one {# & dog} other {# dogs}}</bold>',
+    unicode: 'Hello\u0020{placeholder}',
+  } */
   return (
-    <IntlProvider messages={getCurrentTranslation(locale)} locale={locale} defaultLocale='en'>
+
 
     <View style={styles.container}>
       <FlatList
@@ -86,44 +171,50 @@ export const MediaScreen: React.FC<TProps> = props => {
           />
         )}
         renderItem={({ item }) => (
-          <TouchableOpacity
-            style={{ padding: 16 }}
-            onPress={() =>
-              navigation.navigate(NavigationNames.MediaDetailScreen, {
-                model: JSON.stringify(item)
-              })
-            }
-            activeOpacity={0.6}
-          >
-            <View>
-              <Image
-                source={{
-                  uri: item.imageUrl
-                }}
-                style={styles.image}
-              />
-             
-            </View>
-            <View style={styles.textRowContainer}>
-              <ScrollView
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-              >
-          
-              </ScrollView>
-              <Text style={styles.titleText}>{item.title}</Text>
-              <Text style={styles.minuteText}>
-              
-              </Text>
-            </View>
-          </TouchableOpacity>
+
+
+
+          <View>
+
+            <TouchableOpacity
+              style={{ padding: 16 }}
+              onPress={() =>
+                navigation.navigate(NavigationNames.MediaDetailScreen, {
+                  model: JSON.stringify(item)
+                })
+              }
+              activeOpacity={0.6}
+            >
+              <View>
+                <Image
+                  source={{
+                    uri: item.imageUrl
+                  }}
+                  style={styles.image}
+                />
+
+              </View>
+              <View style={styles.textRowContainer}>
+                <ScrollView
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}
+                >
+
+                </ScrollView>
+                <Text style={styles.titleText}>{item.title}</Text>
+                <Text style={styles.minuteText}>
+
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
         )}
         ItemSeparatorComponent={() => <Divider />}
         showsVerticalScrollIndicator={false}
       />
-    
+
     </View>
-    </IntlProvider>
+
 
   );
 };
