@@ -62,66 +62,42 @@ export const MediaScreen: React.FC<TProps> = props => {
   }
 
   function Media(item: string | any[]) {
+    var MediaModel = {} as MediaModel[];
+
     for (var i = 0; i < item.length; i++) {
-
-
-      var MediaModel = {} as MediaModel[];
-
-      for (var i = 0; i < MediaModel.length; i++) {
-        var user = item[i];
-        var media = MediaModel[i];
-        const mediaitem = {
-          "ru": {
-            rubaslik: "string",
-            ruhaber: "string",
-            ruresim: "string",
-            htmlContent1: "string",  
-          },
-          "kz": {
-            kzbaslik: "string",
-            kzhaber: "string",
-            kzresim: "string",
-            htmlContent: "string",  
-          }
-          
+        MediaModel[i] = item[i];
+ 
+      const mediaitem = {
+        "ru": {
+          rubaslik: MediaModel[i].rubaslik,
+          ruhaber:  MediaModel[i].ruhaber,
+          resimru:  MediaModel[i].imageUrl1,
+          htmlContent1:  MediaModel[i].htmlContent1,
+        },
+        "kz": {
+          kzbaslik:  MediaModel[i].kzbaslik,
+          kzhaber:  MediaModel[i].kzhaber,
+          resim:  MediaModel[i].imageUrl,
+          htmlContent:  MediaModel[i].htmlContent,
         }
 
-
-
-        /* MediaModel.fullName = user.imya +" "+ user.familiya;
-        MediaModel.about = user.perbilgi;
-        MediaModel.title = user.zvanye;
-        MediaModel.imageUrl = "http://25.46.200.59:3002/tmp/"+user.vracid+".png";
-        MediaModel.rating = 5;
-        MediaModel.isOnline = true; */
-
-        console.log(MediaModel),
-
-          MediaModel.push(user);
-      }
-
-
-
-      return MediaModel;
-
+       }  
+        
+       console.log(mediaitem);
+      return mediaitem; 
     }
+
+
+
+
+
+
   }
   useEffect(() => {
 
 
     MediaService.getMedia().then(item => {
-      /* const languages={
-        "title": item.title,
-        "tarih": " ",
-        "rubaslik": " ",
-        "ruhaber": "",
-        "resimru": "",
-        "kzbaslik": "",
-        "kzhaber": "",
-        "resim": "",
-        "tur":  "",
-        "aktif":""
-      } */
+   
       setMedia(item);
       Media(item);
 
@@ -136,25 +112,7 @@ export const MediaScreen: React.FC<TProps> = props => {
 
 
   const { getString } = useLocalization();
-  /* const messages = {
-    simple: 'Hello world',
-    placeholder: 'Hello {name}',
-    date: 'Hello {ts, date}',
-    time: 'Hello {ts, time}',
-    number: 'Hello {num, number}',
-    plural: 'I have {num, plural, one {# dog} other {# dogs}}',
-    select: 'I am a {gender, select, male {boy} female {girl}}',
-    selectordinal: `I am the {order, selectordinal, 
-          one {#st person} 
-          two {#nd person}
-          =3 {#rd person} 
-          other {#th person}
-      }`,
-    richtext: 'I have <bold>{num, plural, one {# dog} other {# dogs}}</bold>',
-    richertext:
-      'I have & < &nbsp; <bold>{num, plural, one {# & dog} other {# dogs}}</bold>',
-    unicode: 'Hello\u0020{placeholder}',
-  } */
+  
   return (
 
 
