@@ -71,13 +71,13 @@ export const MediaScreen: React.FC<TProps> = props => {
         "ru": {
           rubaslik: MediaModel[i].rubaslik,
           ruhaber:  MediaModel[i].ruhaber,
-          resimru:  MediaModel[i].imageUrl1,
+          resimru:  MediaModel[i].imageUrl,
           htmlContent1:  MediaModel[i].htmlContent1,
         },
         "kz": {
           kzbaslik:  MediaModel[i].kzbaslik,
           kzhaber:  MediaModel[i].kzhaber,
-          resim:  MediaModel[i].imageUrl,
+          kzresim:  MediaModel[i].imageUrl1,
           htmlContent:  MediaModel[i].htmlContent,
         }
 
@@ -160,9 +160,7 @@ export const MediaScreen: React.FC<TProps> = props => {
 
                 </ScrollView>
                 <Text style={styles.titleText}>{item.title}</Text>
-                <Text style={styles.minuteText}>
-
-                </Text>
+                 
               </View>
             </TouchableOpacity>
           </View>
@@ -180,7 +178,7 @@ export const MediaScreen: React.FC<TProps> = props => {
 const styles = StyleSheet.create({
   container: { flex: 1 },
   image: {
-    height: 210,
+    height: 400,
     borderRadius: 16,
     borderWidth: 0.4,
     borderColor: Theme.colors.formBackground
@@ -200,7 +198,10 @@ const styles = StyleSheet.create({
   },
   liveText: { color: "white", fontSize: 13 },
   titleText: {
-    fontSize: 15,
+    fontSize: 20,
+    fontWeight:"bold",
+    justifyContent:"center",
+    alignSelf:"center",
     color: Theme.colors.black,
     marginTop: 8
   },
