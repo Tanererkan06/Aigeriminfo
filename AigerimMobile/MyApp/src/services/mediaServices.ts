@@ -22,7 +22,7 @@ export default class MediaService {
                 var media = haberler2[i];
                 var yenihaberler = {} as MediaModel; 
                 yenihaberler.imageUrl = "http://25.46.200.59:3002/tmp/haber/"+"ru"+media.id+".png";
-                yenihaberler.title = media.rubaslik;
+                yenihaberler.rubaslik = media.rubaslik;
                 yenihaberler.htmlContent = media.ruhaber; 
                 yenihaberler.imageUrl1 = "http://25.46.200.59:3002/tmp/haber/"+"kz"+media.id+".png";
  
