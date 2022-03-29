@@ -43,9 +43,11 @@ export const MediaScreen: React.FC<TProps> = props => {
 
   function getLanguages() {
     dispatch(getLanguageList());
+    
   }
   useEffect(() => {
-    getLanguages();
+   
+    
     MediaService.getMedia().then(item => {
       setMedia(item);
     });

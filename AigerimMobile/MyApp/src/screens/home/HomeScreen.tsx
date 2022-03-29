@@ -22,12 +22,12 @@ const width = Dimensions.get('window').width;
 const hight = Dimensions.get('window').height;
 import { DashboardItemsModel, DoctorModel, TypicodeUserModel, DepartmentModel } from "../../models";
 import { DashboardService, DoctorsService, DepartmentService } from "../../services";
-import { useLocalization } from "../../localization";
-import NavigationNames from "../../navigations/NavigationNames";
+ import NavigationNames from "../../navigations/NavigationNames";
 import { HomeMenuItemType } from "../../types";
 import Carousel from "react-native-snap-carousel";
 import Nitelik from "../home/nitelik";
 import Slider from "../home/Slider";
+import { useLocalization } from "../../../src/localization";
 
 
 const generateMenuItems = (
