@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
+ import {
   FlatList,
   View,
   Text,
@@ -35,13 +35,17 @@ const StorySection: React.FC<{
 
 export const MediaScreen: React.FC<TProps> = props => {
   const navigation = useNavigation();
-
+  const dispatch = useDispatch();
+  const { LanguageList } = useSelector((state: RootState) => state.language);
   const [isShowedStoryModal, setIsShowedStoryModal] = useState(false);
   const [selectedStoryIndex, setSelectedStoryIndex] = useState(0);
   const [media, setMedia] = useState<MediaModel[]>(null);
 
-
+  function getLanguages() {
+    dispatch(getLanguageList());
+  }
   useEffect(() => {
+    getLanguages();
     MediaService.getMedia().then(item => {
       setMedia(item);
     });
