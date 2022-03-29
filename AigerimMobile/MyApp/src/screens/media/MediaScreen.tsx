@@ -18,6 +18,9 @@ import { DashboardService, DoctorsService,DepartmentService,MediaService } from 
 import { useNavigation } from "@react-navigation/native";
 import NavigationNames from "../../navigations/NavigationNames";
 import moment from "moment";
+import { useDispatch, useSelector } from 'react-redux';
+import { addLanguageToList, deleteLanguageFromList, getLanguageList, setLanguageStatus } from '../../action/languageActions';
+import { RootState } from '../../reducers';
 
 type TProps = {};
 
