@@ -7,7 +7,7 @@ export default class MediaService {
             .then((response) => response.json())
             .then((json) => {
                 var typeiCodeUsers: TypicodeUserModel[] = json;
-                console.log(typeiCodeUsers)
+            /*     console.log(typeiCodeUsers) */
                 return typeiCodeUsers;
             })
             .catch((error) => {

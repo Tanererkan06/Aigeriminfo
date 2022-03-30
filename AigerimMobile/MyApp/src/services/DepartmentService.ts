@@ -7,7 +7,7 @@ export default class DepartmentService {
             .then((response) => response.json())
             .then((json) => {
                 var typeiCodeUsers: TypicodeUserModel[] = json;
-                console.log(typeiCodeUsers)
+              /*   console.log(typeiCodeUsers) */
                 return typeiCodeUsers;
             })
             .catch((error) => {
@@ -30,7 +30,7 @@ export default class DepartmentService {
            /*
            "profs":  "isim":   "aciklama":    */
 
-                console.log(deparmans),
+            /*     console.log(deparmans), */
 
                     deparmanModel.push(deparmans);
             }

@@ -28,7 +28,7 @@ export default class Nitelik extends React.Component {
       const response = await fetch('http://25.46.200.59:3002/nitelik');
       const json = await response.json();
       this.setState({ data: json });
-      console.log(json)
+    /*   console.log(json) */
     } catch (error) {
       console.log(error);
     } finally {

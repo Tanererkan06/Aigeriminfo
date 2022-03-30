@@ -3,13 +3,20 @@ import { Provider } from 'react-redux';
 import { createStore,combineReducers } from "redux";
 import {name as appName} from './app.json';
 import App from "./src";
-/* import configureStore from './src/store';
- */ 
+ LogBox.ignoreLogs(['Warning: ...']); 
  LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
+/* import configureStore from './src/store';
+ */  /*
+
   LogBox.ignoreLogs(["Possible Unhandled Promise Rejection"]);
-  /*
-  LogBox.ignoreLogs(['Warning: ...']);
-  LogBox.ignoreLogs(["VirtualizedLists should never be nested"]); */
+  LogBox.ignoreLogs(["md-more  is not a valid icon name for family  ionicons"]);
+ 
+ 
+  LogBox.ignoreLogs(["VirtualizedLists should never be nested"]); 
+  
+  
+  
+  */
  
  
 export default App;

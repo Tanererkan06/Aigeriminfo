@@ -8,6 +8,8 @@ import {
   ScrollView,
   TouchableOpacity
 } from "react-native";
+import '@formatjs/intl-locale/polyfill'
+
 import { Theme } from "../../theme";
 import { Divider } from "../../components";
 import { useLocalization } from "../../localization";
@@ -21,7 +23,8 @@ import moment from "moment";
 import { useDispatch, useSelector } from 'react-redux';
 import { addLanguageToList, deleteLanguageFromList, getLanguageList, setLanguageStatus } from '../../action/languageActions';
 import { RootState } from '../../reducers';
-import { IntlProvider, MessageFormatElement, FormattedMessage, FormattedRelativeTime, useIntl } from 'react-intl';
+import { IntlProvider, MessageFormatElement, FormattedMessage, FormattedRelativeTime, useIntl, defineMessages } from 'react-intl';
+/* import * as Localization from 'expo-localization'; */
 
 
 
@@ -48,6 +51,9 @@ const StorySection: React.FC<{
   </>
 );
 
+
+
+
 export const MediaScreen: React.FC<TProps> = props => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -55,55 +61,73 @@ export const MediaScreen: React.FC<TProps> = props => {
   const [isShowedStoryModal, setIsShowedStoryModal] = useState(false);
   const [selectedStoryIndex, setSelectedStoryIndex] = useState(0);
   const [media, setMedia] = useState<MediaModel[]>(null);
+  const [locate, setlocate] = useState();
+  /* const [mediaItem, setMediaItem] = useState(); */
+  /*  const locale = Localization.locale; */
+  const [rubaslik, setrubaslik] = useState<string | undefined>("");
+  const [ruhaber, setruhaber] = useState<string | undefined>("");
+  const [ruresim, setruresim] = useState<string | undefined>("");
+  const [baslik, setbaslik] = useState<string | undefined>("");
+  const [haber, sethaber] = useState<string | undefined>("");
+  const [resim, setresim] = useState<string | undefined>("");
+
+
+
+
+
 
   function getLanguages() {
     dispatch(getLanguageList());
 
   }
 
-  function Media(item: string | any[]) {
-    var MediaModel = {} as MediaModel[];
 
-    for (var i = 0; i < item.length; i++) {
-        MediaModel[i] = item[i];
- 
-      const mediaitem = {
-        "ru": {
-          rubaslik: MediaModel[i].rubaslik,
-          ruhaber:  MediaModel[i].ruhaber,
-          resimru:  MediaModel[i].imageUrl,
-          htmlContent1:  MediaModel[i].htmlContent1,
-        },
-        "kz": {
-          kzbaslik:  MediaModel[i].kzbaslik,
-          kzhaber:  MediaModel[i].kzhaber,
-          kzresim:  MediaModel[i].imageUrl1,
-          htmlContent:  MediaModel[i].htmlContent,
-        }
-
-       }  
-        
-       console.log(mediaitem);
-      return mediaitem; 
-    }
-
-
-
-
-
-
-  }
   useEffect(() => {
 
 
     MediaService.getMedia().then(item => {
-   
+
       setMedia(item);
-      Media(item);
+      var MediaModel = [] as MediaModel[];
 
+      for (var i = 0; i < item.length; i++) {
+        MediaModel[i] = item[i];
 
+        const mediaitems = {
+          ru: {
+            baslik: MediaModel[i].title ,
+            haber: MediaModel[i].htmlContent1,
+            resim: MediaModel[i].imageUrl,
+          },
+          kz: {
+            baslik: MediaModel[i].title2,
+            haber: MediaModel[i].htmlContent,
+            resim: MediaModel[i].imageUrl1,
+            /* htmlContent:  MediaModel[i].htmlContent, */
+          }
+      
 
+        }
+        setrubaslik(mediaitems.ru.baslik);   
+        setbaslik(mediaitems.kz.baslik);  
+        console.log(rubaslik);  
+        console.log(baslik);  
+        setruhaber(mediaitems.ru.haber);
+        sethaber(mediaitems.kz.haber);
+        console.log(ruhaber);  
+        console.log(haber);  
+        setruresim(mediaitems.ru.resim);
+        setresim(mediaitems.kz.resim);
+        console.log(ruresim);
+        console.log(resim);
 
+      
+        return MediaModel
+      }
+   
+      /* setMediaItem(mediaitem)
+
+       */
     });
 
 
@@ -112,63 +136,65 @@ export const MediaScreen: React.FC<TProps> = props => {
 
 
   const { getString } = useLocalization();
-  
+
   return (
 
 
     <View style={styles.container}>
-      <FlatList
-        data={media}
-        keyExtractor={(item, index) => `key${index}ForMedia`}
-        ListHeaderComponent={() => (
-          <StorySection
-            onClickStoryItem={(index: number) => {
-              setSelectedStoryIndex(index);
-              setIsShowedStoryModal(true);
-            }}
-          />
-        )}
-        renderItem={({ item }) => (
+     {/*  <IntlProvider locale="ru" messages={mediaItem}>
+ */}
+        <FlatList
+          data={media}
+          keyExtractor={(item, index) => `key${index}ForMedia`}
+          ListHeaderComponent={() => (
+            <StorySection
+              onClickStoryItem={(index: number) => {
+                setSelectedStoryIndex(index);
+                setIsShowedStoryModal(true);
+              }}
+            />
+          )}
+          renderItem={({ item }) => (
 
 
 
-          <View>
+            <View>
 
-            <TouchableOpacity
-              style={{ padding: 16 }}
-              onPress={() =>
-                navigation.navigate(NavigationNames.MediaDetailScreen, {
-                  model: JSON.stringify(item)
-                })
-              }
-              activeOpacity={0.6}
-            >
-              <View>
-                <Image
-                  source={{
-                    uri: item.imageUrl
-                  }}
-                  style={styles.image}
-                />
+              <TouchableOpacity
+                style={{ padding: 16 }}
+                onPress={() =>
+                  navigation.navigate(NavigationNames.MediaDetailScreen, {
+                    model: JSON.stringify(item)
+                  })
+                }
+                activeOpacity={0.6}
+              >
+                <View>
+                  <Image
+                    source={{
+                      uri: item.imageUrl
+                    }}
+                    style={styles.image}
+                  />
 
-              </View>
-              <View style={styles.textRowContainer}>
-                <ScrollView
-                  horizontal={true}
-                  showsHorizontalScrollIndicator={false}
-                >
+                </View>
+                <View style={styles.textRowContainer}>
+                  <ScrollView
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                  >
 
-                </ScrollView>
-                <Text style={styles.titleText}>{item.title}</Text>
-                 
-              </View>
-            </TouchableOpacity>
-          </View>
-        )}
-        ItemSeparatorComponent={() => <Divider />}
-        showsVerticalScrollIndicator={false}
-      />
+                  </ScrollView>
+                  <Text style={styles.titleText}>{item.title}</Text>
 
+                </View>
+              </TouchableOpacity>
+            </View>
+          )}
+          ItemSeparatorComponent={() => <Divider />}
+          showsVerticalScrollIndicator={false}
+        />
+      {/* </IntlProvider> */}
     </View>
 
 
@@ -199,9 +225,9 @@ const styles = StyleSheet.create({
   liveText: { color: "white", fontSize: 13 },
   titleText: {
     fontSize: 20,
-    fontWeight:"bold",
-    justifyContent:"center",
-    alignSelf:"center",
+    fontWeight: "bold",
+    justifyContent: "center",
+    alignSelf: "center",
     color: Theme.colors.black,
     marginTop: 8
   },

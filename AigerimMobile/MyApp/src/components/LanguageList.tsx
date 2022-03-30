@@ -21,7 +21,7 @@ const LanguageListCompenent = () => {
   const { LanguageList } = useSelector((state: RootState) => state.language);
   const [Language, SetLanguage] = useState('');
   const [checked, setChecked] = React.useState(1); //initial choice
-
+ 
   function getLanguages() {
     dispatch(getLanguageList());
   }
