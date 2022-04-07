@@ -64,7 +64,7 @@ type TProps = {};
 export const HomeScreen: React.FC<TProps> = asyncprops => {
   const navigation = useNavigation();
 
-  const {getString, changeLanguage} = useLocalization();
+  const {getString, currentLanguage} = useLocalization();
 
   const [dashboardItem, setDashboardItem] = useState<DashboardItemsModel>();
   const [doctors, setDoctors] = useState<DoctorModel[]>();
@@ -105,7 +105,7 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
     <ScrollView
       contentContainerStyle={styles.container}
       showsVerticalScrollIndicator={false}>
-      <Slider />
+      <Slider language={currentLanguage()} />
       <Nitelik />
 
       <SectionHeader title={getString('What are you looking for?')} />
