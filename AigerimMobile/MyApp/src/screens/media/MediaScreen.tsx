@@ -5,8 +5,8 @@ import {
   Text,
   StyleSheet,
   Image,
-  ScrollView,
-  TouchableOpacity
+  ScrollView,StatusBar,
+  TouchableOpacity, SectionList
 } from "react-native";
 import '@formatjs/intl-locale/polyfill'
 
@@ -52,7 +52,7 @@ const StorySection: React.FC<{
 );
 
 
-
+ 
 
 export const MediaScreen: React.FC<TProps> = props => {
   const navigation = useNavigation();
@@ -73,8 +73,7 @@ export const MediaScreen: React.FC<TProps> = props => {
 
 
 
-
-
+ 
 
   function getLanguages() {
     dispatch(getLanguageList());
@@ -126,7 +125,6 @@ export const MediaScreen: React.FC<TProps> = props => {
       }
    
       /* setMediaItem(mediaitem)
-
        */
     });
 
@@ -136,13 +134,24 @@ export const MediaScreen: React.FC<TProps> = props => {
 
 
   const { getString } = useLocalization();
+  
 
   return (
+
+    
 
 
     <View style={styles.container}>
      {/*  <IntlProvider locale="ru" messages={mediaItem}>
  */}
+
+{/* <SectionList
+        style={styles.list}
+        sections={LISTDATA}
+        keyExtractor={(item, index) => item + index}
+        renderItem={({item}) => <ListItem item={item} />}
+        renderSectionHeader={({section}) => <ListHeader item={section} />}
+      /> */}
         <FlatList
           data={media}
           keyExtractor={(item, index) => `key${index}ForMedia`}
@@ -193,7 +202,7 @@ export const MediaScreen: React.FC<TProps> = props => {
           )}
           ItemSeparatorComponent={() => <Divider />}
           showsVerticalScrollIndicator={false}
-        />
+        /> 
       {/* </IntlProvider> */}
     </View>
 
@@ -202,7 +211,56 @@ export const MediaScreen: React.FC<TProps> = props => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
+  container: {
+    flex: 1,
+    paddingTop: StatusBar.currentHeight,
+    marginHorizontal: 16
+  },
+  parentView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  list: {
+    width: '100%',
+  },
+  listText: {
+    color: 'white',
+  },
+  listHeaderText: {
+    color: 'white',
+  },
+  listItem: {
+    flex: 1,
+    marginRight: 20,
+    marginLeft: 20,
+    marginTop: 10,
+    backgroundColor: '#9575cd',
+    padding: 10,
+    borderRadius: 5,
+  },
+  listHeader: {
+    flex: 1,
+    marginRight: 20,
+    marginLeft: 20,
+    marginTop: 10,
+    backgroundColor: '#2196f3',
+    padding: 10,
+    borderRadius: 5,
+  },
+  item: {
+    backgroundColor: "#f9c2ff",
+    padding: 20,
+    marginVertical: 8
+  },
+  header: {
+    fontSize: 32,
+    backgroundColor: "#fff"
+  },
+  title: {
+    fontSize: 24
+  },
   image: {
     height: 400,
     borderRadius: 16,
