@@ -21,32 +21,31 @@ import DoctorDetails from "./components/Doctors/DoctorDetails";
 import Doctors from "./components/Doctors/Doctors";
 import AboutDetails from "./components/About/AboutDetails";
 
-
 function App() {
   return (
     <div>
       <Router>
-      <AuthProvider>
+        <AuthProvider>
           <Header />
           <Menu />
           <Switch>
             <Route exact path="/">
               <Banner />
-              
-              <Services/>
-              <Doctors/>
+
+              <Services />
+              <Doctors />
               <ClinicalFacts />
             </Route>
-            
+
             <Route path="/doctor/:doctorId">
               <DoctorDetails />
-            </Route>  
+            </Route>
             <Route path="/service/:serviceId">
               <ServicesDetails />
-            </Route>                    
+            </Route>
             <Route path="/login">
               <Login />
-            </Route>            
+            </Route>
             <Route path="/register">
               <Register />
             </Route>
@@ -58,10 +57,10 @@ function App() {
             </Route>
             <Route path="/services">
               <Services />
-              </Route>
+            </Route>
             <Route path="/doctors">
               <Doctors />
-              </Route>
+            </Route>
             <Route path="/contact">
               <Contact />
             </Route>
