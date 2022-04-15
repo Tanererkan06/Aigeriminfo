@@ -517,12 +517,21 @@ async function calismasaatleri(req, res) {
       .then((c) => {
         connection = c;
         oracledb.fetchAsBuffer = [oracledb.BLOB];
-        return connection.execute("select ng_his_vractakvim.datar, 'прием' d  ,ng_his_vractakvim.bassaat,ng_his_vractakvim.bitsaat,ng_his_vractakvim.servis_id ,ng_his_glzr.isim from ng_his_glzr,ng_his_vractakvim         where ng_his_vractakvim.doktor_id=:doktor_id  and        ng_his_vractakvim.servis_id=ng_his_glzr.kabinet and        ng_his_vractakvim.datar>=to_char(sysdate,'dd/mm/yyyy') ", {
-          /* connection.execute("select ng_his_vractakvim.datar, 'прием' d  ,"+
-        "ng_his_vractakvim.bassaat,ng_his_vractakvim.bitsaat,ng_his_vractakvim.servis_id ,ng_his_glzr.isim "+
-        "from ng_his_glzr,ng_his_vractakvim  where ng_his_vractakvim.datar >=to_char(sysdate,'dd/mm/yyyy') "+
-        "ng_his_glzr.kabinet=ng_his_vractakvim.servis_id  "+
-        "and ng_his_vractakvim.servis_id=:servis_id and ng_his_vractakvim.doktor_id=:doktor_id)", { */
+
+/*
+ //select ng_his_vractakvim.datar, 'прием' d  ,ng_his_vractakvim.bassaat,ng_his_vractakvim.bitsaat,
+  //ng_his_vractakvim.servis_id ,ng_his_glzr.isim 
+  //from ng_his_glzr,ng_his_vractakvim 
+// where ng_his_vractakvim.datar >=to_char(sysdate,'dd/mm/yyyy') 
+and ng_his_glzr.kabinet=ng_his_vractakvim.servis_id  and ng_his_vractakvim.servis_id='69131'
+//and ng_his_vractakvim.doktor_id='DR512' 
+//and ng_his_vractakvim.servis_id in (select kabinet from ng_his_glzr where sinifi <>'S')
+
+*/
+
+
+ return connection.execute("select ng_his_vractakvim.datar,'прием' d  ,ng_his_vractakvim.bassaat,ng_his_vractakvim.bitsaat,ng_his_vractakvim.servis_id ,ng_his_glzr.isim from ng_his_glzr,ng_his_vractakvim   where ng_his_vractakvim.doktor_id=:doktor_id  and   ng_his_vractakvim.servis_id=ng_his_glzr.kabinet and  ng_his_vractakvim.datar>=to_char(sysdate,'dd/mm/yyyy') and ng_his_glzr.kabinet=ng_his_vractakvim.servis_id  and ng_his_vractakvim.servis_id='69131' and ng_his_vractakvim.servis_id in (select kabinet from ng_his_glzr where sinifi <>'S')", {
+          
 
         // servis_id:req.body.servis_id,
           doktor_id: req.body.doktor_id
