@@ -408,20 +408,7 @@ module.exports = app => {
       }).catch((error) => {
         //  res.status(500).json({ message: error.message || "Some error occurred!" });
       });
-  };
-
-  /*
-  uygun tarih secimini buna göre düzenle
-  select ng_his_vractakvim.datar, 'прием' d  ,
-  ng_his_vractakvim.bassaat,ng_his_vractakvim.bitsaat,ng_his_vractakvim.servis_id ,ng_his_glzr.isim 
-from ng_his_glzr,ng_his_vractakvim 
-where ng_his_vractakvim.datar >=to_char(sysdate,'dd/mm/yyyy') 
-and ng_his_glzr.kabinet=ng_his_vractakvim.servis_id  and ng_his_vractakvim.servis_id='69131'
-and ng_his_vractakvim.doktor_id='DR512' 
-and ng_his_vractakvim.servis_id in (select kabinet from ng_his_glzr where sinifi <>'S')
-  
-  */
-
+  };  
 async function hastakayit(req, res) {
   let users = new Array();
 
@@ -518,16 +505,7 @@ async function calismasaatleri(req, res) {
         connection = c;
         oracledb.fetchAsBuffer = [oracledb.BLOB];
 
-/*
- //select ng_his_vractakvim.datar, 'прием' d  ,ng_his_vractakvim.bassaat,ng_his_vractakvim.bitsaat,
-  //ng_his_vractakvim.servis_id ,ng_his_glzr.isim 
-  //from ng_his_glzr,ng_his_vractakvim 
-// where ng_his_vractakvim.datar >=to_char(sysdate,'dd/mm/yyyy') 
-and ng_his_glzr.kabinet=ng_his_vractakvim.servis_id  and ng_his_vractakvim.servis_id='69131'
-//and ng_his_vractakvim.doktor_id='DR512' 
-//and ng_his_vractakvim.servis_id in (select kabinet from ng_his_glzr where sinifi <>'S')
-
-*/
+ 
 
 // SELECT ISIM,ALT_RAN,UST_RAN FROM NG_HIS_GLZR
 //select * from ng_his_ransaat t
@@ -723,7 +701,6 @@ order by NG_HIS_PASRANDEVU.DATAR,NG_HIS_PASRANDEVU.RANDEVU_SAATI
   app.get('/Slider', function (req, res) {
     Slider(req, res);
   })
-
   app.get('/nitelik', function (req, res) {
     nitelik(req, res);
   })
