@@ -28,7 +28,49 @@ NG_HIS_PASRANDEVU.DATAR>to_char(sysdate-5,'dd/mm/yyyy')
 order by NG_HIS_PASRANDEVU.DATAR,NG_HIS_PASRANDEVU.RANDEVU_SAATI
 
 */
+async function tetkikfiyat(req, res) {
+  let users = new Array();
+  var fs = require('fs');
+  const express = require('express');
+  const app = express();
+  app.use(express.static('public'));
+  var path = require('path');
+  connection = await oracledb.getConnection({
+    user: dbConfig.USER,
+    password: dbConfig.PASSWORD,
+    connectString: dbConfig.ConnectString
+  })
+    .then((c) => {
+      connection = c;
+      oracledb.fetchAsBuffer = [oracledb.BLOB];
+      return connection.execute("select t.uslugu,t.isim,t.sena from ng_his_prdkt t");
+    })
+    .then((result) => {
+      result.rows.forEach((elemento) => {
+        let user = new Object();
 
+        user.hizmetid = elemento[0];
+        user.hizmet = elemento[1];
+        user.fiyat = elemento[2]+" Tenge"; 
+
+        users.push(user);
+
+
+      });
+      res.status(200).json(users);
+
+     
+
+
+
+    }).then(() => {
+      if (connection) {
+        connection.close();
+      }
+    }).catch((error) => {
+      res.status(500).json({ message: error.message || "Some error occurred!" });
+    });
+};
   async function nitelik(req, res) {
     let users = new Array();
     var fs = require('fs');
@@ -521,15 +563,10 @@ async function calismasaatleri(req, res) {
     })
       .then((c) => {
         connection = c;
-        oracledb.fetchAsBuffer = [oracledb.BLOB];
-
- 
-
-
+        oracledb.fetchAsBuffer = [oracledb.BLOB]; 
 
  return connection.execute("select ng_his_vractakvim.datar,'прием' d  ,ng_his_vractakvim.bassaat,ng_his_vractakvim.bitsaat,ng_his_vractakvim.servis_id ,ng_his_glzr.isim from ng_his_glzr,ng_his_vractakvim   where ng_his_vractakvim.doktor_id=:doktor_id  and   ng_his_vractakvim.servis_id=ng_his_glzr.kabinet and  ng_his_vractakvim.datar>=to_char(sysdate,'dd/mm/yyyy') and ng_his_glzr.kabinet=ng_his_vractakvim.servis_id  and ng_his_vractakvim.servis_id=:servis_id and ng_his_vractakvim.servis_id in (select kabinet from ng_his_glzr where sinifi <>'S')", {
-          
-
+           
          servis_id:req.body.servis_id,
           doktor_id: req.body.doktor_id
         });
@@ -700,5 +737,8 @@ async function calismasaatleri(req, res) {
   })
   app.get('/nitelik', function (req, res) {
     nitelik(req, res);
+  })
+  app.get('/tetkikfiyat', function (req, res) {
+    tetkikfiyat(req, res);
   })
 };
