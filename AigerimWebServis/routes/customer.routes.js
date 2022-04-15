@@ -4,7 +4,11 @@ module.exports = app => {
 
   oracledb.fetchAsString = [oracledb.CLOB];
 //my.public.ip:1521/service-name  uzaktan baglanmak ister
- 
+  
+
+
+
+
 
 // SELECT ISIM,ALT_RAN,UST_RAN FROM NG_HIS_GLZR
 //select * from ng_his_ransaat t
@@ -22,6 +26,7 @@ ng_his_rpsl.kullan(+)=NG_HIS_PASRANDEVU.doktor_id and
 ng_his_glzr.kabinet=NG_HIS_PASRANDEVU.kabinet_id AND 
 NG_HIS_PASRANDEVU.DATAR>to_char(sysdate-5,'dd/mm/yyyy')
 order by NG_HIS_PASRANDEVU.DATAR,NG_HIS_PASRANDEVU.RANDEVU_SAATI
+
 */
 
   async function nitelik(req, res) {
@@ -506,7 +511,7 @@ async function calismasaatleri(req, res) {
       //  res.status(500).json({ message: error.message || "Some error occurred!" });
     });
 };
-  async function UygunTarihSecimi(req, res) {
+  async function DoktorUygunTarihveSaatSecimi(req, res) {
     let users = new Array();
 
     connection = await oracledb.getConnection({
@@ -520,24 +525,7 @@ async function calismasaatleri(req, res) {
 
  
 
-// SELECT ISIM,ALT_RAN,UST_RAN FROM NG_HIS_GLZR
-//select * from ng_his_ransaat t
-//SELECT * FROM ng_his_kabuzman
 
-/*
-select NG_HIS_PASRANDEVU.RANDEVU_ID as RANDEVU_ID,
-    NG_HIS_PASRANDEVU.DATAR as DATAR,
-    NG_HIS_PASRANDEVU.RANDEVU_SAATI as RANDEVU_SAATI,
-    ng_his_glzr.isim kab,
-    ng_his_rpsl.familya||' '||ng_his_rpsl.imya  VR 
-from NG_HIS_PASRANDEVU,ng_his_rpsl,ng_his_glzr 
-where hasta_id=:p1_var and iptal is null and ran_ok is null and
-ng_his_rpsl.kullan(+)=NG_HIS_PASRANDEVU.doktor_id and 
-ng_his_glzr.kabinet=NG_HIS_PASRANDEVU.kabinet_id AND 
-NG_HIS_PASRANDEVU.DATAR>to_char(sysdate-5,'dd/mm/yyyy')
-order by NG_HIS_PASRANDEVU.DATAR,NG_HIS_PASRANDEVU.RANDEVU_SAATI
-
-*/
 
  return connection.execute("select ng_his_vractakvim.datar,'прием' d  ,ng_his_vractakvim.bassaat,ng_his_vractakvim.bitsaat,ng_his_vractakvim.servis_id ,ng_his_glzr.isim from ng_his_glzr,ng_his_vractakvim   where ng_his_vractakvim.doktor_id=:doktor_id  and   ng_his_vractakvim.servis_id=ng_his_glzr.kabinet and  ng_his_vractakvim.datar>=to_char(sysdate,'dd/mm/yyyy') and ng_his_glzr.kabinet=ng_his_vractakvim.servis_id  and ng_his_vractakvim.servis_id=:servis_id and ng_his_vractakvim.servis_id in (select kabinet from ng_his_glzr where sinifi <>'S')", {
           
@@ -555,11 +543,7 @@ order by NG_HIS_PASRANDEVU.DATAR,NG_HIS_PASRANDEVU.RANDEVU_SAATI
           user.Basssat = elemento[2];
           user.bitissaati = elemento[3];
           user.servisid = elemento[4];
-          user.servis = elemento[5];
-
-
-
-
+          user.servis = elemento[5]; 
 
           users.push(user);
         });
@@ -699,8 +683,8 @@ order by NG_HIS_PASRANDEVU.DATAR,NG_HIS_PASRANDEVU.RANDEVU_SAATI
   app.get('/DoktorSecimi', function (req, res) {
     DoktorSecimi(req, res);
   })
-  app.get('/UygunTarihSecimi', function (req, res) {
-    UygunTarihSecimi(req, res);
+  app.get('/DoktorUygunTarihveSaatSecimi', function (req, res) {
+    DoktorUygunTarihveSaatSecimi(req, res);
   })
   app.get('/UygunSaatSecimi', function (req, res) {
     UygunSaatSecimi(req, res);
