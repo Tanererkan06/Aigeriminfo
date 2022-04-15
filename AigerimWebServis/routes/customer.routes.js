@@ -409,6 +409,103 @@ module.exports = app => {
         //  res.status(500).json({ message: error.message || "Some error occurred!" });
       });
   };
+
+  /*
+  uygun tarih secimini buna göre düzenle
+  select ng_his_vractakvim.datar, 'прием' d  ,
+  ng_his_vractakvim.bassaat,ng_his_vractakvim.bitsaat,ng_his_vractakvim.servis_id ,ng_his_glzr.isim 
+from ng_his_glzr,ng_his_vractakvim 
+where ng_his_vractakvim.datar >=to_char(sysdate,'dd/mm/yyyy') 
+and ng_his_glzr.kabinet=ng_his_vractakvim.servis_id  and ng_his_vractakvim.servis_id='69131'
+and ng_his_vractakvim.doktor_id='DR512' 
+and ng_his_vractakvim.servis_id in (select kabinet from ng_his_glzr where sinifi <>'S')
+  
+  */
+
+async function hastakayit(req, res) {
+  let users = new Array();
+
+  connection = await oracledb.getConnection({
+    user: dbConfig.USER,
+    password: dbConfig.PASSWORD,
+    connectString: dbConfig.ConnectString
+  })
+    .then((c) => {
+      connection = c;
+      oracledb.fetchAsBuffer = [oracledb.BLOB];
+      return  connection.execute(" ", {
+
+       //SELECT ARALIK FROM ng_his_kabuzman  - calisma araliklari 
+       //ALT_RAN,UST_RAN
+
+       //BASSAAT;
+    //BITSAAT;
+      });
+    })
+    .then((result) => {
+      result.rows.forEach((elemento) => {
+        let user = new Object();
+       /*  user.Tarih = elemento[0];
+        user.durumu = elemento[1];
+        user.baslangic = elemento[2];
+        user.bitis = elemento[3]; */
+
+
+
+        users.push(user);
+      });
+
+      res.status(200).json(users);
+    }).then(() => {
+      if (connection) {
+        connection.close();
+      }
+    }).catch((error) => {
+      //  res.status(500).json({ message: error.message || "Some error occurred!" });
+    });
+};
+async function calismasaatleri(req, res) {
+  let users = new Array();
+
+  connection = await oracledb.getConnection({
+    user: dbConfig.USER,
+    password: dbConfig.PASSWORD,
+    connectString: dbConfig.ConnectString
+  })
+    .then((c) => {
+      connection = c;
+      oracledb.fetchAsBuffer = [oracledb.BLOB];
+      return  connection.execute(" ", {
+
+       //SELECT ARALIK FROM ng_his_kabuzman  - calisma araliklari 
+       //ALT_RAN,UST_RAN
+
+       //BASSAAT;
+    //BITSAAT;
+      });
+    })
+    .then((result) => {
+      result.rows.forEach((elemento) => {
+        let user = new Object();
+        user.Tarih = elemento[0];
+        user.durumu = elemento[1];
+        user.baslangic = elemento[2];
+        user.bitis = elemento[3];
+
+
+
+        users.push(user);
+      });
+
+      res.status(200).json(users);
+    }).then(() => {
+      if (connection) {
+        connection.close();
+      }
+    }).catch((error) => {
+      //  res.status(500).json({ message: error.message || "Some error occurred!" });
+    });
+};
   async function UygunTarihSecimi(req, res) {
     let users = new Array();
 
@@ -420,8 +517,14 @@ module.exports = app => {
       .then((c) => {
         connection = c;
         oracledb.fetchAsBuffer = [oracledb.BLOB];
-        return connection.execute("select ng_his_vractakvim.datar, 'прием' d  ,ng_his_vractakvim.bassaat,ng_his_vractakvim.bitsaat,ng_his_vractakvim.servis_id ,ng_his_glzr.isim from ng_his_glzr,ng_his_vractakvim where ng_his_vractakvim.doktor_id=:doktor_id ", {
+        return  connection.execute("select ng_his_vractakvim.datar, 'прием' d  ,"+
+        "ng_his_vractakvim.bassaat,ng_his_vractakvim.bitsaat,ng_his_vractakvim.servis_id ,ng_his_glzr.isim "+
+        "from ng_his_glzr,ng_his_vractakvim  where ng_his_vractakvim.datar >=to_char(sysdate,'dd/mm/yyyy') "+
+        "ng_his_glzr.kabinet=ng_his_vractakvim.servis_id  "+
+        "and ng_his_vractakvim.servis_id=:servis_id and ng_his_vractakvim.doktor_id=:doktor_id)", {
 
+        //connection.execute("select ng_his_vractakvim.datar, 'прием' d  ,ng_his_vractakvim.bassaat,ng_his_vractakvim.bitsaat,ng_his_vractakvim.servis_id ,ng_his_glzr.isim from ng_his_glzr,ng_his_vractakvim where ng_his_vractakvim.doktor_id=:doktor_id ", {
+         servis_id:req.body.servis_id,
           doktor_id: req.body.doktor_id
         });
       })
@@ -551,6 +654,12 @@ module.exports = app => {
         res.status(500).json({ message: error.message || "Some error occurred!" });
       });
   };
+  app.get('/hastakayit', function (req, res) {
+    hastakayit(req, res);
+  })
+  app.get('/calismasaatleri', function (req, res) {
+    calismasaatleri(req, res);
+  })
   app.get('/haberler', function (req, res) {
     haberler(req, res);
   })
