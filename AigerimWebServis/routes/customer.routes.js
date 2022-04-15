@@ -3,7 +3,7 @@ module.exports = app => {
   const oracledb = require('oracledb');
 
   oracledb.fetchAsString = [oracledb.CLOB];
-
+//my.public.ip:1521/service-name  uzaktan baglanmak ister
 
   async function nitelik(req, res) {
     let users = new Array();
@@ -517,16 +517,17 @@ async function calismasaatleri(req, res) {
       .then((c) => {
         connection = c;
         oracledb.fetchAsBuffer = [oracledb.BLOB];
-        return  connection.execute("select ng_his_vractakvim.datar, 'прием' d  ,"+
+        return connection.execute("select ng_his_vractakvim.datar, 'прием' d  ,ng_his_vractakvim.bassaat,ng_his_vractakvim.bitsaat,ng_his_vractakvim.servis_id ,ng_his_glzr.isim from ng_his_glzr,ng_his_vractakvim         where ng_his_vractakvim.doktor_id=:doktor_id  and        ng_his_vractakvim.servis_id=ng_his_glzr.kabinet and        ng_his_vractakvim.datar>=to_char(sysdate,'dd/mm/yyyy') ", {
+          /* connection.execute("select ng_his_vractakvim.datar, 'прием' d  ,"+
         "ng_his_vractakvim.bassaat,ng_his_vractakvim.bitsaat,ng_his_vractakvim.servis_id ,ng_his_glzr.isim "+
         "from ng_his_glzr,ng_his_vractakvim  where ng_his_vractakvim.datar >=to_char(sysdate,'dd/mm/yyyy') "+
         "ng_his_glzr.kabinet=ng_his_vractakvim.servis_id  "+
-        "and ng_his_vractakvim.servis_id=:servis_id and ng_his_vractakvim.doktor_id=:doktor_id)", {
+        "and ng_his_vractakvim.servis_id=:servis_id and ng_his_vractakvim.doktor_id=:doktor_id)", { */
 
-        //connection.execute("select ng_his_vractakvim.datar, 'прием' d  ,ng_his_vractakvim.bassaat,ng_his_vractakvim.bitsaat,ng_his_vractakvim.servis_id ,ng_his_glzr.isim from ng_his_glzr,ng_his_vractakvim where ng_his_vractakvim.doktor_id=:doktor_id ", {
-         servis_id:req.body.servis_id,
+        // servis_id:req.body.servis_id,
           doktor_id: req.body.doktor_id
         });
+       
       })
       .then((result) => {
         result.rows.forEach((elemento) => {
@@ -535,6 +536,10 @@ async function calismasaatleri(req, res) {
           user.durumu = elemento[1];
           user.baslangic = elemento[2];
           user.bitis = elemento[3];
+          user.bitiss = elemento[4];
+          user.bitissz = elemento[5];
+
+
 
 
 
@@ -542,6 +547,7 @@ async function calismasaatleri(req, res) {
         });
 
         res.status(200).json(users);
+        console.log(users)
       }).then(() => {
         if (connection) {
           connection.close();
