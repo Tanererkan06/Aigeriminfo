@@ -529,6 +529,24 @@ and ng_his_glzr.kabinet=ng_his_vractakvim.servis_id  and ng_his_vractakvim.servi
 
 */
 
+// SELECT ISIM,ALT_RAN,UST_RAN FROM NG_HIS_GLZR
+//select * from ng_his_ransaat t
+//SELECT * FROM ng_his_kabuzman
+
+/*
+select NG_HIS_PASRANDEVU.RANDEVU_ID as RANDEVU_ID,
+    NG_HIS_PASRANDEVU.DATAR as DATAR,
+    NG_HIS_PASRANDEVU.RANDEVU_SAATI as RANDEVU_SAATI,
+    ng_his_glzr.isim kab,
+    ng_his_rpsl.familya||' '||ng_his_rpsl.imya  VR 
+from NG_HIS_PASRANDEVU,ng_his_rpsl,ng_his_glzr 
+where hasta_id=:p1_var and iptal is null and ran_ok is null and
+ng_his_rpsl.kullan(+)=NG_HIS_PASRANDEVU.doktor_id and 
+ng_his_glzr.kabinet=NG_HIS_PASRANDEVU.kabinet_id AND 
+NG_HIS_PASRANDEVU.DATAR>to_char(sysdate-5,'dd/mm/yyyy')
+order by NG_HIS_PASRANDEVU.DATAR,NG_HIS_PASRANDEVU.RANDEVU_SAATI
+
+*/
 
  return connection.execute("select ng_his_vractakvim.datar,'прием' d  ,ng_his_vractakvim.bassaat,ng_his_vractakvim.bitsaat,ng_his_vractakvim.servis_id ,ng_his_glzr.isim from ng_his_glzr,ng_his_vractakvim   where ng_his_vractakvim.doktor_id=:doktor_id  and   ng_his_vractakvim.servis_id=ng_his_glzr.kabinet and  ng_his_vractakvim.datar>=to_char(sysdate,'dd/mm/yyyy') and ng_his_glzr.kabinet=ng_his_vractakvim.servis_id  and ng_his_vractakvim.servis_id=:servis_id and ng_his_vractakvim.servis_id in (select kabinet from ng_his_glzr where sinifi <>'S')", {
           
@@ -541,12 +559,12 @@ and ng_his_glzr.kabinet=ng_his_vractakvim.servis_id  and ng_his_vractakvim.servi
       .then((result) => {
         result.rows.forEach((elemento) => {
           let user = new Object();
-          user.Tarih = elemento[0];
-          user.durumu = elemento[1];
-          user.baslangic = elemento[2];
-          user.bitis = elemento[3];
-          user.bitiss = elemento[4];
-          user.bitissz = elemento[5];
+          user.Datar = elemento[0];
+          user.D = elemento[1];
+          user.Basssat = elemento[2];
+          user.bitissaati = elemento[3];
+          user.servisid = elemento[4];
+          user.servis = elemento[5];
 
 
 
