@@ -1,4 +1,4 @@
-import { DoctorModel } from ./ DoctorModel;
+import { DoctorModel } from "./DoctorModel";
 
 export interface MediaModel {
   imageUrl: string;
@@ -8,8 +8,8 @@ export interface MediaModel {
   title2: string; 
   htmlContent1: string;  
   tags: string[];
-  doctor: DoctorModel;
-  isLive: boolean;
+/*   doctor: DoctorModel;
+ */  isLive: boolean;
   startedDate: Date;
   id: number,
   tarih: Date;

@@ -7,7 +7,7 @@ export default class MediaService {
             .then((response) => response.json())
             .then((json) => {
                 var typeiCodeUsers: TypicodeUserModel[] = json;
-                console.log(typeiCodeUsers)
+            /*     console.log(typeiCodeUsers) */
                 return typeiCodeUsers;
             })
             .catch((error) => {
@@ -23,11 +23,11 @@ export default class MediaService {
                 var yenihaberler = {} as MediaModel; 
                 yenihaberler.imageUrl = "http://25.46.200.59:3002/tmp/haber/"+"ru"+media.id+".png";
                 yenihaberler.title = media.rubaslik;
-                yenihaberler.htmlContent = media.ruhaber; 
+                yenihaberler.htmlContent1 = media.ruhaber; 
                 yenihaberler.imageUrl1 = "http://25.46.200.59:3002/tmp/haber/"+"kz"+media.id+".png";
  
                 yenihaberler.title2 = media.kzbaslik;
-                yenihaberler.htmlContent1 = media.kzhaber; 
+                yenihaberler.htmlContent = media.ruhaber; 
 
                     doctorModel.push(yenihaberler);
             }

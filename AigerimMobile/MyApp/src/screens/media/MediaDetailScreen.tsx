@@ -62,18 +62,7 @@ export const MediaDetailScreen: React.FC<TProps> = props => {
       <View style={styles.titleContainer}>
         <Text style={styles.titleText}>{model.title}</Text>
       </View>
-      {/* <Divider style={styles.divider} /> */}
-      <View style={styles.doctorContainer}>
-        {/* <Image
-          source={{ uri: model.doctor.imageUrl }}
-          style={styles.doctorImage}
-        /> */}
-        <View style={styles.doctorInfoRows}>
-{/*           <Text style={styles.doctorNameText}>{model.doctor.fullName}</Text>
-         <Text style={styles.doctorTitleText}>{model.doctor.title}</Text> */} 
-        </View>
-      </View>
-    {/*   <Divider style={styles.divider} /> */}
+  
       <View style={styles.detailContainer}>
         <Text style={styles.detailTitleText}>{getString("Details")}</Text>
         <HtmlView htmlContent={model.htmlContent} imagesMaxWidthOffset={40} />

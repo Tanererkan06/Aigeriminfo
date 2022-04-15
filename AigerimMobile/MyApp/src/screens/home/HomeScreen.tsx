@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   ScrollView,
-  Text, Image,
+  Text,
+  Image,
   View,
-  FlatList, Dimensions,
-  TouchableOpacity
-} from "react-native";
-import { useNavigation } from "@react-navigation/native";
+  FlatList,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import {
   UpcomingAppoinmentRow,
   DashboardMenuItemRow,
@@ -16,48 +18,53 @@ import {
   DashboardCampaignsListItem,
   DoctorItemRow,
   DepartmentItem,
-  TouchableHighlight
-} from "../../components";
+  TouchableHighlight,
+} from '../../components';
 const width = Dimensions.get('window').width;
 const hight = Dimensions.get('window').height;
-import { DashboardItemsModel, DoctorModel, TypicodeUserModel, DepartmentModel } from "../../models";
-import { DashboardService, DoctorsService, DepartmentService } from "../../services";
-import { useLocalization } from "../../localization";
-import NavigationNames from "../../navigations/NavigationNames";
-import { HomeMenuItemType } from "../../types";
-import Carousel from "react-native-snap-carousel";
-import Nitelik from "../home/nitelik";
-import Slider from "../home/Slider";
-
+import {
+  DashboardItemsModel,
+  DoctorModel,
+  TypicodeUserModel,
+  DepartmentModel,
+} from '../../models';
+import {
+  DashboardService,
+  DoctorsService,
+  DepartmentService,
+} from '../../services';
+import NavigationNames from '../../navigations/NavigationNames';
+import {HomeMenuItemType} from '../../types';
+import Carousel from 'react-native-snap-carousel';
+import Nitelik from '../home/nitelik';
+import Slider from '../home/Slider';
+import {useLocalization} from '../../../src/localization';
 
 const generateMenuItems = (
-  getString: (key: string) => string
+  getString: (key: string) => string,
 ): HomeMenuItemType[] => [
-    {
-      row1: getString("Book an Appoinment"),
-      row2: getString("6 Doctors are available"),
-      iconName: "md-alarm",
-      iconBack: "#73CEC1",
-      action: "BookAnAppoinment"
-    },
-    {
-      row1: getString("Lab Tests at Home"),
-      row2: getString("Diagnostics are available"),
-      iconName: "ios-flask",
-      iconBack: "#35CDF7",
-      action: "LabTestsAtHome"
-    },
+  {
+    row1: getString('Book an Appoinment'),
+    row2: getString('6 Doctors are available'),
+    iconName: 'md-alarm',
+    iconBack: '#73CEC1',
+    action: 'BookAnAppoinment',
+  },
+  {
+    row1: getString('Lab Tests at Home'),
+    row2: getString('Diagnostics are available'),
+    iconName: 'ios-flask',
+    iconBack: '#35CDF7',
+    action: 'LabTestsAtHome',
+  },
+];
 
-  ];
-
-type TProps = {
-};
-
+type TProps = {};
 
 export const HomeScreen: React.FC<TProps> = asyncprops => {
   const navigation = useNavigation();
-  const { getString, changeLanguage } = useLocalization();
 
+  const {getString, currentLanguage} = useLocalization();
 
   const [dashboardItem, setDashboardItem] = useState<DashboardItemsModel>();
   const [doctors, setDoctors] = useState<DoctorModel[]>();
@@ -71,49 +78,37 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
 
     DoctorsService.getDoctors().then(typeUsers => {
       setDoctors(typeUsers);
-
     });
     DepartmentService.getDepartment().then(items => {
       setDeparmans(items);
     });
-
   }, []);
-
 
   const onClickMenu = (item: HomeMenuItemType) => {
     switch (item.action) {
-      case "BookAnAppoinment":
+      case 'BookAnAppoinment':
         navigation.navigate(NavigationNames.NewAppointmentScreen);
         break;
-      case "LabTestsAtHome":
+      case 'LabTestsAtHome':
         //navigation.navigate(NavigationName);
         break;
-      case "OnlineHealtConsultant":
+      case 'OnlineHealtConsultant':
         //navigation.navigate(NavigationName);
         break;
     }
   };
 
-
-
-
-
-
   if (dashboardItem === null) {
     return <Text> loading</Text>;
   }
   return (
-
     <ScrollView
       contentContainerStyle={styles.container}
-      showsVerticalScrollIndicator={false}
-    >
-        
-      <Slider />
+      showsVerticalScrollIndicator={false}>
+      <Slider language={currentLanguage()} />
       <Nitelik />
 
-
-      <SectionHeader title={getString("What are you looking for?")} />
+      <SectionHeader title={getString('What are you looking for?')} />
       <FlatList
         data={generateMenuItems(getString)}
         keyExtractor={(item, index) => `key${index}ForMenu`}
@@ -126,16 +121,13 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
         scrollEnabled={false}
       />
 
-
-
       <SectionHeader
-        title={getString("Our Departments")}
-        rightTitle={getString("See More")}
+        title={getString('Our Departments')}
+        rightTitle={getString('See More')}
         rightAction={() =>
           navigation.navigate(NavigationNames.DepartmentListScreen)
         }
       />
-
 
       <FlatList
         data={departman}
@@ -143,11 +135,10 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
           <TouchableOpacity
             onPress={() =>
               navigation.navigate(NavigationNames.DepartmentDetailScreen, {
-                model: JSON.stringify(row.item)
+                model: JSON.stringify(row.item),
               })
-            }
-          >
-            <DepartmentItem item={row.item} style={{ minWidth: 130 }} />
+            }>
+            <DepartmentItem item={row.item} style={{minWidth: 130}} />
           </TouchableOpacity>
         )}
         showsHorizontalScrollIndicator={false}
@@ -157,16 +148,13 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
         contentContainerStyle={styles.departmentsContainer}
       />
 
-
       <SectionHeader
-        title={getString("All Specialists")}
-        rightTitle={getString("See More")}
+        title={getString('All Specialists')}
+        rightTitle={getString('See More')}
         rightAction={() =>
           navigation.navigate(NavigationNames.DoctorListScreen)
         }
       />
-
-
 
       <FlatList
         data={doctors}
@@ -177,10 +165,9 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
             style={styles.touchableDoctorItem}
             onPress={() =>
               navigation.navigate(NavigationNames.DoctorDetailScreen, {
-                model: JSON.stringify(row.item)
+                model: JSON.stringify(row.item),
               })
-            }
-          >
+            }>
             <DoctorItemRow item={row.item} />
           </TouchableOpacity>
         )}
@@ -192,87 +179,47 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
         style={{
           width: width,
 
-          flexDirection: "row",
+          flexDirection: 'row',
           height: hight / 4,
-          borderColor: "white",
-          backgroundColor: "#08324d",
-          //alt zemin 
+          borderColor: 'white',
+          backgroundColor: '#08324d',
+          //alt zemin
           //#052940
           //#08324d
-        }}
-      >
-        <View style={{
-          //backgroundColor: "blue", 
-          flex: 0.5,
-
-        }} >
-          <Text style={styles.innerText}>О клинике
-
-          </Text>
-          <Text style={styles.innerText}>
-            Услуги
-          </Text>
-          <Text style={styles.innerText}>
-            Прайс-лист
-
-          </Text>
-          <Text style={styles.innerText}>
-
-            Специалисты
-
-          </Text>
-          <Text style={styles.innerText}>
-
-
-            Контакты
-          </Text>
-          <Text style={styles.innerText}>
-
-
-            Статьи
-
-          </Text>
-          <Text style={styles.innerText}>
-
-
-
-            Контакты
-          </Text>
-
+        }}>
+        <View
+          style={{
+            //backgroundColor: "blue",
+            flex: 0.5,
+          }}>
+          <Text style={styles.innerText}>О клинике</Text>
+          <Text style={styles.innerText}>Услуги</Text>
+          <Text style={styles.innerText}>Прайс-лист</Text>
+          <Text style={styles.innerText}>Специалисты</Text>
+          <Text style={styles.innerText}>Контакты</Text>
+          <Text style={styles.innerText}>Статьи</Text>
+          <Text style={styles.innerText}>Контакты</Text>
         </View>
-        <View style={{
-          flex: 0.5
-        }} >
-          <Text style={styles.innerText}>Задать вопрос
-          </Text>
-          <Text style={styles.innerText}>
-            Записаться на прием
-          </Text>
-          <Text style={styles.innerText}>
-
-            Оставить отзыв
-          </Text>
-          <Text style={styles.innerText}>
-
-            Оставить отзыв
-          </Text>
-          <Text style={styles.innerText}>
-
-            Написать в администрацию</Text>
+        <View
+          style={{
+            flex: 0.5,
+          }}>
+          <Text style={styles.innerText}>Задать вопрос</Text>
+          <Text style={styles.innerText}>Записаться на прием</Text>
+          <Text style={styles.innerText}>Оставить отзыв</Text>
+          <Text style={styles.innerText}>Оставить отзыв</Text>
+          <Text style={styles.innerText}>Написать в администрацию</Text>
         </View>
 
-        <View style={{
-          flex: 0.5,
-
-        }} >
+        <View
+          style={{
+            flex: 0.5,
+          }}>
           <Text style={styles.innerText}>
-            03000, РК, г.Актобе ул. Пацаева 7/1
-            03000, РК, г.Актобе ул. Шернияза 35
-            03000, РК, г.Актобе ул.Маресьева 87
-            +7 (7132) 905-100
-            +7 (775) 0 905-100
-            +7 (778) 0 905 100
-            call@aigerim.info</Text>
+            03000, РК, г.Актобе ул. Пацаева 7/1 03000, РК, г.Актобе ул. Шернияза
+            35 03000, РК, г.Актобе ул.Маресьева 87 +7 (7132) 905-100 +7 (775) 0
+            905-100 +7 (778) 0 905 100 call@aigerim.info
+          </Text>
         </View>
         {/* <Text style={styles.innerText}>
          Клиника «Айгерим» © 2022</Text> */}
@@ -281,7 +228,6 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
         }} >
           <Text style={styles.innerText}>Задать вопрос </Text>
          </View> */}
-
       </View>
 
       <View
@@ -289,52 +235,41 @@ export const HomeScreen: React.FC<TProps> = asyncprops => {
           //flexDirection: "row",
           height: 50,
           // padding: 20
-          width: width
-        }}
-      >
-        <View style={{ backgroundColor: "#052940" }} >
+          width: width,
+        }}>
+        <View style={{backgroundColor: '#052940'}}>
           <Text style={styles.innerText}>Клиника «Айгерим» © 2022</Text>
         </View>
-
-
       </View>
-
-
     </ScrollView>
   );
 };
 //#052940
 const styles = StyleSheet.create({
   baseText: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   innerText: {
     color: 'white',
     fontSize: 12,
   },
-  container:
-
-
-  {
+  container: {
     paddingVertical: 24,
-
-
   },
-  upcomingAppoinmentRow:
-  {
+  upcomingAppoinmentRow: {
     marginHorizontal: 16,
   },
   touchableDoctorItem: {
     paddingStart: 16,
-    paddingEnd: 8
+    paddingEnd: 8,
   },
   campaignsContainer: {
     paddingHorizontal: 16,
-    paddingVertical: 12
+    paddingVertical: 12,
   },
   departmentsContainer: {
     paddingHorizontal: 16,
-    paddingVertical: 12
+    paddingVertical: 12,
   },
-  horizontalDivider: { width: 12 }
+  horizontalDivider: {width: 12},
 });

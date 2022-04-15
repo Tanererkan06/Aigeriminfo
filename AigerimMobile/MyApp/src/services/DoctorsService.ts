@@ -7,7 +7,7 @@ export default class DoctorsService {
          .then((response) => response.json())
         .then((json) => {
             var typeiCodeUsers: TypicodeUserModel[] = json;
-            console.log(typeiCodeUsers)
+          /*   console.log(typeiCodeUsers) */
             return typeiCodeUsers;
         })
         .catch((error) => {
@@ -28,7 +28,7 @@ export default class DoctorsService {
             doctor.rating = 5;
             doctor.isOnline = true;
             doctor.reviews=[] as ReviewModel[]
-                    console.log(doctor),
+               /*      console.log(doctor), */
 
             doctorModel.push(doctor);
         }
