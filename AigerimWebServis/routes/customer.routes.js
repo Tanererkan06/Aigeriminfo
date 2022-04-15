@@ -4,28 +4,7 @@ module.exports = app => {
 
   oracledb.fetchAsString = [oracledb.CLOB];
 //my.public.ip:1521/service-name  uzaktan baglanmak ister
-
-  /*
-  uygun tarih secimini buna göre düzenle
-  select ng_his_vractakvim.datar, 'прием' d  ,
-  ng_his_vractakvim.bassaat,ng_his_vractakvim.bitsaat,ng_his_vractakvim.servis_id ,ng_his_glzr.isim 
-from ng_his_glzr,ng_his_vractakvim 
-where ng_his_vractakvim.datar >=to_char(sysdate,'dd/mm/yyyy') 
-and ng_his_glzr.kabinet=ng_his_vractakvim.servis_id  and ng_his_vractakvim.servis_id='69131'
-and ng_his_vractakvim.doktor_id='DR512' 
-and ng_his_vractakvim.servis_id in (select kabinet from ng_his_glzr where sinifi <>'S')
-  
-  */
-
-/*
- //select ng_his_vractakvim.datar, 'прием' d  ,ng_his_vractakvim.bassaat,ng_his_vractakvim.bitsaat,
-  //ng_his_vractakvim.servis_id ,ng_his_glzr.isim 
-  //from ng_his_glzr,ng_his_vractakvim 
-// where ng_his_vractakvim.datar >=to_char(sysdate,'dd/mm/yyyy') 
-and ng_his_glzr.kabinet=ng_his_vractakvim.servis_id  and ng_his_vractakvim.servis_id='69131'
-//and ng_his_vractakvim.doktor_id='DR512' 
-//and ng_his_vractakvim.servis_id in (select kabinet from ng_his_glzr where sinifi <>'S')
-*/
+ 
 
 // SELECT ISIM,ALT_RAN,UST_RAN FROM NG_HIS_GLZR
 //select * from ng_his_ransaat t
