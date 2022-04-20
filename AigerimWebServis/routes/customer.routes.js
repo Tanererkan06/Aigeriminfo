@@ -28,6 +28,49 @@ NG_HIS_PASRANDEVU.DATAR>to_char(sysdate-5,'dd/mm/yyyy')
 order by NG_HIS_PASRANDEVU.DATAR,NG_HIS_PASRANDEVU.RANDEVU_SAATI
 
 */
+async function tetkikfiyatdetay(req, res) {
+  let users = new Array();
+  var fs = require('fs');
+  const express = require('express');
+  const app = express();
+  app.use(express.static('public'));
+  var path = require('path');
+  connection = await oracledb.getConnection({
+    user: dbConfig.USER,
+    password: dbConfig.PASSWORD,
+    connectString: dbConfig.ConnectString
+  })
+    .then((c) => {
+      connection = c;
+      oracledb.fetchAsBuffer = [oracledb.BLOB];
+      return connection.execute("select t.uslugu,t.isim,t.sena from ng_his_prdkt t where t.uslugu:hizmet_id ", {
+
+     
+      hizmet_id: req.body.hizmet_id
+      })
+    })
+    .then((result) => {
+      result.rows.forEach((elemento) => {
+        let user = new Object();
+
+        user.hizmetid = elemento[0];
+        user.hizmet = elemento[1];
+        user.fiyat = elemento[2]+" Tenge"; 
+
+        users.push(user);
+
+
+      });
+      res.status(200).json(users); 
+
+    }).then(() => {
+      if (connection) {
+        connection.close();
+      }
+    }).catch((error) => {
+      res.status(500).json({ message: error.message || "Some error occurred!" });
+    });
+};
 async function tetkikfiyat(req, res) {
   let users = new Array();
   var fs = require('fs');
@@ -474,7 +517,46 @@ async function tetkikfiyat(req, res) {
       }).catch((error) => {
         //  res.status(500).json({ message: error.message || "Some error occurred!" });
       });
-  };  
+  }; 
+  async function hastarandevu(req, res) {
+    let users = new Array();
+  
+    connection = await oracledb.getConnection({
+      user: dbConfig.USER,
+      password: dbConfig.PASSWORD,
+      connectString: dbConfig.ConnectString
+    })
+      .then((c) => {
+        connection = c;
+        oracledb.fetchAsBuffer = [oracledb.BLOB];
+        return  connection.execute("select * From NG_HIS_PASRANDEVU", {
+  
+          
+        });
+      })
+      .then((result) => {
+        result.rows.forEach((elemento) => {
+          let user = new Object();
+           user.Tarih = elemento[0];
+          user.durumu = elemento[1];
+          user.baslangic = elemento[2];
+          user.bitis = elemento[3]; 
+          user.bitisaa = elemento[4]; 
+  
+  
+  console.log(users)
+          users.push(user);
+        });
+  
+        res.status(200).json(users);
+      }).then(() => {
+        if (connection) {
+          connection.close();
+        }
+      }).catch((error) => {
+        res.status(500).json({ message: error.message || "Some error occurred!" });
+      });
+  }; 
 async function hastakayit(req, res) {
   let users = new Array();
 
@@ -524,7 +606,7 @@ async function calismasaatleri(req, res) {
     .then((c) => {
       connection = c;
       oracledb.fetchAsBuffer = [oracledb.BLOB];
-      return  connection.execute(" ", {
+      return  connection.execute("SELECT ARALIK FROM ng_his_kabuzman WHERE PROFS=: ", {
 
        //SELECT ARALIK FROM ng_his_kabuzman  - calisma araliklari 
        //ALT_RAN,UST_RAN
@@ -740,5 +822,14 @@ async function calismasaatleri(req, res) {
   })
   app.get('/tetkikfiyat', function (req, res) {
     tetkikfiyat(req, res);
+  }) 
+
+  app.get('/tetkikfiyatDetaz', function (req, res) {
+    tetkikfiyatdetay(req, res);
+  }) 
+
+  //hizmet_id
+  app.get('/hastarandevu', function (req, res) {
+    hastarandevu(req, res);
   })
 };
