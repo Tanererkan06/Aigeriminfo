@@ -116,6 +116,7 @@ module.exports = app => {
     const app = express();
     app.use(express.static('public'));
     var path = require('path');
+
     connection = await oracledb.getConnection({
       user: dbConfig.USER,
       password: dbConfig.PASSWORD,
@@ -600,6 +601,45 @@ module.exports = app => {
         //  res.status(500).json({ message: error.message || "Some error occurred!" });
       });
   };
+
+
+  async function degeraltial(req, res) {
+    let users = new Array();
+
+    connection = await oracledb.getConnection({
+      user: dbConfig.USER,
+      password: dbConfig.PASSWORD,
+      connectString: dbConfig.ConnectString
+    })
+      .then((c) => {
+        connection = c;
+        oracledb.fetchAsBuffer = [oracledb.BLOB];
+        return connection.execute("select * from ng_his_ransaat ")
+
+
+      })
+      .then((result) => {
+        result.rows.forEach((elemento) => { 
+          let user = new Object();
+          {
+       
+            user.xsaat = elemento[0]; 
+            console.log("deger6 : "+elemento[8]);
+          }
+
+          users.push(user);
+        });
+
+        res.status(200).json(users);
+      }).then(() => {
+        if (connection) {
+          connection.close();
+        }
+      }).catch((error) => {
+        //  res.status(500).json({ message: error.message || "Some error occurred!" });
+      });
+  };
+
   async function alikal(req, res) {
     let users = new Array();
 
@@ -612,6 +652,7 @@ module.exports = app => {
         connection = c;
         oracledb.fetchAsBuffer = [oracledb.BLOB];
         //SELECT * FROM INNER JOIN ON ng_his_kabuzman.PROFS=NG_HIS_GLZR.KABINET=:PROFS 
+        //SELECT kbz.ARALIK,glzr.ALT_RAN,glzr.UST_RAN FROM ng_his_kabuzman kbz,NG_HIS_GLZR glzr WHERE (SELECT ALT_RAN,UST_RAN FROM NG_HIS_GLZR WHERE KABINET=PROFS=:PROFS)
         return connection.execute("SELECT ARALIK FROM ng_his_kabuzman WHERE PROFS=:PROFS", {
             //SELECT ARALIK FROM ng_his_kabuzman  - calisma araliklari 
             //ALT_RAN,UST_RAN
@@ -624,39 +665,56 @@ module.exports = app => {
 
       })
       .then((result) => {
-        result.rows.forEach((elemento) => {
-
-
+        result.rows.forEach((elemento) => { 
           let user = new Object();
         
-          if(user.Tarih = elemento[0]=="DEGER1")
+          if(user.deger1 = elemento[0]=="DEGER1")
           {
             console.log(`1`);
-            user.Aralik = elemento[0]; 
+            //user.Aralik = elemento[0]; hemen yazdir
+        
+           //select * from ng_his_ransaat t
+
+           /*
+           result.rows.forEach((elemento) => {
+          let user = new Object();
+          user.Tarih = elemento[0];
+          user.durumu = elemento[1];
+          user.baslangic = elemento[2];
+          user.bitis = elemento[3];
+
+
+
+          users.push(user);
+        });
+
+        res.status(200).json(users);
+           
+           */
           }
-          if(user.Tarih = elemento[0]=="DEGER2")
+          if(user.deger2 = elemento[0]=="DEGER2")
           {
             console.log(`2`);
             user.Aralik = elemento[0]; 
           }
-          if(user.Tarih = elemento[0]=="DEGER3")
+          if(user.deger3 = elemento[0]=="DEGER3")
           {
             console.log(`3`);
             user.Aralik = elemento[0]; 
           }
-          if(user.Tarih = elemento[0]=="DEGER4")
+          if(user.deger4 = elemento[0]=="DEGER4")
           {
             console.log(`4`);
             user.Aralik = elemento[0]; 
           }
-          if(user.Tarih = elemento[0]=="DEGER5")
+          if(user.deger5 =elemento[0]=="DEGER5")
           {
-            console.log(`5`);
-            user.Aralik = elemento[0]; 
+            degerbesal();
+
           }
           if(user.Tarih = elemento[0]=="DEGER6")
           {
-            console.log(`6`);
+            degeraltial();
           }
           if(user.Tarih = elemento[0]=="DEGER7")
           {
@@ -678,7 +736,7 @@ module.exports = app => {
             user.Aralik = elemento[0]; 
           }
 
-          users.push(user);
+        // users.push(user);
         });
 
         res.status(200).json(users);
