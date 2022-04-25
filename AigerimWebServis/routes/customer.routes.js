@@ -601,7 +601,61 @@ module.exports = app => {
         //  res.status(500).json({ message: error.message || "Some error occurred!" });
       });
   };
+  async function degerbesal(req, res) {
+    let users = new Array();
+// kabinet tam gün ise baslangıc ve bitis saatleri alınacak 
+//hastaların seçebileceği tarih ve saat aralığı
+/*
 
+tam gün ise bunu kullan
+FOR al IN (SELECT ALT_RAN,UST_RAN FROM NG_HIS_GLZR WHERE KABINET=:P27_KKOD)LOOP 
+    deg2:=al.ALT_RAN;
+    deg3:=al.UST_RAN ;
+end loop;
+
+yarım gün ise  08:00 - 12:00 ' a kadar bunu kullan 
+FOR al2 IN (SELECT BASSAAT,BITSAAT FROM NG_HIS_VRACTAKVIM  WHERE SERVIS_ID=:P27_KKOD and DOKTOR_ID=:P27_VRKOD  and RANYOK is null  AND  datar=:P27_DATAR)LOOP 
+    deg4:=al2.BASSAAT;
+    deg5:=al2.BITSAAT;
+end loop;
+
+
+hasta kayıt 
+NG_HIS_PASRANDEVU bu tabloya göre kayıt yapılacak
+
+
+*/
+    connection = await oracledb.getConnection({
+      user: dbConfig.USER,
+      password: dbConfig.PASSWORD,
+      connectString: dbConfig.ConnectString
+    })
+      .then((c) => {
+        connection = c;
+        oracledb.fetchAsBuffer = [oracledb.BLOB];
+        return connection.execute("select * from ng_his_ransaat  ")
+      }).then((result) => {
+        result.rows.forEach((elemento) => { 
+          let user = new Object();
+          {
+       
+            user.xsaat = elemento[0]; 
+            console.log("deger5 : "+elemento[7]);
+          }
+
+           users.push(user);
+           
+        });
+     
+        res.status(200).json(users);
+      }).then(() => {
+        if (connection) {
+          connection.close();
+        }
+      }).catch((error) => {
+        //  res.status(500).json({ message: error.message || "Some error occurred!" });
+      });
+  };
 
   async function degeraltial(req, res) {
     let users = new Array();
