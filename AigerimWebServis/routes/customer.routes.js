@@ -1,3 +1,5 @@
+const { stringify } = require("querystring");
+
 module.exports = app => {
   const dbConfig = require("../config/db.config.js");
   const oracledb = require('oracledb');
@@ -25,7 +27,7 @@ module.exports = app => {
   order by NG_HIS_PASRANDEVU.DATAR,NG_HIS_PASRANDEVU.RANDEVU_SAATI
   
   */
-   
+
 
   async function tetkikfiyat(req, res) {
     let users = new Array();
@@ -66,6 +68,7 @@ module.exports = app => {
         res.status(500).json({ message: error.message || "Some error occurred!" });
       });
   };
+
   async function nitelik(req, res) {
     let users = new Array();
     var fs = require('fs');
@@ -111,6 +114,9 @@ module.exports = app => {
         res.status(500).json({ message: error.message || "Some error occurred!" });
       });
   };
+
+
+
   async function haberler(req, res) {
     let users = new Array();
     var fs = require('fs');
@@ -500,11 +506,11 @@ module.exports = app => {
       .then((result) => {
         result.rows.forEach((elemento) => {
           let user = new Object();
-         /*  user.Tarih = elemento[0];
-          user.durumu = elemento[1];
-          user.baslangic = elemento[2];
-          user.bitis = elemento[3];
-          user.bitisaa = elemento[4]; */
+          /*  user.Tarih = elemento[0];
+           user.durumu = elemento[1];
+           user.baslangic = elemento[2];
+           user.bitis = elemento[3];
+           user.bitisaa = elemento[4]; */
 
 
           console.log(users)
@@ -558,7 +564,7 @@ module.exports = app => {
         //  res.status(500).json({ message: error.message || "Some error occurred!" });
       });
   };
- 
+
 
   // 3 den basladi
   async function degerbir(req, res) {
@@ -577,12 +583,12 @@ module.exports = app => {
 
       })
       .then((result) => {
-        result.rows.forEach((elemento) => { 
+        result.rows.forEach((elemento) => {
           let user = new Object();
           {
-       
-            user.xsaat = elemento[0]; 
-            console.log("deger1 : "+elemento[3]);
+
+            user.xsaat = elemento[0];
+            console.log("deger1 : " + elemento[3]);
           }
 
           users.push(user);
@@ -613,12 +619,12 @@ module.exports = app => {
 
       })
       .then((result) => {
-        result.rows.forEach((elemento) => { 
+        result.rows.forEach((elemento) => {
           let user = new Object();
           {
-       
-            user.xsaat = elemento[0]; 
-            console.log("deger2 : "+elemento[4]);
+
+            user.xsaat = elemento[0];
+            console.log("deger2 : " + elemento[4]);
           }
 
           users.push(user);
@@ -635,28 +641,28 @@ module.exports = app => {
   };//5
   async function degeruc(req, res) {
     let users = new Array();
-// kabinet tam gün ise baslangıc ve bitis saatleri alınacak 
-//hastaların seçebileceği tarih ve saat aralığı
-/*
-
-tam gün ise bunu kullan
-FOR al IN (SELECT ALT_RAN,UST_RAN FROM NG_HIS_GLZR WHERE KABINET=:P27_KKOD)LOOP 
-    deg2:=al.ALT_RAN;
-    deg3:=al.UST_RAN ;
-end loop;
-
-yarım gün ise  08:00 - 12:00 ' a kadar bunu kullan 
-FOR al2 IN (SELECT BASSAAT,BITSAAT FROM NG_HIS_VRACTAKVIM  WHERE SERVIS_ID=:P27_KKOD and DOKTOR_ID=:P27_VRKOD  and RANYOK is null  AND  datar=:P27_DATAR)LOOP 
-    deg4:=al2.BASSAAT;
-    deg5:=al2.BITSAAT;
-end loop;
-
-
-hasta kayıt 
-NG_HIS_PASRANDEVU bu tabloya göre kayıt yapılacak
-
-
-*/
+    // kabinet tam gün ise baslangıc ve bitis saatleri alınacak 
+    //hastaların seçebileceği tarih ve saat aralığı
+    /*
+    
+    tam gün ise bunu kullan
+    FOR al IN (SELECT ALT_RAN,UST_RAN FROM NG_HIS_GLZR WHERE KABINET=:P27_KKOD)LOOP 
+        deg2:=al.ALT_RAN;
+        deg3:=al.UST_RAN ;
+    end loop;
+    
+    yarım gün ise  08:00 - 12:00 ' a kadar bunu kullan 
+    FOR al2 IN (SELECT BASSAAT,BITSAAT FROM NG_HIS_VRACTAKVIM  WHERE SERVIS_ID=:P27_KKOD and DOKTOR_ID=:P27_VRKOD  and RANYOK is null  AND  datar=:P27_DATAR)LOOP 
+        deg4:=al2.BASSAAT;
+        deg5:=al2.BITSAAT;
+    end loop;
+    
+    
+    hasta kayıt 
+    NG_HIS_PASRANDEVU bu tabloya göre kayıt yapılacak
+    
+    
+    */
     connection = await oracledb.getConnection({
       user: dbConfig.USER,
       password: dbConfig.PASSWORD,
@@ -667,18 +673,19 @@ NG_HIS_PASRANDEVU bu tabloya göre kayıt yapılacak
         oracledb.fetchAsBuffer = [oracledb.BLOB];
         return connection.execute("select * from ng_his_ransaat  ")
       }).then((result) => {
-        result.rows.forEach((elemento) => { 
+        result.rows.forEach((elemento) => {
           let user = new Object();
           {
-       
-            user.xsaat = elemento[0]; 
-            console.log("deger5 : "+elemento[5]);
+
+
+            console.log("deger5 : " + elemento[5]);
+
           }
 
-           users.push(user);
-           
+          users.push(user);
+
         });
-     
+
         res.status(200).json(users);
       }).then(() => {
         if (connection) {
@@ -700,66 +707,79 @@ NG_HIS_PASRANDEVU bu tabloya göre kayıt yapılacak
         connection = c;
         oracledb.fetchAsBuffer = [oracledb.BLOB];
         return connection.execute("select * from ng_his_ransaat ")
-
-
       })
       .then((result) => {
-        result.rows.forEach((elemento) => { 
+        result.rows.forEach((elemento) => {
           let user = new Object();
           {
-       
-            user.xsaat = elemento[0]; 
-            console.log("deger4 : "+elemento[6]);
+            user.xsaat = elemento[0];
+            console.log("deger4 : " + elemento[6]);
           }
-
           users.push(user);
+
+
+
+
+
+
+
         });
 
-        res.status(200).json(users);
       }).then(() => {
         if (connection) {
           connection.close();
         }
       }).catch((error) => {
-        //  res.status(500).json({ message: error.message || "Some error occurred!" });
+        res.status(500).json({ message: error.message || "Some error occurred!" });
       });
   };//7
-  async function degerbes(req, res) {
-    let users = new Array();
 
-    connection = await oracledb.getConnection({
-      user: dbConfig.USER,
-      password: dbConfig.PASSWORD,
-      connectString: dbConfig.ConnectString
+
+//select * from ng_his_ransaat
+  
+async function degerbes(req, res) {
+  let users = new Array();
+  var fs = require('fs');
+  const express = require('express');
+  const app = express();
+  app.use(express.static('public'));
+  var path = require('path');
+
+  connection = await oracledb.getConnection({
+    user: dbConfig.USER,
+    password: dbConfig.PASSWORD,
+    connectString: dbConfig.ConnectString
+  })
+    .then((c) => {
+      connection = c;
+       return connection.execute("select * from ng_his_ransaat");
     })
-      .then((c) => {
-        connection = c;
-        oracledb.fetchAsBuffer = [oracledb.BLOB];
-        return connection.execute("select * from ng_his_ransaat ")
+    .then((result) => {
+      result.rows.forEach((elemento) => {
+        let user = new Object();
+
+        user.uzman = elemento[7]; 
+
+        users.push(user);
 
 
-      })
-      .then((result) => {
-        result.rows.forEach((elemento) => { 
-          let user = new Object();
-          {
-       
-            user.xsaat = elemento[0]; 
-            console.log("deger5 : "+elemento[7]);
-          }
-
-          users.push(user);
-        });
-
-        res.status(200).json(users);
-      }).then(() => {
-        if (connection) {
-          connection.close();
-        }
-      }).catch((error) => {
-        //  res.status(500).json({ message: error.message || "Some error occurred!" });
       });
-  };//8
+      console.log(users)
+      res.status(users)
+
+  //res.status(200).json(users);
+
+
+
+    }).then(() => {
+      if (connection) {
+        connection.close();
+      }
+    }).catch((error) => {
+      res.status(500).json({ message: error.message || "Some error occurred!" });
+    });
+}; 
+  //8
   async function degeralti(req, res) {
     let users = new Array();
 
@@ -776,14 +796,14 @@ NG_HIS_PASRANDEVU bu tabloya göre kayıt yapılacak
 
       })
       .then((result) => {
-        result.rows.forEach((elemento) => { 
+        result.rows.forEach((elemento) => {
           let user = new Object();
           {
-       
-            
-              console.log(elemento[8]);
 
-            
+
+            console.log(elemento[8]);
+
+
           }
 
           users.push(user);
@@ -814,12 +834,12 @@ NG_HIS_PASRANDEVU bu tabloya göre kayıt yapılacak
 
       })
       .then((result) => {
-        result.rows.forEach((elemento) => { 
+        result.rows.forEach((elemento) => {
           let user = new Object();
           {
-       
-            user.xsaat = elemento[0]; 
-            console.log("deger7 : "+elemento[9]);
+
+            user.xsaat = elemento[0];
+            console.log("deger7 : " + elemento[9]);
           }
 
           users.push(user);
@@ -850,12 +870,12 @@ NG_HIS_PASRANDEVU bu tabloya göre kayıt yapılacak
 
       })
       .then((result) => {
-        result.rows.forEach((elemento) => { 
+        result.rows.forEach((elemento) => {
           let user = new Object();
           {
-       
-            user.xsaat = elemento[0]; 
-            console.log("deger8 : "+elemento[10]);
+
+            user.xsaat = elemento[0];
+            console.log("deger8 : " + elemento[10]);
           }
 
           users.push(user);
@@ -886,12 +906,12 @@ NG_HIS_PASRANDEVU bu tabloya göre kayıt yapılacak
 
       })
       .then((result) => {
-        result.rows.forEach((elemento) => { 
+        result.rows.forEach((elemento) => {
           let user = new Object();
           {
-       
-            user.xsaat = elemento[11]; 
-            console.log("deger9 : "+elemento[8]);
+
+            user.xsaat = elemento[11];
+            console.log("deger9 : " + elemento[8]);
           }
 
           users.push(user);
@@ -922,12 +942,12 @@ NG_HIS_PASRANDEVU bu tabloya göre kayıt yapılacak
 
       })
       .then((result) => {
-        result.rows.forEach((elemento) => { 
+        result.rows.forEach((elemento) => {
           let user = new Object();
           {
-       
-            user.xsaat = elemento[0]; 
-            console.log("deger10 : "+elemento[12]);
+
+            user.xsaat = elemento[0];
+            console.log("deger10 : " + elemento[12]);
           }
 
           users.push(user);
@@ -958,12 +978,12 @@ NG_HIS_PASRANDEVU bu tabloya göre kayıt yapılacak
 
       })
       .then((result) => {
-        result.rows.forEach((elemento) => { 
+        result.rows.forEach((elemento) => {
           let user = new Object();
           {
-       
-            user.xsaat = elemento[0]; 
-            console.log("deger11 : "+elemento[13]);
+
+            user.xsaat = elemento[0];
+            console.log("deger11 : " + elemento[13]);
           }
 
           users.push(user);
@@ -978,12 +998,19 @@ NG_HIS_PASRANDEVU bu tabloya göre kayıt yapılacak
         //  res.status(500).json({ message: error.message || "Some error occurred!" });
       });
   };
-  
- 
+
+
+
 
   async function alikal(req, res) {
     let users = new Array();
-
+    let deger;
+    var fs = require('fs');
+    const express = require('express');
+    const app = express();
+    app.use(express.static('public'));
+    var path = require('path');
+    PROFS = req.body.PROFS;
     connection = await oracledb.getConnection({
       user: dbConfig.USER,
       password: dbConfig.PASSWORD,
@@ -992,95 +1019,160 @@ NG_HIS_PASRANDEVU bu tabloya göre kayıt yapılacak
       .then((c) => {
         connection = c;
         oracledb.fetchAsBuffer = [oracledb.BLOB];
-        //SELECT * FROM INNER JOIN ON ng_his_kabuzman.PROFS=NG_HIS_GLZR.KABINET=:PROFS 
-        //SELECT kbz.ARALIK,glzr.ALT_RAN,glzr.UST_RAN FROM ng_his_kabuzman kbz,NG_HIS_GLZR glzr WHERE (SELECT ALT_RAN,UST_RAN FROM NG_HIS_GLZR WHERE KABINET=PROFS=:PROFS)
-        return connection.execute("SELECT ARALIK FROM ng_his_kabuzman WHERE PROFS=:PROFS", {
-            //SELECT ARALIK FROM ng_his_kabuzman  - calisma araliklari 
-            //ALT_RAN,UST_RAN
-
-            //BASSAAT;
-            //BITSAAT;
-            PROFS: req.body.PROFS
-          });
-
-
+        return connection.execute("SELECT * FROM ng_his_kabuzman k WHERE exists ( Select * from NG_HIS_GLZR g WHERE  k.PROFS=:PROFS) ",{PROFS});
       })
       .then((result) => {
-        result.rows.forEach((elemento) => { 
+        result.rows.forEach((elemento) => {
           let user = new Object();
-        
-          if(user.deger1 = elemento[0]=="DEGER1")
-          {
-           
-              /*  user.Aralik = elemento[0];  */
-           degerbir();
-          }
-          if(user.deger2 = elemento[0]=="DEGER2")
-          {
-           
-              /*  user.Aralik = elemento[0];  */
-           degeriki();
-          }
-          if(user.deger3 = elemento[0]=="DEGER3")
-          {
-            console.log(`3`);
-           /*  user.Aralik = elemento[0];  */
-           degeruc();
-          }
-          if(user.deger4 = elemento[0]=="DEGER4")
-          {
-            
-            /* user.Aralik = elemento[0];  */
-            degerdort();
-          }
-          if(user.deger5 =elemento[0]=="DEGER5")
-          {
-           degerbes();
-            
 
-          }
-          if(user.deger6  = elemento[0]=="DEGER6")
-          {
-            degeralti();
-          }
-          if(user.deger7  = elemento[0]=="DEGER7")
-          {
-            
-            degeryedi();
-          }
-          if(user.deger8  = elemento[0]=="DEGER8")
-          {
-           
-            degersekiz();
-          }
-          if(user.deger9= elemento[0]=="DEGER9")
-          {
-           
-            degerdokuz();
-          }
-          if(user.deger10 = elemento[0]=="DEGER10")
-          {
-             
-           degeron();
-          }
-          if(user.deger11 = elemento[0]=="DEGER11")
-          {
-             
-           degeronbir();
-          }
+          user.deger = elemento[0]; 
+          user.degers = elemento[1]; 
+ 
 
-       // users.push(user);
+          users.push(user);
+
+
         });
 
+        console.log(users);
+
+
+       /*  users.forEach((elemento) => {
+         
+
+            // deger = elemento[0];  
+             if(deger = elemento[0]=="DEGER5")
+             {
+               //degerbes();
+               console.log(`ben geldim`)
+             }
+
+        }); */
+
+        console.log(stringify(deger));
+
+       
+
+
+
         res.status(200).json(users);
+
+
+
+
+
       }).then(() => {
         if (connection) {
           connection.close();
         }
       }).catch((error) => {
-        //  res.status(500).json({ message: error.message || "Some error occurred!" });
+        res.status(500).json({ message: error.message || "Some error occurred!" });
       });
   };
+
+
+  //SELECT ARALIK FROM ng_his_kabuzman WHERE PROFS=:PROFS
+
+  //  function alikal(req, res) {
+  //   let users = new Array();
+  //   PROFS = req.body.PROFS;
+  //   connection =  oracledb.getConnection({
+  //     user: dbConfig.USER,
+  //     password: dbConfig.PASSWORD,
+  //     connectString: dbConfig.ConnectString
+  //   })
+  //     .then((c) => {
+  //       connection = c;
+  //       oracledb.fetchAsBuffer = [oracledb.BLOB];
+  //        return connection.execute("SELECT * FROM ng_his_kabuzman WHERE PROFS=:PROFS", {
+  //          PROFS
+  //       });
+
+
+  //     })
+  //     .then((result) => {
+  //       result.rows.forEach((elemento) => {
+  //         let user = new Object();
+
+  //         if (user.deger1 = elemento[0] == "DEGER1") {
+
+  //            user.degerbir = elemento[0];   
+  //           degerbir();
+  //         }
+  //         if (user.deger2 = elemento[0] == "DEGER2") {
+
+  //           user.degeriki = elemento[0];   
+
+  //           degeriki();
+  //         }
+  //         if (user.deger3 = elemento[0] == "DEGER3") {
+  //           console.log(`3`);
+  //           user.degeruc = elemento[0];   
+
+  //           degeruc();
+  //         }
+  //         if (user.deger4 = elemento[0] == "DEGER4") {
+
+  //           user.degerdort = elemento[0];   
+
+  //           degerdort();
+
+  //         }
+  //         if (user.deger5 = elemento[0] == "DEGER5") {
+  //           user.degerbes = elemento[0];   
+
+  //           degerbes();
+ 
+
+  //         }
+  //         if (user.deger6 = elemento[0] == "DEGER6") {
+  //           user.degeralti = elemento[0];   
+
+  //           degeralti();
+  //         }
+  //         if (user.deger7 = elemento[0] == "DEGER7") {
+  //           user.degeryedi = elemento[0];   
+
+
+  //           degeryedi();
+  //         }
+  //         if (user.deger8 = elemento[0] == "DEGER8") {
+  //           user.degersekiz = elemento[0];   
+
+
+  //           degersekiz();
+  //         }
+  //         if (user.deger9 = elemento[0] == "DEGER9") {
+  //           user.degerdokuz = elemento[0];   
+
+
+  //           degerdokuz();
+  //         }
+  //         if (user.deger10 = elemento[0] == "DEGER10") {
+  //           user.degeron = elemento[0];   
+
+
+  //           degeron();
+  //         }
+  //         if (user.deger11 = elemento[0] == "DEGER11") {
+  //           user.degeronbir = elemento[0];   
+
+
+  //           degeronbir();
+  //         }
+
+  //         // users.push(user);
+  //       });
+
+  //       res.status(200).json(users);
+  //     }).then(() => {
+  //       if (connection) {
+  //         connection.close();
+  //       }
+  //     }).catch((error) => {
+  //       //  res.status(500).json({ message: error.message || "Some error occurred!" });
+  //     });
+  // };
 
   async function DoktorUygunTarihveSaatSecimi(req, res) {
     let users = new Array();
@@ -1273,7 +1365,7 @@ NG_HIS_PASRANDEVU bu tabloya göre kayıt yapılacak
   app.post('/hastakayit', function (req, res) {
     hastakayit(req, res);
   })
- 
+
   app.get('/hastarandevularitakip', function (req, res) {
     hastarandevularitakip(req, res);
   })
