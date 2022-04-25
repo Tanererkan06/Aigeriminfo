@@ -601,6 +601,81 @@ module.exports = app => {
         //  res.status(500).json({ message: error.message || "Some error occurred!" });
       });
   };
+ 
+
+  
+  async function degeralbiral(req, res) {
+    let users = new Array();
+
+    connection = await oracledb.getConnection({
+      user: dbConfig.USER,
+      password: dbConfig.PASSWORD,
+      connectString: dbConfig.ConnectString
+    })
+      .then((c) => {
+        connection = c;
+        oracledb.fetchAsBuffer = [oracledb.BLOB];
+        return connection.execute("select * from ng_his_ransaat ")
+
+
+      })
+      .then((result) => {
+        result.rows.forEach((elemento) => { 
+          let user = new Object();
+          {
+       
+            user.xsaat = elemento[0]; 
+            console.log("deger1 : "+elemento[3]);
+          }
+
+          users.push(user);
+        });
+
+        res.status(200).json(users);
+      }).then(() => {
+        if (connection) {
+          connection.close();
+        }
+      }).catch((error) => {
+        //  res.status(500).json({ message: error.message || "Some error occurred!" });
+      });
+  };
+  async function degeralikial(req, res) {
+    let users = new Array();
+
+    connection = await oracledb.getConnection({
+      user: dbConfig.USER,
+      password: dbConfig.PASSWORD,
+      connectString: dbConfig.ConnectString
+    })
+      .then((c) => {
+        connection = c;
+        oracledb.fetchAsBuffer = [oracledb.BLOB];
+        return connection.execute("select * from ng_his_ransaat ")
+
+
+      })
+      .then((result) => {
+        result.rows.forEach((elemento) => { 
+          let user = new Object();
+          {
+       
+            user.xsaat = elemento[0]; 
+            console.log("deger2 : "+elemento[4]);
+          }
+
+          users.push(user);
+        });
+
+        res.status(200).json(users);
+      }).then(() => {
+        if (connection) {
+          connection.close();
+        }
+      }).catch((error) => {
+        //  res.status(500).json({ message: error.message || "Some error occurred!" });
+      });
+  };
   async function degerbesal(req, res) {
     let users = new Array();
 // kabinet tam gün ise baslangıc ve bitis saatleri alınacak 
@@ -656,6 +731,7 @@ NG_HIS_PASRANDEVU bu tabloya göre kayıt yapılacak
         //  res.status(500).json({ message: error.message || "Some error occurred!" });
       });
   };
+
 
   async function degeraltial(req, res) {
     let users = new Array();
@@ -725,41 +801,26 @@ NG_HIS_PASRANDEVU bu tabloya göre kayıt yapılacak
           if(user.deger1 = elemento[0]=="DEGER1")
           {
             console.log(`1`);
-            //user.Aralik = elemento[0]; hemen yazdir
-        
-           //select * from ng_his_ransaat t
-
-           /*
-           result.rows.forEach((elemento) => {
-          let user = new Object();
-          user.Tarih = elemento[0];
-          user.durumu = elemento[1];
-          user.baslangic = elemento[2];
-          user.bitis = elemento[3];
-
-
-
-          users.push(user);
-        });
-
-        res.status(200).json(users);
-           
-           */
+              /*  user.Aralik = elemento[0];  */
+           degerbiral();
           }
           if(user.deger2 = elemento[0]=="DEGER2")
           {
             console.log(`2`);
-            user.Aralik = elemento[0]; 
+              /*  user.Aralik = elemento[0];  */
+           degerikial();
           }
           if(user.deger3 = elemento[0]=="DEGER3")
           {
             console.log(`3`);
-            user.Aralik = elemento[0]; 
+           /*  user.Aralik = elemento[0];  */
+           degerucal();
           }
           if(user.deger4 = elemento[0]=="DEGER4")
           {
             console.log(`4`);
-            user.Aralik = elemento[0]; 
+            /* user.Aralik = elemento[0];  */
+            degerdortal();
           }
           if(user.deger5 =elemento[0]=="DEGER5")
           {
@@ -802,6 +863,7 @@ NG_HIS_PASRANDEVU bu tabloya göre kayıt yapılacak
         //  res.status(500).json({ message: error.message || "Some error occurred!" });
       });
   };
+
   async function DoktorUygunTarihveSaatSecimi(req, res) {
     let users = new Array();
 
