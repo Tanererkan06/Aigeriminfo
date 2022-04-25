@@ -25,50 +25,7 @@ module.exports = app => {
   order by NG_HIS_PASRANDEVU.DATAR,NG_HIS_PASRANDEVU.RANDEVU_SAATI
   
   */
-  /* async function tetkikfiyatdetay(req, res) {
-    let users = new Array();
-    var fs = require('fs');
-    const express = require('express');
-    const app = express();
-    app.use(express.static('public'));
-    var path = require('path');
-    connection = await oracledb.getConnection({
-      user: dbConfig.USER,
-      password: dbConfig.PASSWORD,
-      connectString: dbConfig.ConnectString
-    })
-      .then((c) => {
-        connection = c;
-        oracledb.fetchAsBuffer = [oracledb.BLOB];
-        return connection.execute("select t.uslugu,t.isim,t.sena from ng_his_prdkt t where t.uslugu:hizmet_id ", {
-  
-       
-        hizmet_id: req.body.hizmet_id
-        });
-      })
-      .then((result) => {
-        result.rows.forEach((elemento) => {
-          let user = new Object();
-  
-          user.hizmetid = elemento[0];
-          user.hizmet = elemento[1];
-          user.fiyat = elemento[2]+" Tenge"; 
-  
-          users.push(user);
-  
-  
-        });
-        res.status(200).json(users); 
-  
-      }).then(() => {
-        if (connection) {
-          connection.close();
-        }
-      }).catch((error) => {
-        res.status(500).json({ message: error.message || "Some error occurred!" });
-      });
-  }; */
-
+   
 
   async function tetkikfiyat(req, res) {
     let users = new Array();
@@ -603,7 +560,7 @@ module.exports = app => {
   };
  
 
-  
+  // 3 den basladi
   async function degerbir(req, res) {
     let users = new Array();
 
@@ -639,7 +596,7 @@ module.exports = app => {
       }).catch((error) => {
         //  res.status(500).json({ message: error.message || "Some error occurred!" });
       });
-  };
+  };//4
   async function degeriki(req, res) {
     let users = new Array();
 
@@ -675,7 +632,7 @@ module.exports = app => {
       }).catch((error) => {
         //  res.status(500).json({ message: error.message || "Some error occurred!" });
       });
-  };
+  };//5
   async function degeruc(req, res) {
     let users = new Array();
 // kabinet tam gün ise baslangıc ve bitis saatleri alınacak 
@@ -715,7 +672,7 @@ NG_HIS_PASRANDEVU bu tabloya göre kayıt yapılacak
           {
        
             user.xsaat = elemento[0]; 
-            console.log("deger5 : "+elemento[7]);
+            console.log("deger5 : "+elemento[5]);
           }
 
            users.push(user);
@@ -730,7 +687,7 @@ NG_HIS_PASRANDEVU bu tabloya göre kayıt yapılacak
       }).catch((error) => {
         //  res.status(500).json({ message: error.message || "Some error occurred!" });
       });
-  }; 
+  }; //6
   async function degerdort(req, res) {
     let users = new Array();
 
@@ -752,7 +709,7 @@ NG_HIS_PASRANDEVU bu tabloya göre kayıt yapılacak
           {
        
             user.xsaat = elemento[0]; 
-            console.log("deger6 : "+elemento[8]);
+            console.log("deger4 : "+elemento[6]);
           }
 
           users.push(user);
@@ -766,7 +723,7 @@ NG_HIS_PASRANDEVU bu tabloya göre kayıt yapılacak
       }).catch((error) => {
         //  res.status(500).json({ message: error.message || "Some error occurred!" });
       });
-  };
+  };//7
   async function degerbes(req, res) {
     let users = new Array();
 
@@ -788,7 +745,7 @@ NG_HIS_PASRANDEVU bu tabloya göre kayıt yapılacak
           {
        
             user.xsaat = elemento[0]; 
-            console.log("deger6 : "+elemento[8]);
+            console.log("deger5 : "+elemento[7]);
           }
 
           users.push(user);
@@ -802,7 +759,7 @@ NG_HIS_PASRANDEVU bu tabloya göre kayıt yapılacak
       }).catch((error) => {
         //  res.status(500).json({ message: error.message || "Some error occurred!" });
       });
-  };
+  };//8
   async function degeralti(req, res) {
     let users = new Array();
 
@@ -823,8 +780,10 @@ NG_HIS_PASRANDEVU bu tabloya göre kayıt yapılacak
           let user = new Object();
           {
        
-            user.xsaat = elemento[0]; 
-            console.log("deger6 : "+elemento[8]);
+            
+              console.log(elemento[8]);
+
+            
           }
 
           users.push(user);
@@ -838,7 +797,7 @@ NG_HIS_PASRANDEVU bu tabloya göre kayıt yapılacak
       }).catch((error) => {
         //  res.status(500).json({ message: error.message || "Some error occurred!" });
       });
-  };
+  };//9
   async function degeryedi(req, res) {
     let users = new Array();
 
@@ -860,7 +819,7 @@ NG_HIS_PASRANDEVU bu tabloya göre kayıt yapılacak
           {
        
             user.xsaat = elemento[0]; 
-            console.log("deger6 : "+elemento[8]);
+            console.log("deger7 : "+elemento[9]);
           }
 
           users.push(user);
@@ -874,7 +833,7 @@ NG_HIS_PASRANDEVU bu tabloya göre kayıt yapılacak
       }).catch((error) => {
         //  res.status(500).json({ message: error.message || "Some error occurred!" });
       });
-  };
+  };//10
   async function degersekiz(req, res) {
     let users = new Array();
 
@@ -896,7 +855,7 @@ NG_HIS_PASRANDEVU bu tabloya göre kayıt yapılacak
           {
        
             user.xsaat = elemento[0]; 
-            console.log("deger6 : "+elemento[8]);
+            console.log("deger8 : "+elemento[10]);
           }
 
           users.push(user);
@@ -910,7 +869,7 @@ NG_HIS_PASRANDEVU bu tabloya göre kayıt yapılacak
       }).catch((error) => {
         //  res.status(500).json({ message: error.message || "Some error occurred!" });
       });
-  };
+  };//11
   async function degerdokuz(req, res) {
     let users = new Array();
 
@@ -931,8 +890,8 @@ NG_HIS_PASRANDEVU bu tabloya göre kayıt yapılacak
           let user = new Object();
           {
        
-            user.xsaat = elemento[0]; 
-            console.log("deger6 : "+elemento[8]);
+            user.xsaat = elemento[11]; 
+            console.log("deger9 : "+elemento[8]);
           }
 
           users.push(user);
@@ -946,7 +905,7 @@ NG_HIS_PASRANDEVU bu tabloya göre kayıt yapılacak
       }).catch((error) => {
         //  res.status(500).json({ message: error.message || "Some error occurred!" });
       });
-  };
+  };//12
   async function degeron(req, res) {
     let users = new Array();
 
@@ -968,7 +927,7 @@ NG_HIS_PASRANDEVU bu tabloya göre kayıt yapılacak
           {
        
             user.xsaat = elemento[0]; 
-            console.log("deger6 : "+elemento[8]);
+            console.log("deger10 : "+elemento[12]);
           }
 
           users.push(user);
@@ -982,7 +941,7 @@ NG_HIS_PASRANDEVU bu tabloya göre kayıt yapılacak
       }).catch((error) => {
         //  res.status(500).json({ message: error.message || "Some error occurred!" });
       });
-  };
+  };//13
   async function degeronbir(req, res) {
     let users = new Array();
 
@@ -1004,7 +963,7 @@ NG_HIS_PASRANDEVU bu tabloya göre kayıt yapılacak
           {
        
             user.xsaat = elemento[0]; 
-            console.log("deger6 : "+elemento[8]);
+            console.log("deger11 : "+elemento[13]);
           }
 
           users.push(user);
@@ -1020,12 +979,7 @@ NG_HIS_PASRANDEVU bu tabloya göre kayıt yapılacak
       });
   };
   
-
-
-
-
-
-
+ 
 
   async function alikal(req, res) {
     let users = new Array();
@@ -1057,13 +1011,13 @@ NG_HIS_PASRANDEVU bu tabloya göre kayıt yapılacak
         
           if(user.deger1 = elemento[0]=="DEGER1")
           {
-            console.log(`1`);
+           
               /*  user.Aralik = elemento[0];  */
            degerbir();
           }
           if(user.deger2 = elemento[0]=="DEGER2")
           {
-            console.log(`2`);
+           
               /*  user.Aralik = elemento[0];  */
            degeriki();
           }
@@ -1075,13 +1029,14 @@ NG_HIS_PASRANDEVU bu tabloya göre kayıt yapılacak
           }
           if(user.deger4 = elemento[0]=="DEGER4")
           {
-            console.log(`4`);
+            
             /* user.Aralik = elemento[0];  */
             degerdort();
           }
           if(user.deger5 =elemento[0]=="DEGER5")
           {
-            degerbes();
+           degerbes();
+            
 
           }
           if(user.deger6  = elemento[0]=="DEGER6")
@@ -1090,35 +1045,31 @@ NG_HIS_PASRANDEVU bu tabloya göre kayıt yapılacak
           }
           if(user.deger7  = elemento[0]=="DEGER7")
           {
-            console.log(`7`);
-            //user.Aralik = elemento[0]; 
+            
             degeryedi();
           }
           if(user.deger8  = elemento[0]=="DEGER8")
           {
-            console.log(`8`);
-            //user.Aralik = elemento[0]; 
+           
             degersekiz();
           }
           if(user.deger9= elemento[0]=="DEGER9")
           {
-            console.log(`9`);
+           
             degerdokuz();
           }
           if(user.deger10 = elemento[0]=="DEGER10")
           {
-            console.log(`10`);
-           // user.deger10 = elemento[0]; 
+             
            degeron();
           }
           if(user.deger11 = elemento[0]=="DEGER11")
           {
-            console.log(`11`);
-           // user.deger10 = elemento[0]; 
+             
            degeronbir();
           }
 
-        // users.push(user);
+       // users.push(user);
         });
 
         res.status(200).json(users);
