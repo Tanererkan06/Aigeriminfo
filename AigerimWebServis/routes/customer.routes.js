@@ -652,8 +652,8 @@ module.exports = app => {
         console.log(stringify(deger));
 
         
-
-        res.status(200).json(users);
+    const sonuc = degerler(stringify(deger));
+        res.status(200).json(sonuc);
  
 
 
