@@ -1019,7 +1019,7 @@ async function degerbes(req, res) {
       .then((c) => {
         connection = c;
         oracledb.fetchAsBuffer = [oracledb.BLOB];
-        return connection.execute("SELECT * FROM ng_his_kabuzman k WHERE exists ( Select * from NG_HIS_GLZR g WHERE  k.PROFS=:PROFS) ",{PROFS});
+        return connection.execute("SELECT Kabinet FROM ng_his_kabuzman INNER JOIN NG_HIS_GLZR ON ng_his_kabuzman.profs=NG_HIS_GLZR.profs   ");
       })
       .then((result) => {
         result.rows.forEach((elemento) => {
@@ -1027,7 +1027,8 @@ async function degerbes(req, res) {
 
           user.deger = elemento[0]; 
           user.degers = elemento[1]; 
- 
+          user.degerss = elemento[2]; 
+ user.degerss = elemento[2]; 
 
           users.push(user);
 
