@@ -4,31 +4,11 @@ module.exports = app => {
   const dbConfig = require("../config/db.config.js");
   const oracledb = require('oracledb');
 
+  let alt,ust="";
+
   oracledb.fetchAsString = [oracledb.CLOB];
   //my.public.ip:1521/service-name  uzaktan baglanmak ister
-
-
-
-  // SELECT ISIM,ALT_RAN,UST_RAN FROM NG_HIS_GLZR
-  //select * from ng_his_ransaat t
-  //SELECT * FROM ng_his_kabuzman
-
-  /*
-  select NG_HIS_PASRANDEVU.RANDEVU_ID as RANDEVU_ID,
-      NG_HIS_PASRANDEVU.DATAR as DATAR,
-      NG_HIS_PASRANDEVU.RANDEVU_SAATI as RANDEVU_SAATI,
-      ng_his_glzr.isim kab,
-      ng_his_rpsl.familya||' '||ng_his_rpsl.imya  VR 
-  from NG_HIS_PASRANDEVU,ng_his_rpsl,ng_his_glzr 
-  where hasta_id=:p1_var and iptal is null and ran_ok is null and
-  ng_his_rpsl.kullan(+)=NG_HIS_PASRANDEVU.doktor_id and 
-  ng_his_glzr.kabinet=NG_HIS_PASRANDEVU.kabinet_id AND 
-  NG_HIS_PASRANDEVU.DATAR>to_char(sysdate-5,'dd/mm/yyyy')
-  order by NG_HIS_PASRANDEVU.DATAR,NG_HIS_PASRANDEVU.RANDEVU_SAATI
   
-  */
-
-
   async function tetkikfiyat(req, res) {
     let users = new Array();
     var fs = require('fs');
@@ -71,7 +51,7 @@ module.exports = app => {
 
   async function degerler(req, res) {
     let users = new Array();
-    let deger = req.body.deger;
+
     var fs = require('fs');
     const express = require('express');
     const app = express();
@@ -85,25 +65,21 @@ module.exports = app => {
     })
       .then((c) => {
         connection = c;
+        let deger = req.body.deger;
         oracledb.fetchAsBuffer = [oracledb.BLOB];
-        return connection.execute("select "+deger+" from ng_his_ransaat");
+        return connection.execute("select " + deger + " from ng_his_ransaat");
       })
       .then((result) => {
         result.rows.forEach((elemento) => {
           let user = new Object();
 
-          user.deger = elemento[0];
-          
+          user.deger = elemento[0]; 
+           users.push(user); 
+        }); 
+ 
 
-          users.push(user);
-
-
-        });
-        res.status(200).json(users);
-
-
-
-
+        
+         res.status(200).json(users);  
 
       }).then(() => {
         if (connection) {
@@ -112,6 +88,7 @@ module.exports = app => {
       }).catch((error) => {
         res.status(500).json({ message: error.message || "Some error occurred!" });
       });
+      
   };
 
   async function nitelik(req, res) {
@@ -159,12 +136,6 @@ module.exports = app => {
         res.status(500).json({ message: error.message || "Some error occurred!" });
       });
   };
-  
-
-
-  
-
-
   async function haberler(req, res) {
     let users = new Array();
     var fs = require('fs');
@@ -613,9 +584,9 @@ module.exports = app => {
       });
   };
 
-  
+
   async function aralikal(req, res) {
-     let users = new Array();
+    let users = new Array();
     let deger;
     var fs = require('fs');
     const express = require('express');
@@ -632,30 +603,26 @@ module.exports = app => {
         connection = c;
         oracledb.fetchAsBuffer = [oracledb.BLOB];
         // ////SELECT * FROM ng_his_kabuzman INNER JOIN NG_HIS_GLZR ON ng_his_kabuzman.profs=NG_HIS_GLZR.profs 
-        return connection.execute("SELECT Aralik FROM ng_his_kabuzman WHERE PROFS=:PROFS",{PROFS});
+        return connection.execute("SELECT k.aralik,g.ust_ran,g.alt_ran FROM NG_HIS_GLZR g INNER JOIN ng_his_kabuzman k ON k.profs =:PROFS", { PROFS });
       })
       .then((result) => {
         result.rows.forEach((elemento) => {
           let user = new Object();
 
-          user.deger = elemento[0]; 
-        deger=elemento[0]; 
-
+          user.deger = elemento[0];
+          deger = elemento[0];
+          degers = elemento[1];
+         console.log(elemento[1])
           users.push(user);
 
 
         });
 
-        console.log(deger);
- 
-
-        console.log(stringify(deger));
-
-        
-    const sonuc = degerler(stringify(deger));
-        res.status(200).json(sonuc);
- 
-
+       // console.log(deger); 
+               
+        res.status(200).json(deger); 
+        //const sonuc = degerler(stringify(deger));
+       //  res.status(200).json(sonuc);
 
       }).then(() => {
         if (connection) {
@@ -666,9 +633,9 @@ module.exports = app => {
       });
   };
 
- 
+
   async function DoktorUygunTarihveSaatSecimi(req, res) {
-    let users = new Array();
+   
 
     connection = await oracledb.getConnection({
       user: dbConfig.USER,
