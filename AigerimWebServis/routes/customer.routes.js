@@ -599,11 +599,18 @@ module.exports = app => {
       password: dbConfig.PASSWORD,
       connectString: dbConfig.ConnectString
     })
+
+    /*
+    SELECT k.aralik,g.ust_ran,g.alt_ran,g.kabinet,vr.servis_id,vr.BASSAAT,vr.BITSAAT FROM NG_HIS_GLZR g 
+INNER JOIN ng_his_vractakvim vr ON g.kabinet=vr.servis_id
+INNER JOIN ng_his_kabuzman k ON k.profs ='UZ024' 
+    
+    */
       .then((c) => {
         connection = c;
         oracledb.fetchAsBuffer = [oracledb.BLOB];
         // Kabinet ve servis id ayni tablo birlestir
-         return connection.execute("SELECT k.aralik,g.ust_ran,g.alt_ran,g.kabinet FROM NG_HIS_GLZR g INNER JOIN ng_his_kabuzman k ON k.profs =:PROFS", { PROFS });
+         return connection.execute("SELECT k.aralik,g.ust_ran,g.alt_ran,g.kabinet FROM NG_HIS_GLZR g INNER JOIN ng_his_kabuzman k ON k.profs =:PROFS INNER JOIN ng_his_vractakvim vr ON g.kabinet=vr.servis_id", { PROFS });
       })
       .then((result) => {
         result.rows.forEach((elemento) => {
@@ -612,8 +619,9 @@ module.exports = app => {
           user.deger = elemento[0];
           deger = elemento[0];
           degers = elemento[1];
-         console.log(elemento[0]+`,`+elemento[1]+`,`+elemento[2])
-          users.push(user);
+          console.log(elemento[3])
+        // console.log(elemento[0]+`,`+elemento[1]+`,`+elemento[2])
+         // users.push(user);
 
 
         });
