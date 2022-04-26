@@ -602,8 +602,8 @@ module.exports = app => {
       .then((c) => {
         connection = c;
         oracledb.fetchAsBuffer = [oracledb.BLOB];
-        // ////SELECT * FROM ng_his_kabuzman INNER JOIN NG_HIS_GLZR ON ng_his_kabuzman.profs=NG_HIS_GLZR.profs 
-        return connection.execute("SELECT k.aralik,g.ust_ran,g.alt_ran FROM NG_HIS_GLZR g INNER JOIN ng_his_kabuzman k ON k.profs =:PROFS", { PROFS });
+        // Kabinet ve servis id ayni tablo birlestir
+         return connection.execute("SELECT k.aralik,g.ust_ran,g.alt_ran,g.kabinet FROM NG_HIS_GLZR g INNER JOIN ng_his_kabuzman k ON k.profs =:PROFS", { PROFS });
       })
       .then((result) => {
         result.rows.forEach((elemento) => {
