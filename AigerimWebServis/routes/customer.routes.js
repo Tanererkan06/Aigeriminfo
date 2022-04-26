@@ -69,6 +69,52 @@ module.exports = app => {
       });
   };
 
+  async function degerler(req, res) {
+    let users = new Array();
+    var fs = require('fs');
+    const express = require('express');
+    const app = express();
+    app.use(express.static('public'));
+    var path = require('path');
+
+    connection = await oracledb.getConnection({
+      user: dbConfig.USER,
+      password: dbConfig.PASSWORD,
+      connectString: dbConfig.ConnectString
+    })
+      .then((c) => {
+        connection = c;
+        oracledb.fetchAsBuffer = [oracledb.BLOB];
+        return connection.execute("select "+req.body.deger+" from ng_his_ransaat");
+      })
+      .then((result) => {
+        result.rows.forEach((elemento) => {
+          let user = new Object();
+
+          user.uzman = elemento[0];
+          user.hastalar = elemento[1];
+          user.klinik = elemento[2];
+          user.uzmanlik = elemento[2];
+
+          users.push(user);
+
+
+        });
+        res.status(200).json(users);
+
+
+
+
+
+      }).then(() => {
+        if (connection) {
+          connection.close();
+        }
+      }).catch((error) => {
+        res.status(500).json({ message: error.message || "Some error occurred!" });
+      });
+  };
+
   async function nitelik(req, res) {
     let users = new Array();
     var fs = require('fs');
@@ -114,7 +160,10 @@ module.exports = app => {
         res.status(500).json({ message: error.message || "Some error occurred!" });
       });
   };
+  
 
+
+  
 
 
   async function haberler(req, res) {
@@ -758,252 +807,34 @@ async function degerbes(req, res) {
       result.rows.forEach((elemento) => {
         let user = new Object();
 
-        user.uzman = elemento[7]; 
+        user.kabinetsaat = elemento[7]; 
 
         users.push(user);
 
 
       });
       console.log(users)
-      res.status(users)
-
-  //res.status(200).json(users);
-
-
+     // res.status(users) 
+     //res.send(users);
+     res.json(users)
 
     }).then(() => {
       if (connection) {
+        
         connection.close();
       }
     }).catch((error) => {
-      res.status(500).json({ message: error.message || "Some error occurred!" });
+      //res.status(500).json({ message: error.message || "Some error occurred!" });
     });
-}; 
-  //8
-  async function degeralti(req, res) {
-    let users = new Array();
 
-    connection = await oracledb.getConnection({
-      user: dbConfig.USER,
-      password: dbConfig.PASSWORD,
-      connectString: dbConfig.ConnectString
-    })
-      .then((c) => {
-        connection = c;
-        oracledb.fetchAsBuffer = [oracledb.BLOB];
-        return connection.execute("select * from ng_his_ransaat ")
-
-
-      })
-      .then((result) => {
-        result.rows.forEach((elemento) => {
-          let user = new Object();
-          {
-
-
-            console.log(elemento[8]);
-
-
-          }
-
-          users.push(user);
-        });
-
-        res.status(200).json(users);
-      }).then(() => {
-        if (connection) {
-          connection.close();
-        }
-      }).catch((error) => {
-        //  res.status(500).json({ message: error.message || "Some error occurred!" });
-      });
-  };//9
-  async function degeryedi(req, res) {
-    let users = new Array();
-
-    connection = await oracledb.getConnection({
-      user: dbConfig.USER,
-      password: dbConfig.PASSWORD,
-      connectString: dbConfig.ConnectString
-    })
-      .then((c) => {
-        connection = c;
-        oracledb.fetchAsBuffer = [oracledb.BLOB];
-        return connection.execute("select * from ng_his_ransaat ")
-
-
-      })
-      .then((result) => {
-        result.rows.forEach((elemento) => {
-          let user = new Object();
-          {
-
-            user.xsaat = elemento[0];
-            console.log("deger7 : " + elemento[9]);
-          }
-
-          users.push(user);
-        });
-
-        res.status(200).json(users);
-      }).then(() => {
-        if (connection) {
-          connection.close();
-        }
-      }).catch((error) => {
-        //  res.status(500).json({ message: error.message || "Some error occurred!" });
-      });
-  };//10
-  async function degersekiz(req, res) {
-    let users = new Array();
-
-    connection = await oracledb.getConnection({
-      user: dbConfig.USER,
-      password: dbConfig.PASSWORD,
-      connectString: dbConfig.ConnectString
-    })
-      .then((c) => {
-        connection = c;
-        oracledb.fetchAsBuffer = [oracledb.BLOB];
-        return connection.execute("select * from ng_his_ransaat ")
-
-
-      })
-      .then((result) => {
-        result.rows.forEach((elemento) => {
-          let user = new Object();
-          {
-
-            user.xsaat = elemento[0];
-            console.log("deger8 : " + elemento[10]);
-          }
-
-          users.push(user);
-        });
-
-        res.status(200).json(users);
-      }).then(() => {
-        if (connection) {
-          connection.close();
-        }
-      }).catch((error) => {
-        //  res.status(500).json({ message: error.message || "Some error occurred!" });
-      });
-  };//11
-  async function degerdokuz(req, res) {
-    let users = new Array();
-
-    connection = await oracledb.getConnection({
-      user: dbConfig.USER,
-      password: dbConfig.PASSWORD,
-      connectString: dbConfig.ConnectString
-    })
-      .then((c) => {
-        connection = c;
-        oracledb.fetchAsBuffer = [oracledb.BLOB];
-        return connection.execute("select * from ng_his_ransaat ")
-
-
-      })
-      .then((result) => {
-        result.rows.forEach((elemento) => {
-          let user = new Object();
-          {
-
-            user.xsaat = elemento[11];
-            console.log("deger9 : " + elemento[8]);
-          }
-
-          users.push(user);
-        });
-
-        res.status(200).json(users);
-      }).then(() => {
-        if (connection) {
-          connection.close();
-        }
-      }).catch((error) => {
-        //  res.status(500).json({ message: error.message || "Some error occurred!" });
-      });
-  };//12
-  async function degeron(req, res) {
-    let users = new Array();
-
-    connection = await oracledb.getConnection({
-      user: dbConfig.USER,
-      password: dbConfig.PASSWORD,
-      connectString: dbConfig.ConnectString
-    })
-      .then((c) => {
-        connection = c;
-        oracledb.fetchAsBuffer = [oracledb.BLOB];
-        return connection.execute("select * from ng_his_ransaat ")
-
-
-      })
-      .then((result) => {
-        result.rows.forEach((elemento) => {
-          let user = new Object();
-          {
-
-            user.xsaat = elemento[0];
-            console.log("deger10 : " + elemento[12]);
-          }
-
-          users.push(user);
-        });
-
-        res.status(200).json(users);
-      }).then(() => {
-        if (connection) {
-          connection.close();
-        }
-      }).catch((error) => {
-        //  res.status(500).json({ message: error.message || "Some error occurred!" });
-      });
-  };//13
-  async function degeronbir(req, res) {
-    let users = new Array();
-
-    connection = await oracledb.getConnection({
-      user: dbConfig.USER,
-      password: dbConfig.PASSWORD,
-      connectString: dbConfig.ConnectString
-    })
-      .then((c) => {
-        connection = c;
-        oracledb.fetchAsBuffer = [oracledb.BLOB];
-        return connection.execute("select * from ng_his_ransaat ")
-
-
-      })
-      .then((result) => {
-        result.rows.forEach((elemento) => {
-          let user = new Object();
-          {
-
-            user.xsaat = elemento[0];
-            console.log("deger11 : " + elemento[13]);
-          }
-
-          users.push(user);
-        });
-
-        res.status(200).json(users);
-      }).then(() => {
-        if (connection) {
-          connection.close();
-        }
-      }).catch((error) => {
-        //  res.status(500).json({ message: error.message || "Some error occurred!" });
-      });
-  };
+ }; 
+  
 
 
 
 
-  async function alikal(req, res) {
-    let users = new Array();
+  async function aralikal(req, res) {
+     let users = new Array();
     let deger;
     var fs = require('fs');
     const express = require('express');
@@ -1019,47 +850,30 @@ async function degerbes(req, res) {
       .then((c) => {
         connection = c;
         oracledb.fetchAsBuffer = [oracledb.BLOB];
-        return connection.execute("SELECT Kabinet FROM ng_his_kabuzman INNER JOIN NG_HIS_GLZR ON ng_his_kabuzman.profs=NG_HIS_GLZR.profs   ");
+        // ////SELECT * FROM ng_his_kabuzman INNER JOIN NG_HIS_GLZR ON ng_his_kabuzman.profs=NG_HIS_GLZR.profs 
+        return connection.execute("SELECT Aralik FROM ng_his_kabuzman WHERE PROFS=:PROFS",{PROFS});
       })
       .then((result) => {
         result.rows.forEach((elemento) => {
           let user = new Object();
 
           user.deger = elemento[0]; 
-          user.degers = elemento[1]; 
-          user.degerss = elemento[2]; 
- user.degerss = elemento[2]; 
+        deger=elemento[0]; 
 
           users.push(user);
 
 
         });
 
-        console.log(users);
-
-
-       /*  users.forEach((elemento) => {
-         
-
-            // deger = elemento[0];  
-             if(deger = elemento[0]=="DEGER5")
-             {
-               //degerbes();
-               console.log(`ben geldim`)
-             }
-
-        }); */
+        console.log(deger);
+ 
 
         console.log(stringify(deger));
 
-       
-
-
+        
 
         res.status(200).json(users);
-
-
-
+ 
 
 
       }).then(() => {
@@ -1071,110 +885,7 @@ async function degerbes(req, res) {
       });
   };
 
-
-  //SELECT ARALIK FROM ng_his_kabuzman WHERE PROFS=:PROFS
-
-  //  function alikal(req, res) {
-  //   let users = new Array();
-  //   PROFS = req.body.PROFS;
-  //   connection =  oracledb.getConnection({
-  //     user: dbConfig.USER,
-  //     password: dbConfig.PASSWORD,
-  //     connectString: dbConfig.ConnectString
-  //   })
-  //     .then((c) => {
-  //       connection = c;
-  //       oracledb.fetchAsBuffer = [oracledb.BLOB];
-  //        return connection.execute("SELECT * FROM ng_his_kabuzman WHERE PROFS=:PROFS", {
-  //          PROFS
-  //       });
-
-
-  //     })
-  //     .then((result) => {
-  //       result.rows.forEach((elemento) => {
-  //         let user = new Object();
-
-  //         if (user.deger1 = elemento[0] == "DEGER1") {
-
-  //            user.degerbir = elemento[0];   
-  //           degerbir();
-  //         }
-  //         if (user.deger2 = elemento[0] == "DEGER2") {
-
-  //           user.degeriki = elemento[0];   
-
-  //           degeriki();
-  //         }
-  //         if (user.deger3 = elemento[0] == "DEGER3") {
-  //           console.log(`3`);
-  //           user.degeruc = elemento[0];   
-
-  //           degeruc();
-  //         }
-  //         if (user.deger4 = elemento[0] == "DEGER4") {
-
-  //           user.degerdort = elemento[0];   
-
-  //           degerdort();
-
-  //         }
-  //         if (user.deger5 = elemento[0] == "DEGER5") {
-  //           user.degerbes = elemento[0];   
-
-  //           degerbes();
  
-
-  //         }
-  //         if (user.deger6 = elemento[0] == "DEGER6") {
-  //           user.degeralti = elemento[0];   
-
-  //           degeralti();
-  //         }
-  //         if (user.deger7 = elemento[0] == "DEGER7") {
-  //           user.degeryedi = elemento[0];   
-
-
-  //           degeryedi();
-  //         }
-  //         if (user.deger8 = elemento[0] == "DEGER8") {
-  //           user.degersekiz = elemento[0];   
-
-
-  //           degersekiz();
-  //         }
-  //         if (user.deger9 = elemento[0] == "DEGER9") {
-  //           user.degerdokuz = elemento[0];   
-
-
-  //           degerdokuz();
-  //         }
-  //         if (user.deger10 = elemento[0] == "DEGER10") {
-  //           user.degeron = elemento[0];   
-
-
-  //           degeron();
-  //         }
-  //         if (user.deger11 = elemento[0] == "DEGER11") {
-  //           user.degeronbir = elemento[0];   
-
-
-  //           degeronbir();
-  //         }
-
-  //         // users.push(user);
-  //       });
-
-  //       res.status(200).json(users);
-  //     }).then(() => {
-  //       if (connection) {
-  //         connection.close();
-  //       }
-  //     }).catch((error) => {
-  //       //  res.status(500).json({ message: error.message || "Some error occurred!" });
-  //     });
-  // };
-
   async function DoktorUygunTarihveSaatSecimi(req, res) {
     let users = new Array();
 
@@ -1324,8 +1035,8 @@ async function degerbes(req, res) {
   app.get('/hastakayit', function (req, res) {
     hastakayit(req, res);
   })
-  app.get('/alikal', function (req, res) {
-    alikal(req, res);
+  app.get('/aralik', function (req, res) {
+    aralikal(req, res);
   })
   app.get('/haberler', function (req, res) {
     haberler(req, res);
@@ -1341,6 +1052,9 @@ async function degerbes(req, res) {
   })
   app.get('/DoktorSecimi', function (req, res) {
     DoktorSecimi(req, res);
+  })
+  app.get('/degerler', function (req, res) {
+    degerler(req, res);
   })
   app.get('/DoktorUygunTarihveSaatSecimi', function (req, res) {
     DoktorUygunTarihveSaatSecimi(req, res);
