@@ -612,7 +612,7 @@ module.exports = app => {
           user.deger = elemento[0];
           deger = elemento[0];
           degers = elemento[1];
-         console.log(elemento[1])
+         console.log(elemento[0]+`,`+elemento[1]+`,`+elemento[2])
           users.push(user);
 
 
