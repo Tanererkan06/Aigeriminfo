@@ -4,11 +4,22 @@ module.exports = app => {
   const dbConfig = require("../config/db.config.js");
   const oracledb = require('oracledb');
 
-  let alt,ust="";
+  let alt, ust = "";
 
   oracledb.fetchAsString = [oracledb.CLOB];
   //my.public.ip:1521/service-name  uzaktan baglanmak ister
+
+  /*
+  SELECT k.aralik,g.ust_ran,g.alt_ran,g.kabinet,vr.servis_id,vr.BASSAAT,vr.BITSAAT FROM NG_HIS_GLZR g 
+INNER JOIN ng_his_vractakvim vr ON g.kabinet=vr.servis_id and vr.datar between '20/04/2022' and '30/04/2022'
+INNER JOIN ng_his_kabuzman k ON k.profs ='UZ008'
+
+
+//eger bastar bittar bos ise kabinet saatleri kullan
   
+  
+  */
+
   async function tetkikfiyat(req, res) {
     let users = new Array();
     var fs = require('fs');
@@ -73,13 +84,13 @@ module.exports = app => {
         result.rows.forEach((elemento) => {
           let user = new Object();
 
-          user.deger = elemento[0]; 
-           users.push(user); 
-        }); 
- 
+          user.deger = elemento[0];
+          users.push(user);
+        });
 
-        
-         res.status(200).json(users);  
+
+
+        res.status(200).json(users);
 
       }).then(() => {
         if (connection) {
@@ -88,7 +99,7 @@ module.exports = app => {
       }).catch((error) => {
         res.status(500).json({ message: error.message || "Some error occurred!" });
       });
-      
+
   };
 
   async function nitelik(req, res) {
@@ -594,56 +605,61 @@ module.exports = app => {
     app.use(express.static('public'));
     var path = require('path');
     PROFS = req.body.PROFS;
+    BASTAR = req.body.BASTAR;
+    BITTAR = req.body.BITTAR;
     connection = await oracledb.getConnection({
       user: dbConfig.USER,
       password: dbConfig.PASSWORD,
       connectString: dbConfig.ConnectString
     })
 
-    /*
-    SELECT k.aralik,g.ust_ran,g.alt_ran,g.kabinet,vr.servis_id,vr.BASSAAT,vr.BITSAAT FROM NG_HIS_GLZR g 
-INNER JOIN ng_his_vractakvim vr ON g.kabinet=vr.servis_id
-INNER JOIN ng_his_kabuzman k ON k.profs ='UZ024' 
-    
-    */
+      /*
+       
+  
+ SELECT k.aralik,g.alt_ran,g.ust_ran,g.kabinet,vr.servis_id,vr.BASSAAT,vr.BITSAAT FROM NG_HIS_GLZR g 
+INNER JOIN ng_his_vractakvim vr ON g.kabinet=vr.servis_id 
+AND 
+vr.datar between '20/04/2022' and '30/04/2022'
+INNER JOIN ng_his_kabuzman k ON k.profs ='UZ008'
+      
+      */
       .then((c) => {
         connection = c;
         oracledb.fetchAsBuffer = [oracledb.BLOB];
         // Kabinet ve servis id ayni tablo birlestir
-         return connection.execute("SELECT k.aralik,g.ust_ran,g.alt_ran,g.kabinet FROM NG_HIS_GLZR g INNER JOIN ng_his_kabuzman k ON k.profs =:PROFS INNER JOIN ng_his_vractakvim vr ON g.kabinet=vr.servis_id", { PROFS });
+        return connection.execute(`
+        SELECT k.aralik,g.alt_ran,g.ust_ran,g.kabinet,vr.servis_id,vr.BASSAAT,vr.BITSAAT FROM NG_HIS_GLZR g 
+        INNER JOIN ng_his_vractakvim vr ON g.kabinet=vr.servis_id 
+        AND  vr.datar between :BASTAR and :BITTAR INNER JOIN ng_his_kabuzman k ON k.profs=:PROFS`,
+          { PROFS, BASTAR, BITTAR });
       })
       .then((result) => {
         result.rows.forEach((elemento) => {
           let user = new Object();
+          user.Datar = elemento[0];
+          user.D = elemento[1];
+          user.Basssat = elemento[2];
+          user.bitissaati = elemento[3];
+          user.servisid = elemento[4];
+          user.servis = elemento[5];
 
-          user.deger = elemento[0];
-          deger = elemento[0];
-          degers = elemento[1];
-          console.log(elemento[3])
-        // console.log(elemento[0]+`,`+elemento[1]+`,`+elemento[2])
-         // users.push(user);
-
-
+          users.push(user);
         });
 
-       // console.log(deger); 
-               
-        res.status(200).json(deger); 
-        //const sonuc = degerler(stringify(deger));
-       //  res.status(200).json(sonuc);
-
+        res.status(200).json(users);
+        console.log(users)
       }).then(() => {
         if (connection) {
           connection.close();
         }
       }).catch((error) => {
-        res.status(500).json({ message: error.message || "Some error occurred!" });
+        //  res.status(500).json({ message: error.message || "Some error occurred!" });
       });
   };
 
 
   async function DoktorUygunTarihveSaatSecimi(req, res) {
-   
+
 
     connection = await oracledb.getConnection({
       user: dbConfig.USER,
