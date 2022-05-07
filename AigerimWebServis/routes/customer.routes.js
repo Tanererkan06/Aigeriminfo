@@ -665,24 +665,22 @@ INNER JOIN ng_his_kabuzman k ON k.profs ='UZ008'
       oracledb.fetchAsBuffer = [oracledb.BLOB];
       return connection.execute(`
       select ng_his_vractakvim.datar, 'прием' d  ,ng_his_vractakvim.bassaat,
-ng_his_vractakvim.bitsaat,ng_his_vractakvim.servis_id ,ng_his_glzr.isim from ng_his_glzr,ng_his_vractakvim 
-where ng_his_vractakvim.doktor_id=:doktor_id  and
-ng_his_vractakvim.servis_id=ng_his_glzr.kabinet and
-ng_his_vractakvim.datar>=:BASTAR and
-ng_his_vractakvim.servis_id in (select kabinet from ng_his_glzr where sinifi <>'S')`,
+      ng_his_vractakvim.bitsaat,ng_his_vractakvim.servis_id ,ng_his_glzr.isim from ng_his_glzr,ng_his_vractakvim 
+      where ng_his_vractakvim.doktor_id=:doktor_id  and ng_his_vractakvim.servis_id=ng_his_glzr.kabinet and ng_his_vractakvim.datar>=:BASTAR and ng_his_vractakvim.servis_id in (select kabinet from ng_his_glzr where sinifi <>'S')`,
         { doktor_id, BASTAR });
     })
       .then((result) => {
         result.rows.forEach((elemento) => {
           let user = new Object();
-          user.aralik = elemento[0];
-          user.alt = elemento[1];
-          user.ust = elemento[2];
-          user.kabinet_id = elemento[3];
+          user.datar = elemento[0];
+          user.D = elemento[1];
+          user.bassaat = elemento[2];
+          user.bitsaat = elemento[3];
+ 
           user.servis_id = elemento[4];
-          user.bastar = elemento[5];
-          user.bittar = elemento[6];
+          user.isim = elemento[5];
           users.push(user);
+          console.log(users)
         });
 
         res.status(200).json(users);
