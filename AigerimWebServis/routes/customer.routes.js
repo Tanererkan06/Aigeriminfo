@@ -636,13 +636,13 @@ INNER JOIN ng_his_kabuzman k ON k.profs ='UZ008'
       .then((result) => {
         result.rows.forEach((elemento) => {
           let user = new Object();
-          user.Datar = elemento[0];
-          user.D = elemento[1];
-          user.Basssat = elemento[2];
-          user.bitissaati = elemento[3];
-          user.servisid = elemento[4];
-          user.servis = elemento[5];
-
+          user.aralik = elemento[0];
+          user.alt = elemento[1];
+          user.ust = elemento[2];
+          user.kabinet = elemento[3];
+          user.servis = elemento[4];
+          user.bastar = elemento[5];
+          user.bittar = elemento[6];
           users.push(user);
         });
 
