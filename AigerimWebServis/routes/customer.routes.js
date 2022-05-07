@@ -68,7 +68,7 @@ INNER JOIN ng_his_kabuzman k ON k.profs ='UZ008'
     const app = express();
     app.use(express.static('public'));
     var path = require('path');
-
+     let deger = req.body.deger;
     connection = await oracledb.getConnection({
       user: dbConfig.USER,
       password: dbConfig.PASSWORD,
@@ -76,17 +76,112 @@ INNER JOIN ng_his_kabuzman k ON k.profs ='UZ008'
     })
       .then((c) => {
         connection = c;
-        let deger = req.body.deger;
+       
         oracledb.fetchAsBuffer = [oracledb.BLOB];
         return connection.execute("select " + deger + " from ng_his_ransaat");
       })
       .then((result) => {
-        result.rows.forEach((elemento) => {
+    // 
+    
+         if(deger=="DEGER1")
+        {
+          console.log(deger)
+          console.log(result)
+        }  
+        if(deger=="DEGER2")
+        {
+          console.log(deger)
+          console.log(result)
+        }  
+        if(deger=="DEGER3")
+        {
+          console.log(deger)
+          console.log(result)
+        }   
+        if(deger=="DEGER4")
+        {
+          console.log(deger)
+          console.log(result)
+        }  
+        if(deger=="DEGER4")
+        {
+          console.log(deger)
+          console.log(result)
+        }  
+
+        if(deger=="DEGER1")
+        {
+          console.log(deger)
+          console.log(result)
+        }  
+        if(deger=="DEGER2")
+        {
+          console.log(deger)
+          console.log(result)
+        }  
+        if(deger=="DEGER3")
+        {
+          console.log(deger)
+          console.log(result)
+        }   
+        if(deger=="DEGER4")
+        {
+          console.log(deger)
+          console.log(result)
+        }  
+        if(deger=="DEGER5")
+        {
+          console.log(deger)
+          console.log(result)
+        }  
+        if(deger=="DEGER6")
+        {
+          console.log(deger)
+          console.log(result)
+        }   
+        if(deger=="DEGER7")
+        {
+          console.log(deger)
+          console.log(result)
+        }  
+
+        if(deger=="DEGER5")
+        {
+          console.log(deger)
+          console.log(result)
+        }  
+
+        if(deger=="DEGER8")
+        {
+          console.log(deger)
+          console.log(result)
+        }  
+
+        if(deger=="DEGER9")
+        {
+          console.log(deger)
+          console.log(result)
+        }  
+
+        if(deger=="DEGER10")
+        {
+          console.log(deger)
+          console.log(result)
+        }  
+
+        if(deger=="DEGER11")
+        {
+          console.log(deger)
+          console.log(result)
+        }  
+        /* result.rows.forEach((elemento) => {
           let user = new Object();
 
           user.deger = elemento[0];
           users.push(user);
-        });
+        
+        
+        }); */
 
 
 
