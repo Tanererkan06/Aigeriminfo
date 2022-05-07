@@ -617,7 +617,8 @@ INNER JOIN ng_his_kabuzman k ON k.profs ='UZ008'
       return connection.execute(`
         SELECT k.aralik,g.alt_ran,g.ust_ran,g.kabinet,vr.servis_id,vr.BASSAAT,vr.BITSAAT FROM NG_HIS_GLZR g 
         INNER JOIN ng_his_vractakvim vr ON g.kabinet=vr.servis_id 
-        AND  vr.datar between :BASTAR and :BITTAR INNER JOIN ng_his_kabuzman k ON k.profs=:PROFS`,
+        AND  vr.datar between :BASTAR and :BITTAR INNER 
+        JOIN ng_his_kabuzman k ON k.profs=:PROFS`,
         { PROFS, BASTAR, BITTAR });
     })
       .then((result) => {
@@ -664,9 +665,19 @@ INNER JOIN ng_his_kabuzman k ON k.profs ='UZ008'
       connection = c;
       oracledb.fetchAsBuffer = [oracledb.BLOB];
       return connection.execute(`
-      select ng_his_vractakvim.datar, 'прием' d  ,ng_his_vractakvim.bassaat,
-      ng_his_vractakvim.bitsaat,ng_his_vractakvim.servis_id ,ng_his_glzr.isim from ng_his_glzr,ng_his_vractakvim 
-      where ng_his_vractakvim.doktor_id=:doktor_id  and ng_his_vractakvim.servis_id=ng_his_glzr.kabinet and ng_his_vractakvim.datar>=:BASTAR and ng_his_vractakvim.servis_id in (select kabinet from ng_his_glzr where sinifi <>'S')`,
+      select 
+      ng_his_vractakvim.datar, 
+      'прием' d  
+      ,ng_his_vractakvim.bassaat,
+      ng_his_vractakvim.bitsaat,
+      ng_his_vractakvim.servis_id ,
+      ng_his_glzr.isim,
+      ng_his_glzr.profs 
+      from ng_his_glzr,ng_his_vractakvim 
+      where ng_his_vractakvim.doktor_id=:doktor_id  
+      and ng_his_vractakvim.servis_id=ng_his_glzr.kabinet
+      and ng_his_vractakvim.datar>=:BASTAR and ng_his_vractakvim.servis_id in 
+      (select kabinet from ng_his_glzr where sinifi <>'S')`,
         { doktor_id, BASTAR });
     })
       .then((result) => {
@@ -676,9 +687,10 @@ INNER JOIN ng_his_kabuzman k ON k.profs ='UZ008'
           user.D = elemento[1];
           user.bassaat = elemento[2];
           user.bitsaat = elemento[3];
- 
           user.servis_id = elemento[4];
           user.isim = elemento[5];
+          user.profs = elemento[6];
+        
           users.push(user);
           console.log(users)
         });
