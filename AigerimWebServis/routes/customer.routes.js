@@ -670,6 +670,7 @@ INNER JOIN ng_his_kabuzman k ON k.profs ='UZ008'
       'прием' d  
       ,ng_his_vractakvim.bassaat,
       ng_his_vractakvim.bitsaat,
+      ng_his_vractakvim.doktor_id,
       ng_his_vractakvim.servis_id ,
       ng_his_glzr.isim,
       ng_his_glzr.profs 
@@ -687,9 +688,10 @@ INNER JOIN ng_his_kabuzman k ON k.profs ='UZ008'
           user.D = elemento[1];
           user.bassaat = elemento[2];
           user.bitsaat = elemento[3];
-          user.servis_id = elemento[4];
-          user.isim = elemento[5];
-          user.profs = elemento[6];
+          user.docktor_id = elemento[4];
+          user.servis_id = elemento[5];
+          user.isim = elemento[6];
+          user.profs = elemento[7];
         
           users.push(user);
           console.log(users)
