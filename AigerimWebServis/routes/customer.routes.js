@@ -611,43 +611,30 @@ INNER JOIN ng_his_kabuzman k ON k.profs ='UZ008'
       user: dbConfig.USER,
       password: dbConfig.PASSWORD,
       connectString: dbConfig.ConnectString
-    })
-
-      /*
-       
-  
- SELECT k.aralik,g.alt_ran,g.ust_ran,g.kabinet,vr.servis_id,vr.BASSAAT,vr.BITSAAT FROM NG_HIS_GLZR g 
-INNER JOIN ng_his_vractakvim vr ON g.kabinet=vr.servis_id 
-AND 
-vr.datar between '20/04/2022' and '30/04/2022'
-INNER JOIN ng_his_kabuzman k ON k.profs ='UZ008'
-      
-      */
-      .then((c) => {
-        connection = c;
-        oracledb.fetchAsBuffer = [oracledb.BLOB];
-        // Kabinet ve servis id ayni tablo birlestir
-        return connection.execute(`
+    }).then((c) => {
+      connection = c;
+      oracledb.fetchAsBuffer = [oracledb.BLOB];
+      return connection.execute(`
         SELECT k.aralik,g.alt_ran,g.ust_ran,g.kabinet,vr.servis_id,vr.BASSAAT,vr.BITSAAT FROM NG_HIS_GLZR g 
         INNER JOIN ng_his_vractakvim vr ON g.kabinet=vr.servis_id 
         AND  vr.datar between :BASTAR and :BITTAR INNER JOIN ng_his_kabuzman k ON k.profs=:PROFS`,
-          { PROFS, BASTAR, BITTAR });
-      })
+        { PROFS, BASTAR, BITTAR });
+    })
       .then((result) => {
         result.rows.forEach((elemento) => {
           let user = new Object();
           user.aralik = elemento[0];
           user.alt = elemento[1];
           user.ust = elemento[2];
-          user.kabinet = elemento[3];
-          user.servis = elemento[4];
+          user.kabinet_id = elemento[3];
+          user.servis_id = elemento[4];
           user.bastar = elemento[5];
           user.bittar = elemento[6];
           users.push(user);
         });
 
         res.status(200).json(users);
-        console.log(users)
+
       }).then(() => {
         if (connection) {
           connection.close();
@@ -659,39 +646,47 @@ INNER JOIN ng_his_kabuzman k ON k.profs ='UZ008'
 
 
   async function DoktorUygunTarihveSaatSecimi(req, res) {
-
+    let users = new Array();
+    let deger;
+    var fs = require('fs');
+    const express = require('express');
+    const app = express();
+    app.use(express.static('public'));
+    var path = require('path');
+    doktor_id = req.body.doktor_id;
+    BASTAR = req.body.BASTAR;
 
     connection = await oracledb.getConnection({
       user: dbConfig.USER,
       password: dbConfig.PASSWORD,
       connectString: dbConfig.ConnectString
+    }).then((c) => {
+      connection = c;
+      oracledb.fetchAsBuffer = [oracledb.BLOB];
+      return connection.execute(`
+      select ng_his_vractakvim.datar, 'прием' d  ,ng_his_vractakvim.bassaat,
+ng_his_vractakvim.bitsaat,ng_his_vractakvim.servis_id ,ng_his_glzr.isim from ng_his_glzr,ng_his_vractakvim 
+where ng_his_vractakvim.doktor_id=:doktor_id  and
+ng_his_vractakvim.servis_id=ng_his_glzr.kabinet and
+ng_his_vractakvim.datar>=:BASTAR and
+ng_his_vractakvim.servis_id in (select kabinet from ng_his_glzr where sinifi <>'S')`,
+        { doktor_id, BASTAR });
     })
-      .then((c) => {
-        connection = c;
-        oracledb.fetchAsBuffer = [oracledb.BLOB];
-
-        return connection.execute("select ng_his_vractakvim.datar,'прием' d  ,ng_his_vractakvim.bassaat,ng_his_vractakvim.bitsaat,ng_his_vractakvim.servis_id ,ng_his_glzr.isim from ng_his_glzr,ng_his_vractakvim   where ng_his_vractakvim.doktor_id=:doktor_id  and   ng_his_vractakvim.servis_id=ng_his_glzr.kabinet and  ng_his_vractakvim.datar>=to_char(sysdate,'dd/mm/yyyy') and ng_his_glzr.kabinet=ng_his_vractakvim.servis_id  and ng_his_vractakvim.servis_id=:servis_id and ng_his_vractakvim.servis_id in (select kabinet from ng_his_glzr where sinifi <>'S')", {
-
-          servis_id: req.body.servis_id,
-          doktor_id: req.body.doktor_id
-        });
-
-      })
       .then((result) => {
         result.rows.forEach((elemento) => {
           let user = new Object();
-          user.Datar = elemento[0];
-          user.D = elemento[1];
-          user.Basssat = elemento[2];
-          user.bitissaati = elemento[3];
-          user.servisid = elemento[4];
-          user.servis = elemento[5];
-
+          user.aralik = elemento[0];
+          user.alt = elemento[1];
+          user.ust = elemento[2];
+          user.kabinet_id = elemento[3];
+          user.servis_id = elemento[4];
+          user.bastar = elemento[5];
+          user.bittar = elemento[6];
           users.push(user);
         });
 
         res.status(200).json(users);
-        console.log(users)
+
       }).then(() => {
         if (connection) {
           connection.close();
@@ -700,6 +695,7 @@ INNER JOIN ng_his_kabuzman k ON k.profs ='UZ008'
         //  res.status(500).json({ message: error.message || "Some error occurred!" });
       });
   };
+
   async function UygunSaatSecimi(req, res) {
     let users = new Array();
 
@@ -735,7 +731,7 @@ INNER JOIN ng_his_kabuzman k ON k.profs ='UZ008'
           connection.close();
         }
       }).catch((error) => {
-        //  res.status(500).json({ message: error.message || "Some error occurred!" });
+        res.status(500).json({ message: error.message || "Some error occurred!" });
       });
   };
   async function DoktorBilgi(req, res) {
