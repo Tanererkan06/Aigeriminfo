@@ -81,107 +81,120 @@ INNER JOIN ng_his_kabuzman k ON k.profs ='UZ008'
         return connection.execute("select " + deger + " from ng_his_ransaat");
       })
       .then((result) => {
-    // 
-    
-         if(deger=="DEGER1")
-        {
-          console.log(deger)
-          console.log(result)
-        }  
-        if(deger=="DEGER2")
-        {
-          console.log(deger)
-          console.log(result)
-        }  
-        if(deger=="DEGER3")
-        {
-          console.log(deger)
-          console.log(result)
-        }   
-        if(deger=="DEGER4")
-        {
-          console.log(deger)
-          console.log(result)
-        }  
-        if(deger=="DEGER4")
-        {
-          console.log(deger)
-          console.log(result)
-        }  
+    //  
 
         if(deger=="DEGER1")
         {
-          console.log(deger)
-          console.log(result)
+          result.rows.forEach((elemento) => {
+            let user = new Object();
+  
+            user.deger = elemento[0];
+            users.push(user); 
+          });   
+          res.status(200).json(users);
         }  
         if(deger=="DEGER2")
         {
-          console.log(deger)
-          console.log(result)
+          result.rows.forEach((elemento) => {
+            let user = new Object();
+  
+            user.deger = elemento[0];
+            users.push(user); 
+          });   
+          res.status(200).json(users);
         }  
         if(deger=="DEGER3")
         {
-          console.log(deger)
-          console.log(result)
+          result.rows.forEach((elemento) => {
+            let user = new Object();
+  
+            user.deger = elemento[0];
+            users.push(user); 
+          });   
+          res.status(200).json(users);
         }   
         if(deger=="DEGER4")
         {
-          console.log(deger)
-          console.log(result)
+          result.rows.forEach((elemento) => {
+            let user = new Object();
+  
+            user.deger = elemento[0];
+            users.push(user); 
+          });   
+          res.status(200).json(users);
         }  
         if(deger=="DEGER5")
         {
-          console.log(deger)
-          console.log(result)
-        }  
-        if(deger=="DEGER6")
-        {
-          console.log(deger)
-          console.log(result)
-        }   
-        if(deger=="DEGER7")
-        {
-          console.log(deger)
-          console.log(result)
-        }  
-
-        if(deger=="DEGER8")
-        {
-          console.log(deger)
-          console.log(result)
-        }  
-
           
-
-        if(deger=="DEGER9")
-        {
-          console.log(deger)
-          console.log(result)
-        }  
-
-        if(deger=="DEGER10")
-        {
-          console.log(deger)
-          console.log(result)
-        }  
-
-        if(deger=="DEGER11")
-        {
-          console.log(deger)
-          console.log(result)
-        }  
-        /* result.rows.forEach((elemento) => {
+           result.rows.forEach((elemento) => {
           let user = new Object();
 
           user.deger = elemento[0];
-          users.push(user);
-        
-        
-        }); */
-
-
-
+          users.push(user); 
+        });   
         res.status(200).json(users);
+        }  
+        if(deger=="DEGER6")
+        {
+          result.rows.forEach((elemento) => {
+            let user = new Object();
+  
+            user.deger = elemento[0];
+            users.push(user); 
+          });   
+          res.status(200).json(users);
+        }   
+        if(deger=="DEGER7")
+        {
+          result.rows.forEach((elemento) => {
+            let user = new Object();
+  
+            user.deger = elemento[0];
+            users.push(user); 
+          });   
+          res.status(200).json(users);
+        }  
+        if(deger=="DEGER8")
+        {
+          result.rows.forEach((elemento) => {
+            let user = new Object();
+  
+            user.deger = elemento[0];
+            users.push(user); 
+          });   
+          res.status(200).json(users);
+        }   
+        if(deger=="DEGER9")
+        {
+          result.rows.forEach((elemento) => {
+            let user = new Object();
+  
+            user.deger = elemento[0];
+            users.push(user); 
+          });   
+          res.status(200).json(users);
+        }  
+        if(deger=="DEGER10")
+        {
+          result.rows.forEach((elemento) => {
+            let user = new Object();
+  
+            user.deger = elemento[0];
+            users.push(user); 
+          });   
+          res.status(200).json(users);
+        }  
+        if(deger=="DEGER11")
+        {
+          result.rows.forEach((elemento) => {
+            let user = new Object();
+  
+            user.deger = elemento[0];
+            users.push(user); 
+          });   
+          res.status(200).json(users);
+        }  
+        
 
       }).then(() => {
         if (connection) {
