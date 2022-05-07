@@ -667,16 +667,18 @@ INNER JOIN ng_his_kabuzman k ON k.profs ='UZ008'
       return connection.execute(`
       select 
       ng_his_vractakvim.datar, 
-      'прием' d  
-      ,ng_his_vractakvim.bassaat,
+      'прием' d,
+      ng_his_vractakvim.bassaat,
       ng_his_vractakvim.bitsaat,
       ng_his_vractakvim.doktor_id,
       ng_his_vractakvim.servis_id ,
       ng_his_glzr.isim,
-      ng_his_glzr.profs 
+      ng_his_glzr.profs
+      
       from ng_his_glzr,ng_his_vractakvim 
       where ng_his_vractakvim.doktor_id=:doktor_id  
       and ng_his_vractakvim.servis_id=ng_his_glzr.kabinet
+      
       and ng_his_vractakvim.datar>=:BASTAR and ng_his_vractakvim.servis_id in 
       (select kabinet from ng_his_glzr where sinifi <>'S')`,
         { doktor_id, BASTAR });
@@ -688,11 +690,12 @@ INNER JOIN ng_his_kabuzman k ON k.profs ='UZ008'
           user.D = elemento[1];
           user.bassaat = elemento[2];
           user.bitsaat = elemento[3];
-          user.docktor_id = elemento[4];
+          user.doktor_id = elemento[4];
           user.servis_id = elemento[5];
-          user.isim = elemento[6];
-          user.profs = elemento[7];
-        
+          user.servis_isim = elemento[6];
+          user.servis_profs = elemento[7]; 
+          
+          
           users.push(user);
           console.log(users)
         });
