@@ -78,17 +78,18 @@ INNER JOIN ng_his_kabuzman k ON k.profs ='UZ008'
         connection = c;
        
         oracledb.fetchAsBuffer = [oracledb.BLOB];
-        return connection.execute("select " + deger + " from ng_his_ransaat");
+        return connection.execute("select SIRA_NO,XSAAT," + deger + " ,XDAKKIKA from ng_his_ransaat");
       })
       .then((result) => {
     //  
 
         if(deger=="DEGER1")
         {
+
           result.rows.forEach((elemento) => {
             let user = new Object();
   
-            user.deger = elemento[0];
+            user.deger = elemento[3];
             users.push(user); 
           });   
           res.status(200).json(users);
@@ -98,7 +99,7 @@ INNER JOIN ng_his_kabuzman k ON k.profs ='UZ008'
           result.rows.forEach((elemento) => {
             let user = new Object();
   
-            user.deger = elemento[0];
+           user.deger = elemento[3];
             users.push(user); 
           });   
           res.status(200).json(users);
@@ -108,7 +109,7 @@ INNER JOIN ng_his_kabuzman k ON k.profs ='UZ008'
           result.rows.forEach((elemento) => {
             let user = new Object();
   
-            user.deger = elemento[0];
+           user.deger = elemento[3];
             users.push(user); 
           });   
           res.status(200).json(users);
@@ -118,7 +119,7 @@ INNER JOIN ng_his_kabuzman k ON k.profs ='UZ008'
           result.rows.forEach((elemento) => {
             let user = new Object();
   
-            user.deger = elemento[0];
+           user.deger = elemento[3];
             users.push(user); 
           });   
           res.status(200).json(users);
@@ -129,7 +130,7 @@ INNER JOIN ng_his_kabuzman k ON k.profs ='UZ008'
            result.rows.forEach((elemento) => {
           let user = new Object();
 
-          user.deger = elemento[0];
+          user.deger = elemento[3];
           users.push(user); 
         });   
         res.status(200).json(users);
@@ -139,7 +140,7 @@ INNER JOIN ng_his_kabuzman k ON k.profs ='UZ008'
           result.rows.forEach((elemento) => {
             let user = new Object();
   
-            user.deger = elemento[0];
+           user.deger = elemento[3];
             users.push(user); 
           });   
           res.status(200).json(users);
@@ -149,7 +150,7 @@ INNER JOIN ng_his_kabuzman k ON k.profs ='UZ008'
           result.rows.forEach((elemento) => {
             let user = new Object();
   
-            user.deger = elemento[0];
+           user.deger = elemento[3];
             users.push(user); 
           });   
           res.status(200).json(users);
@@ -159,7 +160,7 @@ INNER JOIN ng_his_kabuzman k ON k.profs ='UZ008'
           result.rows.forEach((elemento) => {
             let user = new Object();
   
-            user.deger = elemento[0];
+           user.deger = elemento[3];
             users.push(user); 
           });   
           res.status(200).json(users);
@@ -169,7 +170,7 @@ INNER JOIN ng_his_kabuzman k ON k.profs ='UZ008'
           result.rows.forEach((elemento) => {
             let user = new Object();
   
-            user.deger = elemento[0];
+           user.deger = elemento[3];
             users.push(user); 
           });   
           res.status(200).json(users);
@@ -179,7 +180,7 @@ INNER JOIN ng_his_kabuzman k ON k.profs ='UZ008'
           result.rows.forEach((elemento) => {
             let user = new Object();
   
-            user.deger = elemento[0];
+           user.deger = elemento[3];
             users.push(user); 
           });   
           res.status(200).json(users);
@@ -189,7 +190,7 @@ INNER JOIN ng_his_kabuzman k ON k.profs ='UZ008'
           result.rows.forEach((elemento) => {
             let user = new Object();
   
-            user.deger = elemento[0];
+           user.deger = elemento[3];
             users.push(user); 
           });   
           res.status(200).json(users);
