@@ -145,17 +145,13 @@ INNER JOIN ng_his_kabuzman k ON k.profs ='UZ008'
           console.log(result)
         }  
 
-        if(deger=="DEGER5")
-        {
-          console.log(deger)
-          console.log(result)
-        }  
-
         if(deger=="DEGER8")
         {
           console.log(deger)
           console.log(result)
         }  
+
+          
 
         if(deger=="DEGER9")
         {
